@@ -1,0 +1,15 @@
+build
+executables
+vendor/SDL2
+vendor/SDL2_image
+vendor/PNG 
+vendor/JPEG 
+vendor/build 
+SDL2_connector/bin 
+SDL2_connector/lib 
+SDL2_connector/build 
+build_info.txt
+vendor/build_info.txt
+SDL2_connector/build_info.txt
+
+*.bkp

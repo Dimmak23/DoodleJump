@@ -1,0 +1,1 @@
+Write-Host "size: "; (Get-ChildItem -Path executables -Recurse | Measure-Object -Property Length -Sum).Sum / 1MB; Write-Host " (MB)."

@@ -1,0 +1,21 @@
+if(WIN32)
+	add_executable(
+		${MAIN}
+		WIN32
+		source/${MAIN}.cpp
+		"${APP_ICON_WIN}"
+	)
+endif()
+
+target_include_directories(
+	${MAIN}
+	PUBLIC ${LIB_APPLICATION}
+)
+target_link_libraries(
+	${MAIN}
+	PRIVATE application
+)
+set_specific_definitions(
+	${MAIN}
+)
+set_output_properties(${MAIN})
