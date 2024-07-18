@@ -1,20 +1,18 @@
 #pragma once
 
-#pragma once
-
-//* Custom headers
+//* Game
 //? Modules
 //? Inheritance
 //? Interfaces
-#include "I_DynamicSpawn.hpp"
-#include "I_Universe.hpp"
+#include "level/world/interface/I_DynamicSpawn.hpp"
+#include "level/world/interface/I_Universe.hpp"
 
 //* C++ std
 #include <memory>
 #include <vector>
 
 //* Forward declarations
-class SpriteWrapper;
+class Image;
 class Locator;
 class ILocatableScene;
 class ICollidable;
@@ -118,10 +116,10 @@ private:
 	//@ Members
 
 	//* Containers
-	std::vector<std::unique_ptr<SpriteWrapper>> _Enemies;
+	std::vector<std::unique_ptr<Image>> _Enemies;
 	std::vector<std::unique_ptr<Locator>> _EnemyLocators;	 // TODO: find a way to use single locator for all
 	std::vector<std::unique_ptr<Ammo>> _AmmoTiles;
-	std::vector<std::unique_ptr<SpriteWrapper>> _Wormholes;
+	std::vector<std::unique_ptr<Image>> _Wormholes;
 	std::vector<std::unique_ptr<Locator>> _WormholesLocators;	 // TODO: find a way to use single locator for all
 	std::vector<std::unique_ptr<Wormhole>> _WormholesEngines;
 	std::vector<int> _EmptyPlatformsIndecies;

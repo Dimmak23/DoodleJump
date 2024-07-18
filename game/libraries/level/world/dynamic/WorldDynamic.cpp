@@ -1,31 +1,24 @@
 //* Source header
-#include "WorldDynamic.hpp"
+#include "level/world/dynamic/WorldDynamic.hpp"
+
+//* Game
+#include "abilities/wormhole/Wormhole.hpp"
+#include "graphics/image/Image.hpp"
+#include "level/level/I_Stoppable.hpp"
+#include "modules/collider/I_Collidable.hpp"
+#include "modules/locator/Locator.hpp"
+#include "modules/physics_engine/I_Mechanics.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
+#include "modules/scene/I_LocatableScene.hpp"
+#include "modules/spawn/RandomSpawn.hpp"
+#include "projectiles/ammo/Ammo.hpp"
+#include "screen/ScreenItem.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
 #include <string>
-
-//* Custom
-//? Inheritance
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_Collidable.hpp"
-#include "I_LocatableScene.hpp"
-#include "I_Mechanics.hpp"
-#include "I_Stoppable.hpp"
-//? Modules
-#include "Locator.hpp"
-#include "PhysicsEngine.hpp"
-#include "RandomSpawn.hpp"
-//? Wrappers
-#include "SpriteWrapper.hpp"
-//? Projectiles
-#include "Ammo.hpp"
-//? Abilities
-#include "Wormhole.hpp"
-//? Utilities
-#include "Sizes.hpp"
 
 WorldDynamic::WorldDynamic(const ScreenItem* parent_screen,		   //
 						   const char* enemies_path_cut,		   //
@@ -95,9 +88,9 @@ void WorldDynamic::onSpawnNewEnemy(const int& x, const int& y, const unsigned in
 {
 	//? Create sprite with image variance as index
 	std::string Path(_EnemiesPathCut + std::to_string(variance + 1) + _EnemiesPathAdder);
-	_Enemies.push_back(std::make_unique<SpriteWrapper>(_Screen, Path.c_str(),	 //
-													   Sizes::Environment::EnemyWidth[variance],
-													   Sizes::Environment::EnemyHeight[variance]));
+	_Enemies.push_back(std::make_unique<Image>(_Screen, Path.c_str(),	 //
+											   Sizes::Environment::EnemyWidth[variance],
+											   Sizes::Environment::EnemyHeight[variance]));
 	onAddNewActorToPlayerCollider(_Enemies.back().get());	 //? Don't forget to tell player
 
 	//? Place image in the x,y Bottom-Center coordinate
@@ -112,9 +105,9 @@ void WorldDynamic::onSpawnNewWormhole(const int& x, const int& y, const unsigned
 	// variance //! unused here
 
 	//? Create sprite with image variance as index
-	_Wormholes.push_back(std::make_unique<SpriteWrapper>(_Screen, _WormholePath,			   //
-														 Sizes::Environment::WormholeWidth,	   //
-														 Sizes::Environment::WormholeHeight));
+	_Wormholes.push_back(std::make_unique<Image>(_Screen, _WormholePath,			   //
+												 Sizes::Environment::WormholeWidth,	   //
+												 Sizes::Environment::WormholeHeight));
 	onAddNewWormholeToPlayerCollider(_Wormholes.back().get());	  //? Don't forget to tell player
 
 	//? Place image in the x,y Bottom-Center coordinate

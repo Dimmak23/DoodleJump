@@ -1,10 +1,7 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-#include "I_RelocatableActor.hpp"
+//* Game
+#include "modules/locator/I_RelocatableActor.hpp"
 
 //* C++ std
 #include <memory>
@@ -12,8 +9,8 @@
 
 //* Forward declarations
 class RectangleCore;
-class SpriteWrapper;
-class AnimatedSpriteWrapper;
+class Image;
+class AnimatedImage;
 struct Point;
 class IAccounting;
 struct ScreenItem;
@@ -66,7 +63,7 @@ private:
 
 	//* Reusable widget updater
 	void updateWidgetsContainer(const size_t& new_counter, size_t& current_counter,
-								std::vector<std::unique_ptr<AnimatedSpriteWrapper>>& Digits);
+								std::vector<std::unique_ptr<AnimatedImage>>& Digits);
 
 	//@ Members
 
@@ -75,10 +72,10 @@ private:
 	IAccounting* _PlatformsWorld{ nullptr };
 
 	//* Widgets
-	std::unique_ptr<SpriteWrapper> _DistanceLabel{ nullptr };
-	std::unique_ptr<SpriteWrapper> _PlatformsCountLabel{ nullptr };
-	std::vector<std::unique_ptr<AnimatedSpriteWrapper>> _DistanceDigits;
-	std::vector<std::unique_ptr<AnimatedSpriteWrapper>> _PlatformsDigits;
+	std::unique_ptr<Image> _DistanceLabel{ nullptr };
+	std::unique_ptr<Image> _PlatformsCountLabel{ nullptr };
+	std::vector<std::unique_ptr<AnimatedImage>> _DistanceDigits;
+	std::vector<std::unique_ptr<AnimatedImage>> _PlatformsDigits;
 	std::unique_ptr<Locator> _SharedLocator{ nullptr };
 
 	//* Geometry

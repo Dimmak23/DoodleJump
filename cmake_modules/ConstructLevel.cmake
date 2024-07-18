@@ -2,24 +2,11 @@
 add_library(
 	level
 	${LIB_TYPE}
-	${LVL_MAIN}/Level.cpp
-	${LVL_MAIN}/Level.hpp
+	${GAME_INCLUDES}/level/level/Level.cpp
 )
 target_include_directories(
 	level
-	PUBLIC ${LVL_MAIN}
-	PUBLIC ${ACT_PLAYER}
-	PUBLIC ${ABL_JETPACK} # ? Jet Pack ability
-	PUBLIC ${MOD_PARALLAX}
-	PUBLIC ${MOD_COLLIDER}
-	PUBLIC ${MOD_CAMERA}
-	PUBLIC ${MOD_SCENE}
-	PUBLIC ${SCR_BOARD}
-	PUBLIC ${LVL_SWORLD}
-	PUBLIC ${LVL_DWORLD}
-	PUBLIC ${SCREEN} # ? Inherit from ScreenItem interface
-	PUBLIC ${UTILS}
-	PUBLIC ${MOD_GUN}
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	level

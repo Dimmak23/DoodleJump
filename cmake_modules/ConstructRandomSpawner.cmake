@@ -2,13 +2,11 @@
 add_library(
 	random_spawner
 	${LIB_TYPE}
-	${MOD_RSPAWN}/RandomSpawn.cpp
-	${MOD_RSPAWN}/RandomSpawn.hpp
+	${GAME_INCLUDES}/modules/spawn/RandomSpawn.cpp
 )
 target_include_directories(
 	random_spawner
-	PUBLIC ${RECT} # ? Use features from RectangleCore
-	PUBLIC ${UNI_FEATURES} # ? Composes with IUniverse*
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	random_spawner

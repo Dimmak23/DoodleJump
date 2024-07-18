@@ -6,13 +6,13 @@
 //? Modules
 //? Inheritance
 //? Interfaces
-#include "I_RelocatableActor.hpp"
+#include "modules/locator/I_RelocatableActor.hpp"
 
 //* C++ std
 #include <memory>
 
 //* Forward declarations
-class SpriteWrapper;
+class Image;
 class Locator;
 class PhysicsEngine;
 struct Point;
@@ -55,7 +55,7 @@ private:
 	//@ Members
 
 	//* Modules
-	std::unique_ptr<SpriteWrapper> _Image{ nullptr };
+	std::unique_ptr<Image> _Image{ nullptr };
 	std::unique_ptr<Locator> _Locator{ nullptr };
 	std::unique_ptr<PhysicsEngine> _Mover{ nullptr };
 

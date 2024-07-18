@@ -1,9 +1,8 @@
 #pragma once
 
-//* Custom
-//? Inheritance
+//* Game
 //? Interfaces
-#include "I_Collidable.hpp"
+#include "modules/collider/I_Collidable.hpp"
 
 //* C++ std
 #include <memory>

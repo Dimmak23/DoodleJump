@@ -1,10 +1,5 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-
 //* C++ std
 #include <memory>
 #include <vector>

@@ -11,7 +11,7 @@
 //* Forward declarations
 class RectangleCore;
 struct Point;
-class SpriteWrapper;
+class Image;
 class PhysicsEngine;
 struct IntersectionInfo;
 class Locator;
@@ -95,7 +95,7 @@ private:
 
 	RectangleCore* _TracingCharacter{ nullptr };
 	IMechanics* _CharacterEngine{ nullptr };
-	std::unique_ptr<SpriteWrapper> _ViewPort{ nullptr };
+	std::unique_ptr<Image> _ViewPort{ nullptr };
 	std::unique_ptr<Locator> _ViewPortLocator{ nullptr };
 	std::unique_ptr<PhysicsEngine> _ViewPortMover{ nullptr };
 	ILocatableScene* _LevelScene{ nullptr };
@@ -105,7 +105,7 @@ private:
 
 	//* Mechanics
 	float _CameraSpeedX{ 1.f };
-	float _CameraSpeedY{ 0.55f };
+	float _CameraSpeedY{ 1.05f };
 
 	//* Utilities
 	IntersectionInfo* _info{ nullptr };

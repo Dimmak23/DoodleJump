@@ -1,27 +1,19 @@
 //* Source header
 #include "GameApplication.hpp"
 
-//* Vendor connection
-//? Launch
-#include "Launcher.hpp"
+//* SDL2: Connector
+#include "SDL2_connector/Launcher.hpp"
+
+//* Game
+#include "level/level/Level.hpp"
+#include "rectangle/RectangleCore.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
 #include <sstream>
 #include <string>
-
-//* Custom
-//? Inheritance
-#include "RectangleCore.hpp"
-//? Interfaces
-//? Modules
-//? Wrappers
-//? Worlds
-//? Levels
-#include "Level.hpp"
-//? Utilities
-#include "Sizes.hpp"
 
 GameApplication::GameApplication(int argc, char** argv)
 {
@@ -127,9 +119,7 @@ GameApplication::GameApplication(int argc, char** argv)
 	// std::cout << "Constructed GameApplication size of:" << sizeof(*this) << '\n';
 }
 
-GameApplication::~GameApplication()
-{ /* std::cout << "Deleted GameApplication...\n"; */
-}
+GameApplication::~GameApplication() { /* std::cout << "Deleted GameApplication...\n"; */ }
 
 void GameApplication::PreInit(int& width, int& height, bool& fullscreen)
 {

@@ -2,11 +2,11 @@
 #include "Sprite.hpp"
 
 //* Vendor: SDL2
-// #ifdef _WIN32
+#ifdef _WIN32
 #include "SDL.h"
-// #else
-// #include <SDL2/SDL.h>
-// #endif
+#else
+#include <SDL2/SDL.h>
+#endif
 
 //* Vendor connection
 #include "IApplication.hpp"
@@ -15,14 +15,14 @@
 
 //* C++ std
 
-Sprite::Sprite() { LogLine("--c--\tSprite object constructed on heap with size: ", sizeof(*this)); }
+Sprite::Sprite() { /* LogLine("--c--\tSprite object constructed on heap with size: ", sizeof(*this)); */ }
 
 Sprite::~Sprite()
 {
 	// LogLine("\t\tDestroying sprite _texture: ", _texture, /* ", _underTexture: ", _underTexture, */
 	// ", &_Destination: ", _Destination.get());
 	releaseTextureMemory();
-	LogLine("--d--\tSprite object destroyed...");
+	// LogLine("--d--\tSprite object destroyed...");
 }
 
 // SDL_Texture** Sprite::getTexture() { return _texture; }
@@ -39,10 +39,10 @@ void Sprite::setOrigin(int x, int y)
 	_Destination->y = y;
 }
 
-void Sprite::setSize(int w, int h)
+void Sprite::setSize(int width, int height)
 {
-	_Destination->w = w;
-	_Destination->h = h;
+	_Destination->w = width;
+	_Destination->h = height;
 }
 
 void Sprite::initiaze(const char* path, IARectangle* target_space)
@@ -53,8 +53,6 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 		return;
 	}
 
-	// std::cout << "run reload with _rectangle->x: " << _rectangle.x << ", y:" << _rectangle.y;
-	// std::cout << ", w: " << _rectangle.w << ", h: " << _rectangle.h << '\n';
 	_Destination = std::make_unique<SDL_Rect>();
 	SDL_Rect* target = new SDL_Rect();
 	SDL_Surface* tempSource = Render::loadSurface(path);
@@ -70,7 +68,6 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 	bool __laterRelease{ false };
 	if (target_space == nullptr)
 	{
-		// std::cout << "reloading ImageWidget without target...\n";
 		//? Assign from temporary surface, if no target
 		__laterRelease = true;
 		target->x = 0;				  // X coordinate of the top-left corner of the cropped area
@@ -78,14 +75,14 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 		target->w = tempSource->w;	  // Width of the cropped area
 		target->h = tempSource->h;	  // Height of the cropped area}
 									  //! maybe call parent method for this
-		// _ImageBoundary->getBody()->w = tempSource->w;
-		// _ImageBoundary->getBody()->h = tempSource->h;
+
+		_Destination->x = 0;
+		_Destination->y = 0;
 		_Destination->w = tempSource->w;
 		_Destination->h = tempSource->h;
 	}
 	else
 	{
-		// std::cout << "reloading cropped ImageWidget...\n";
 		//? Re-assign inner ractangle by target, if any target exist
 		_Destination->x = target_space->x;
 		_Destination->y = target_space->y;
@@ -95,9 +92,6 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 		target->w = target_space->w;
 		target->h = target_space->h;
 	}
-
-	// std::cout << "have to be zeros here _rectangle->x: " << _rectangle.x << ", y:" << _rectangle.y;
-	// std::cout << ", w: " << _rectangle.w << ", h: " << _rectangle.h << '\n';
 
 	//? Create cropped image
 	SDL_Surface* croppedSurface = SDL_CreateRGBSurface(	   //
@@ -127,7 +121,7 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 	else
 	{
 		// LogLine("SDL_CreateTextureFromSurface PointerToPointer texture: ", _texture);
-		LogLine("--a--\tAssigned texture...");
+		// LogLine("--a--\tAssigned texture...");
 	}
 
 	SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);					  //! Check return value
@@ -140,5 +134,5 @@ void Sprite::releaseTextureMemory()
 {
 	SDL_DestroyTexture(_texture);
 	_texture = nullptr;
-	LogLine("--r--\tTexture released...");
+	// LogLine("--r--\tTexture released...");
 }

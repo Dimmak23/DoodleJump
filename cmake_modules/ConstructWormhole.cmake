@@ -2,15 +2,11 @@
 add_library(
 	wormhole
 	${LIB_TYPE}
-	${ABL_WRMHL}/Wormhole.cpp
-	${ABL_WRMHL}/Wormhole.hpp
+	${GAME_INCLUDES}/abilities/wormhole/Wormhole.cpp
 )
 target_include_directories(
 	wormhole
-	PUBLIC ${SCREEN} # ? Using in the contructor: ScreenItem*
-	PUBLIC ${RECT} # ? Compose RectangleShape* and RectangleCore*
-	PUBLIC ${MOD_PENGINE} # ? Compose PhysicsEngine* and use it's features, Compose IMechanics* and use it features
-	PUBLIC ${MOD_LOCATOR} # ? Compose Locator* and use it's features
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	wormhole

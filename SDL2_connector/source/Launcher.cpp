@@ -2,13 +2,13 @@
 #include "Launcher.hpp"
 
 //* Vendor: SDL2
-// #ifdef _WIN32
+#ifdef _WIN32
 #include "SDL.h"
 #include "SDL_image.h"
-// #else
-// #include <SDL2/SDL.h>
-// #include <SDL2/SDL_image.h>
-// #endif
+#else
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#endif
 
 //* Vendor connection
 #include "IApplication.hpp"
@@ -282,10 +282,10 @@ bool Launcher::InitializeWindow(IApplication* application)
 bool Launcher::InitializeRenderer()
 {
 	//? Create a renderer for GPU accelerated drawing
-	Render::setRenderer(															//
-		SDL_CreateRenderer(Render::getWindow(),										//
-						   -1,														//
-						   SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)	//
+	Render::setRenderer(																  //
+		SDL_CreateRenderer(Render::getWindow(),											  //
+						   -1,															  //
+						   SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSYNC */)	  //
 	);
 	//@ SDL_RENDERER_SOFTWARE -	the renderer is a software fallback
 	//@ SDL_RENDERER_ACCELERATED - the renderer uses hardware acceleration

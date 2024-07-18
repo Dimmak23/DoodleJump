@@ -1,10 +1,5 @@
 #pragma once
 
-//* Custom
-//? Inheritance
-//? Interfaces
-//? Modules
-
 //* C++ std
 #include <memory>
 
@@ -58,7 +53,7 @@ private:
 	std::unique_ptr<Locator> _SharedLocator{ nullptr };
 
 	//* Design full speed
-	double _MaximumLinearSpeed{ 1.95 };
+	double _MaximumLinearSpeed{ 2.55 };
 
 	//* When we activate?
 	const int _ActivationDistance{};

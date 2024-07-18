@@ -1,21 +1,15 @@
 //* Source header
-#include "RandomSpawn.hpp"
+#include "modules/spawn/RandomSpawn.hpp"
 
-//* DL_Framework
+//* Game
+#include "level/world/interface/I_Universe.hpp"
+#include "modules/spawn/Randomizer.hpp"
+#include "rectangle/RectangleCore.hpp"
+
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Modules
-#include "Randomizer.hpp"
-//? Inheritance
-#include "RectangleCore.hpp"
-//? Interfaces
-#include "I_Universe.hpp"
-//? Wrappers
-//? Utilities
 
 RandomSpawn::RandomSpawn(IUniverse* parent_world, const unsigned int& sprite_width, const unsigned int& sprite_height)
 	: _Parent(parent_world), _SpriteWidth(sprite_width), _SpriteHeight(sprite_height)

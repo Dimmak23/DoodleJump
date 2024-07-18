@@ -1,14 +1,5 @@
 #pragma once
 
-#pragma once
-
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-
-//* C++ std
-
 //* Forward declarations
 class IMechanics;
 

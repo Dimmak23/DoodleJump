@@ -1,20 +1,13 @@
-
 //* Source header
-#include "Gun.hpp"
+#include "modules/gun/Gun.hpp"
+
+//* Game
+#include "actor/interface/I_Shooter.hpp"
+#include "level/world/interface/I_DynamicSpawn.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-#include "I_DynamicSpawn.hpp"
-#include "I_Shooter.hpp"
-//? Interfaces
-//? Modules
-//? Wrappers
-//? Worlds
-//? Utilities
 
 Gun::Gun() {}
 

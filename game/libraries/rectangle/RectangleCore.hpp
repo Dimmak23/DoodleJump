@@ -1,11 +1,5 @@
 #pragma once
 
-//* Custom
-//? Interfaces
-//? Inheritance
-
-//* C++ std
-
 //* Forward declarations
 
 struct Rectangle

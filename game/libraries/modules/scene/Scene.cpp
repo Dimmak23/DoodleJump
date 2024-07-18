@@ -1,17 +1,12 @@
 //* Source header
-#include "Scene.hpp"
+#include "modules/scene/Scene.hpp"
 
-//* DL_Framework
+//* Game
+#include "modules/locator/I_RelocatableActor.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-#include "I_RelocatableActor.hpp"
 
 void Scene::addPlayer(IRelocatableActor* actor) { _Player = actor; }
 

@@ -1,12 +1,5 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-
-//* C++ std
-
 //* Forward declarations
 struct Point;
 class IDynamicSpawn;

@@ -2,24 +2,17 @@
 add_library(
 	score_board
 	${LIB_TYPE}
-	${SCR_BOARD}/ScoreBoard.cpp
-	${SCR_BOARD}/ScoreBoard.hpp
+	${GAME_INCLUDES}/score_board/ScoreBoard.cpp
 )
 target_include_directories(
 	score_board
-	PUBLIC ${SCREEN} # ? Composes with ScreenItem*
-	PUBLIC ${UNI_FEATURES} # ? Composes with IAccounting* and using it's features
-	PUBLIC ${WR_SPRITE} # ? Composes with SpriteWrapper*
-	PUBLIC ${MOD_LOCATOR} # ? Inherits IRelocatableActor*, composes with Locator*
-	PUBLIC ${WR_ANISPRITE} # ? Composes with AnimatedSpriteWrapper*
-	PUBLIC ${RECT} # ? Composes with RectangleCore* and uses it's features
-	PUBLIC ${UTILS}
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	score_board
-	PRIVATE sprite_wrapper
+	PRIVATE image
 	PRIVATE locator
-	PRIVATE animated_character
+	PRIVATE animated_image
 	PRIVATE rectangle
 )
 set_specific_definitions(

@@ -1,16 +1,6 @@
 //* Source header
 #include "rectangle/RectangleCore.hpp"
 
-//* C++ std
-
-//* Custom
-//? Inheritance
-//? Interfaces
-//? Modules
-//? Wrappers
-//? Worlds
-//? Utilities
-
 Rectangle* RectangleCore::getBody() { return &_rectangle; }
 
 int RectangleCore::top() const { return _rectangle.y; }

@@ -1,17 +1,13 @@
 //* Source header
-#include "PhysicsEngine.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
 
-//* DL_Framework
+//* Game
+#include "rectangle/RectangleShape.hpp"
 
 //* C++ std
 #include <algorithm>
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-#include "RectangleShape.hpp"
-//? Interfaces
 
 PhysicsEngine::PhysicsEngine(RectangleShape* rectangle) /* 	   //
 	 : _hostBody(rectangle->getBody()), _hostTheta(rectangle->getAngle()) */

@@ -1,18 +1,12 @@
 //* Source header
-#include "JetPack.hpp"
+#include "abilities/jet_pack/JetPack.hpp"
+
+//* Game
+#include "modules/physics_engine/I_Mechanics.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-//? Interfaces
-#include "I_Mechanics.hpp"
-//? Modules
-//? Wrappers
-//? Worlds
-//? Utilities
 
 // TODO: engine should be assigned here and not be reset when level reloaded
 JetPack::JetPack() {}

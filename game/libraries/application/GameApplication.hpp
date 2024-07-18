@@ -1,9 +1,7 @@
 #pragma once
 
-//* Custom
-//? Inheritance
-//? Interfaces
-#include "I_Application.hpp"
+//* SDL2: Connector
+#include "SDL2_connector/IApplication.hpp"
 
 //* C++ std
 #include <memory>

@@ -2,7 +2,7 @@ if(WIN32)
 	add_executable(
 		${MAIN}
 		WIN32
-		source/${MAIN}.cpp
+		${CMAKE_SOURCE_DIR}/game/source/${MAIN}.cpp
 		"${APP_ICON_WIN}"
 	)
 endif()

@@ -2,22 +2,15 @@
 add_library(
 	player
 	${LIB_TYPE}
-	${ACT_PLAYER}/Player.cpp
-	${ACT_PLAYER}/Player.hpp
+	${GAME_INCLUDES}/actor/player/Player.cpp
 )
 target_include_directories(
 	player
-	PUBLIC ${ACT_FEATURES} # ? Inherit from IShooter*
-	PUBLIC ${SCREEN} # ? Composes with ScreenItem*
-	PUBLIC ${WR_ANISPRITE} # ? Compose AnimatedSpriteWrapper*
-	PUBLIC ${MOD_LOCATOR} # ? Compose Locator*
-	PUBLIC ${MOD_PENGINE} # ? Compose PhysicsEngine*
-	PUBLIC ${UTILS} # ? Path, Sizes
-	PUBLIC ${WR_FEATURES}
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	player
-	PRIVATE animated_character
+	PRIVATE animated_image
 	PRIVATE locator
 	PRIVATE physics_engine
 	PRIVATE rectangle

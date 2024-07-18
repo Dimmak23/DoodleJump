@@ -1,30 +1,24 @@
 //* Source header
-#include "Wormhole.hpp"
+#include "abilities/wormhole/Wormhole.hpp"
+
+//* Custom
+#include "modules/locator/Locator.hpp"
+#include "modules/physics_engine/I_Mechanics.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
+#include "rectangle/RectangleShape.hpp"
+#include "screen/ScreenItem.hpp"
 
 //* C++ std
 #include <cmath>
 #include <format>
 #include <iostream>
 
-//* Custom
-//? Inheritance
-#include "RectangleShape.hpp"
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_Mechanics.hpp"
-//? Modules
-#include "Locator.hpp"
-#include "PhysicsEngine.hpp"
-//? Wrappers
-//? Worlds
-//? Utilities
-
 Wormhole::Wormhole(const ScreenItem* parent_screen, IMechanics* character_engine, RectangleShape* character_body,
 				   RectangleCore* aim_body)
 	: _CharacterEngine(character_engine)
 	, _PossesingBody(character_body)
 	, _Aim(aim_body)
-	, _ActivationDistance(2 * parent_screen->ApplicationHeight)
+	, _ActivationDistance(0.25f * parent_screen->ApplicationHeight)
 {
 	_PossesingMover = std::make_unique<PhysicsEngine>(_PossesingBody);
 	_SharedLocator = std::make_unique<Locator>(nullptr);

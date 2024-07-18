@@ -2,15 +2,12 @@
 add_library(
 	rectangle
 	${LIB_TYPE}
-	${RECT}/RectangleShape.cpp
-	${RECT}/RectangleShape.hpp
-	${RECT}/RectangleCore.cpp
-	${RECT}/RectangleCore.hpp
+	${GAME_INCLUDES}/rectangle/RectangleShape.cpp
+	${GAME_INCLUDES}/rectangle/RectangleCore.cpp
 )
 target_include_directories(
 	rectangle
-	PUBLIC ${SCREEN} # ? Composes with ScreenItem*
-	PUBLIC ${UTILS}
+	PUBLIC ${GAME_INCLUDES}
 )
 set_specific_definitions(
 	rectangle

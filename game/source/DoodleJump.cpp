@@ -1,12 +1,12 @@
+//* SDL2: Connector
+#include "SDL2_connector/Launcher.hpp"
+
+//* Game
+#include "application/GameApplication.hpp"
+
 //* C++ std
 #include <iostream>
 #include <memory>
-
-//* Vendor connector
-#include "Launcher.hpp"
-
-//* Custom libraries
-#include "GameApplication.hpp"
 
 int main(int argc, char** argv)
 {

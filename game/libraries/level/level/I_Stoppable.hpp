@@ -1,11 +1,5 @@
 #pragma once
 
-//* Custom
-//? Inheritance
-//? Interfaces
-
-//* C++ std
-
 //* Forward declarations
 using size_t = unsigned long long int;
 

@@ -2,13 +2,11 @@
 add_library(
 	physics_engine
 	${LIB_TYPE}
-	${MOD_PENGINE}/PhysicsEngine.cpp
-	${MOD_PENGINE}/PhysicsEngine.hpp
+	${GAME_INCLUDES}/modules/physics_engine/PhysicsEngine.cpp
 )
 target_include_directories(
 	physics_engine
-	PUBLIC ${RECT} # ? Use features from RectangleCore
-	PUBLIC ${UTILS}
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	physics_engine

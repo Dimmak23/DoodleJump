@@ -1,16 +1,8 @@
 //* Source header
 #include "rectangle/RectangleShape.hpp"
 
-//* C++ std
-
-//* twoDarKade: framework
-//? Inheritance
-//? Interfaces
+//* Game
 #include "screen/ScreenItem.hpp"
-//? Modules
-//? Wrappers
-//? Worlds
-//? Utilities
 
 RectangleShape::RectangleShape() : _InitialScaleWidth(1.f), _InitialScaleHeight(1.f)
 {

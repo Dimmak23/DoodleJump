@@ -1,33 +1,29 @@
 //* Source header
-#include "Ammo.hpp"
+#include "projectiles/ammo/Ammo.hpp"
+
+//* Custom
+//? Modules
+#include "modules/locator/Locator.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
+//? Wrappers
+#include "graphics/image/Image.hpp"
+//? Worlds
+//? Utilities
+#include "screen/ScreenItem.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <cmath>
 #include <format>
 #include <iostream>
 
-//* Custom
-//? Inheritance
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_RelocatableActor.hpp"
-//? Modules
-#include "Locator.hpp"
-#include "PhysicsEngine.hpp"
-//? Wrappers
-#include "SpriteWrapper.hpp"
-//? Worlds
-//? Utilities
-// #include "Path.hpp"
-#include "Sizes.hpp"
-
 Ammo::Ammo(const ScreenItem* parent_screen, const Point& begin, const Point& end, const char* path)
 	: _Screen(parent_screen), _ImagePath(path)
 {
 	//? Construct default image
-	_Image = std::make_unique<SpriteWrapper>(_Screen, _ImagePath,			   //
-											 Sizes::Projectiles::AmmoWidth,	   //
-											 Sizes::Projectiles::AmmoWidth	   //
+	_Image = std::make_unique<Image>(_Screen, _ImagePath,			   //
+									 Sizes::Projectiles::AmmoWidth,	   //
+									 Sizes::Projectiles::AmmoWidth	   //
 	);
 
 	//? Construct locator

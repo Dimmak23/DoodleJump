@@ -1,18 +1,15 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-#include "I_Accounting.hpp"
-#include "I_Universe.hpp"
+//* Game
+#include "level/world/interface/I_Accounting.hpp"
+#include "level/world/interface/I_Universe.hpp"
 
 //* C++ std
 #include <memory>
 #include <vector>
 
 //* Forward declarations
-class SpriteWrapper;		//? wrappers
+class Image;				//? wrappers
 class Locator;				//? locator
 class IRelocatableActor;	//? locator/interface
 class ILocatableScene;		//? scene/interface
@@ -107,7 +104,7 @@ private:
 
 	const unsigned int _PlatformWidth{};
 	const unsigned int _PlatformHeight{};
-	std::vector<std::unique_ptr<SpriteWrapper>> _Platforms;
+	std::vector<std::unique_ptr<Image>> _Platforms;
 	std::vector<std::unique_ptr<Locator>> _PlatformsLocators;
 
 	std::unique_ptr<RandomSpawn> _PlatformSpawner{ nullptr };

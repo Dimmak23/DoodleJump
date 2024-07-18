@@ -1,29 +1,20 @@
 #pragma once
 
-//* DL_Framework
-
-//* Custom
-//? Modules
-//? Inheritance
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_Stoppable.hpp"
+//* Game
+#include "level/level/I_Stoppable.hpp"
+#include "screen/ScreenItem.hpp"
 
 //* C++ std
 #include <memory>
 #include <vector>
 
 //* Forward declarations
-class SpriteWrapper;
-class Locator;
-class PhysicsEngine;
 class Collider;
 class Camera;
 class RectangleShape;
 class Scene;
 class WorldStatic;
 class WorldDynamic;
-class AnimatedSpriteWrapper;
 struct Point;
 class ParallaxItem;
 class Player;

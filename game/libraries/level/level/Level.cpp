@@ -1,35 +1,26 @@
 //* Source header
-#include "Level.hpp"
+#include "level/level/Level.hpp"
+
+//* Game
+#include "abilities/jet_pack/JetPack.hpp"
+#include "actor/player/Player.hpp"
+#include "level/world/dynamic/WorldDynamic.hpp"
+#include "level/world/static/WorldStatic.hpp"
+#include "modules/camera/Camera.hpp"
+#include "modules/collider/Collider.hpp"
+#include "modules/gun/Gun.hpp"
+#include "modules/locator/Locator.hpp"
+#include "modules/parallax/ParallaxItem.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
+#include "modules/scene/Scene.hpp"
+#include "rectangle/RectangleShape.hpp"
+#include "score_board/ScoreBoard.hpp"
+#include "utilities/Path.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-#include "RectangleShape.hpp"
-//? Interfaces
-//? Modules
-#include "Camera.hpp"
-#include "Collider.hpp"
-#include "Gun.hpp"
-#include "Locator.hpp"
-#include "ParallaxItem.hpp"
-#include "PhysicsEngine.hpp"
-#include "Scene.hpp"
-//? Abilities
-#include "JetPack.hpp"
-//? Wrappers
-//? Actors
-#include "Player.hpp"
-//? Worlds
-#include "WorldDynamic.hpp"
-#include "WorldStatic.hpp"
-//? Widgets
-#include "ScoreBoard.hpp"
-//? Utilities
-#include "Path.hpp"
-#include "Sizes.hpp"
 
 Level::Level(					   //
 	const unsigned int& width,	   //

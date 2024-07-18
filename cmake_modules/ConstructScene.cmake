@@ -2,13 +2,11 @@
 add_library(
 	scene
 	${LIB_TYPE}
-	${MOD_SCENE}/Scene.cpp
-	${MOD_SCENE}/Scene.hpp
+	${GAME_INCLUDES}/modules/scene/Scene.cpp
 )
 target_include_directories(
 	scene
-	PUBLIC ${MOD_LOCATOR} # ? Composes with IRelocatableActor*
-	PUBLIC ${RECT} # ? Composes with RectangleCore
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	scene

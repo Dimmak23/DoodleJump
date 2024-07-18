@@ -2,12 +2,11 @@
 add_library(
 	stealth
 	${LI_TYPE}
-	${ABL_STEALTH}/Stealth.cpp
-	${ABL_STEALTH}/Stealth.hpp
+	${GAME_INCLUDES}/abilities/stealth/Stealth.cpp
 )
 target_include_directories(
 	stealth
-	PUBLIC ${WR_FEATURES} # ? Compose with IGraphicle*
+	PUBLIC ${GAME_INCLUDES}
 )
 set_specific_definitions(
 	stealth

@@ -1,23 +1,17 @@
 //* Source header
-#include "Player.hpp"
+#include "actor/player/Player.hpp"
+
+//* Game
+#include "graphics/animated_image/AnimatedImage.hpp"
+#include "modules/locator/Locator.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
+#include "screen/ScreenItem.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <cmath>
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-//? Interfaces
-#include "ScreenItem.hpp"
-//? Modules
-#include "Locator.hpp"
-#include "PhysicsEngine.hpp"
-//? Wrappers
-#include "AnimatedSpriteWrapper.hpp"
-//? Worlds
-//? Utilities
-#include "Sizes.hpp"
 
 Player::Player(const ScreenItem* parent_screen, const char* path)
 	: _Screen(parent_screen)
@@ -45,10 +39,10 @@ const Point* Player::getSpawnPoint() { return updateSpawnPoint(); }
 
 void Player::initialize()
 {
-	_DoodieAnimation = std::make_unique<AnimatedSpriteWrapper>(_Screen,						   //
-															   _ImagePath, 2,				   //
-															   Sizes::Player::DefaultWidth,	   //
-															   Sizes::Player::DefaultHeight	   //
+	_DoodieAnimation = std::make_unique<AnimatedImage>(_Screen,						   //
+													   _ImagePath, 2,				   //
+													   Sizes::Player::DefaultWidth,	   //
+													   Sizes::Player::DefaultHeight	   //
 	);
 
 	_DoodieSpawnPoint = std::make_unique<Point>(0, _SpawnPointHeight);

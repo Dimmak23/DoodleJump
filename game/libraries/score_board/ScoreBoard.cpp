@@ -1,25 +1,18 @@
 //* Source header
-#include "ScoreBoard.hpp"
+#include "score_board/ScoreBoard.hpp"
+
+//* Game
+#include "graphics/animated_image/AnimatedImage.hpp"
+#include "graphics/image/Image.hpp"
+#include "level/world/interface/I_Accounting.hpp"
+#include "modules/locator/Locator.hpp"
+#include "rectangle/RectangleCore.hpp"
+#include "screen/ScreenItem.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-#include "RectangleCore.hpp"
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_Accounting.hpp"
-//? Modules
-#include "Locator.hpp"
-//? Wrappers
-#include "AnimatedSpriteWrapper.hpp"
-#include "SpriteWrapper.hpp"
-//? Actors
-//? Worlds
-//? Utilities
-#include "Sizes.hpp"
 
 ScoreBoard::ScoreBoard(const ScreenItem* parent_screen,			   //
 					   const Point& right_top_corner_placement,	   //
@@ -65,11 +58,11 @@ void ScoreBoard::initialize()
 	// TODO: after level reload they could be simply showed up in a initial state
 	// TODO: so no need to reset some pointers
 	//? Load sprite for score pixels label
-	_DistanceLabel = std::make_unique<SpriteWrapper>(	 //
-		_Screen,										 //
-		_DistanceLabelPath,								 //
-		Sizes::Widgets::PlatformsLabelWidth,			 //
-		Sizes::Widgets::PlatformsLabelHeight			 //
+	_DistanceLabel = std::make_unique<Image>(	 //
+		_Screen,								 //
+		_DistanceLabelPath,						 //
+		Sizes::Widgets::PlatformsLabelWidth,	 //
+		Sizes::Widgets::PlatformsLabelHeight	 //
 	);
 	_SharedLocator->resetBody(_DistanceLabel->getBody());
 	//? Placing according to design and given point
@@ -79,10 +72,10 @@ void ScoreBoard::initialize()
 	);
 
 	//? Load sprite for score platforms lavel
-	_PlatformsCountLabel = std::make_unique<SpriteWrapper>(_Screen,								   //
-														   _PlatformsLabelPath,					   //
-														   Sizes::Widgets::PlatformsLabelWidth,	   //
-														   Sizes::Widgets::PlatformsLabelHeight	   //
+	_PlatformsCountLabel = std::make_unique<Image>(_Screen,								   //
+												   _PlatformsLabelPath,					   //
+												   Sizes::Widgets::PlatformsLabelWidth,	   //
+												   Sizes::Widgets::PlatformsLabelHeight	   //
 	);
 	_SharedLocator->resetBody(_PlatformsCountLabel->getBody());
 	//? Placing according to design and given point
@@ -94,12 +87,12 @@ void ScoreBoard::initialize()
 	//? Load animated sprite container for 8 digits pixels score
 	for (size_t index{}; index < _DistanceCountDigits; index++)
 	{
-		_DistanceDigits.push_back(std::make_unique<AnimatedSpriteWrapper>(_Screen,							   //
-																		  _DigitsLabelsPath,				   //
-																		  _DigitsQuantity,					   //
-																		  Sizes::Widgets::DigitsLabelWidth,	   //
-																		  Sizes::Widgets::DigitsLabelHeight	   //
-																		  ));								   //
+		_DistanceDigits.push_back(std::make_unique<AnimatedImage>(_Screen,							   //
+																  _DigitsLabelsPath,				   //
+																  _DigitsQuantity,					   //
+																  Sizes::Widgets::DigitsLabelWidth,	   //
+																  Sizes::Widgets::DigitsLabelHeight	   //
+																  ));								   //
 		_SharedLocator->resetBody(_DistanceDigits.back()->getBody());
 		//? place every digit next to each other with offset
 		_SharedLocator->setLTCornerLocation(	//
@@ -117,12 +110,12 @@ void ScoreBoard::initialize()
 	//? Load animated sprite container for 6 digits platforms score
 	for (size_t index{}; index < _PlatformsCountDigits; index++)
 	{
-		_PlatformsDigits.push_back(std::make_unique<AnimatedSpriteWrapper>(_Screen,								//
-																		   _DigitsLabelsPath,					//
-																		   _DigitsQuantity,						//
-																		   Sizes::Widgets::DigitsLabelWidth,	//
-																		   Sizes::Widgets::DigitsLabelHeight	//
-																		   ));									//
+		_PlatformsDigits.push_back(std::make_unique<AnimatedImage>(_Screen,								//
+																   _DigitsLabelsPath,					//
+																   _DigitsQuantity,						//
+																   Sizes::Widgets::DigitsLabelWidth,	//
+																   Sizes::Widgets::DigitsLabelHeight	//
+																   ));									//
 		_SharedLocator->resetBody(_PlatformsDigits.back()->getBody());
 		//? place every digit next to each other with offset
 		_SharedLocator->setLTCornerLocation(	//
@@ -198,7 +191,7 @@ void ScoreBoard::render()
 }
 
 void ScoreBoard::updateWidgetsContainer(const size_t& new_counter, size_t& current_counter,
-										std::vector<std::unique_ptr<AnimatedSpriteWrapper>>& Digits)
+										std::vector<std::unique_ptr<AnimatedImage>>& Digits)
 {
 	if (new_counter == current_counter) return;
 

@@ -1,13 +1,11 @@
 #pragma once
 
-//* Custom
-//? Inheritance
-#include "I_Connectable.hpp"
-#include "I_Mechanics.hpp"
-//? Interfaces
+//* Game
+#include "modules/physics_engine/I_Connectable.hpp"
+#include "modules/physics_engine/I_Mechanics.hpp"
 
 //* C++ std
-#include <numbers>	  // TODO: remove this later
+#include <numbers>	  // TODO: get rid of this later
 
 //* Forward declarations
 struct Rectangle;

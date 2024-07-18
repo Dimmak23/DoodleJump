@@ -1,27 +1,21 @@
 //* Source header
-#include "WorldStatic.hpp"
+#include "level/world/static/WorldStatic.hpp"
+
+//* Game
+#include "abilities/stealth/Stealth.hpp"
+#include "graphics/image/Image.hpp"
+#include "modules/collider/I_Collidable.hpp"
+#include "modules/locator/Locator.hpp"
+#include "modules/scene/I_LocatableScene.hpp"
+#include "modules/spawn/RandomSpawn.hpp"
+#include "screen/ScreenItem.hpp"
+#include "utilities/Environment.hpp"
+#include "utilities/Sizes.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
 #include <string>
-
-//* Custom
-//? Inheritance
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_Collidable.hpp"
-#include "I_LocatableScene.hpp"
-//? Modules
-#include "Locator.hpp"
-#include "RandomSpawn.hpp"
-//? Wrappers
-#include "SpriteWrapper.hpp"
-//? Abilities
-#include "Stealth.hpp"
-//? Utilities
-#include "Environment.hpp"
-#include "Sizes.hpp"
 
 WorldStatic::WorldStatic(const ScreenItem* parent_screen,	 //
 						 const char* path_cut,				 //
@@ -119,9 +113,9 @@ void WorldStatic::initialize()
 void WorldStatic::onSpawnNewActor(const int& x, const int& y, const unsigned int& variance)
 {
 	std::string Path(_PlatformsPathCut + std::to_string(variance + 1) + _PlatformsPathAdder);
-	_Platforms.push_back(std::make_unique<SpriteWrapper>(_Screen, Path.c_str(),	   //
-														 Sizes::Environment::PlatformWidth,
-														 Sizes::Environment::PlatformHeight));
+	_Platforms.push_back(std::make_unique<Image>(_Screen, Path.c_str(),	   //
+												 Sizes::Environment::PlatformWidth,
+												 Sizes::Environment::PlatformHeight));
 	onAddNewActorToPlayerCollider(_Platforms.back().get());	   //? Don't forget to tell player
 
 	_PlatformsLocators.push_back(std::make_unique<Locator>(_Platforms.back().get()));

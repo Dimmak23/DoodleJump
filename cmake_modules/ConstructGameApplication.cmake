@@ -2,19 +2,16 @@
 add_library(
 	application
 	${LIB_TYPE}
-	${LIB_APPLICATION}/GameApplication.cpp
-	${LIB_APPLICATION}/GameApplication.hpp
+	${GAME_INCLUDES}/application/GameApplication.cpp
 )
 target_include_directories(
 	application
-	PUBLIC ${Framework_INCLUDE_PATH}
-	PUBLIC ${LVL_MAIN}
-	PUBLIC ${UTILS}
-	PUBLIC ${RECT} # ? Using Point*
+	PUBLIC ${VC_EXPORT_INCLUDE}
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	application
-	PUBLIC "${Framework_BINARY}"
+	PUBLIC "${SDL2_Connector_LIBRARY}"
 	PRIVATE level
 )
 set_specific_definitions(

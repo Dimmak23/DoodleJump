@@ -1,10 +1,7 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-#include "I_RelocatableActor.hpp"
+//* Game
+#include "modules/locator/I_RelocatableActor.hpp"
 
 //* C++ std
 #include <memory>
@@ -12,7 +9,7 @@
 
 //* Forward declarations
 struct ScreenItem;
-class SpriteWrapper;
+class Image;
 class Locator;
 
 enum class MovingSide : int
@@ -67,7 +64,7 @@ private:
 	//@ Members
 
 	//* Modules
-	std::vector<std::unique_ptr<SpriteWrapper>> _Images;
+	std::vector<std::unique_ptr<Image>> _Images;
 	std::unique_ptr<Locator> _Locator{ nullptr };
 
 	//* Parent window

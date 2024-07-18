@@ -1,24 +1,23 @@
 //* Source header
-#include "Camera.hpp"
+#include "modules/camera/Camera.hpp"
 
-//* DL_Framework
+//* SDL2: Connector
+
+//* Game
+//? Modules
+#include "modules/locator/Locator.hpp"
+#include "modules/physics_engine/PhysicsEngine.hpp"
+//? Interfaces
+#include "modules/physics_engine/I_Mechanics.hpp"
+#include "modules/scene/I_LocatableScene.hpp"
+//? Wrappers
+#include "graphics/image/Image.hpp"
+//? Utilities
+#include "screen/ScreenItem.hpp"
 
 //* C++ std
 #include <cmath>
 #include <iostream>
-
-//* Custom
-//? Modules
-#include "Locator.hpp"
-#include "PhysicsEngine.hpp"
-//? Inheritance
-#include "ScreenItem.hpp"
-//? Interfaces
-#include "I_LocatableScene.hpp"
-#include "I_Mechanics.hpp"
-//? Wrappers
-#include "SpriteWrapper.hpp"
-//? Utilities
 
 Camera::Camera(const ScreenItem* parent_screen,		   //
 			   RectangleCore* tracing_body,			   //
@@ -28,8 +27,8 @@ Camera::Camera(const ScreenItem* parent_screen,		   //
 	: _Screen(parent_screen), _TracingCharacter(tracing_body), _ImagePath(path)
 {
 	//? Get serialized viewport width, height and scale them according to the game window
-	_ViewPort = std::make_unique<SpriteWrapper>(_Screen, _ImagePath,	//
-												viewport_width, viewport_height);
+	_ViewPort = std::make_unique<Image>(_Screen, _ImagePath,	//
+										viewport_width, viewport_height);
 	_ViewPort->setIsHidden(true);
 
 	//? Place camera at correct point

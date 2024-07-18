@@ -1,12 +1,5 @@
 #pragma once
 
-//* Custom
-//? Inheritance
-//? Interfaces
-//? Modules
-
-//* C++ std
-
 //* Forward declarations
 class IGraphicle;
 using size_t = unsigned long long;

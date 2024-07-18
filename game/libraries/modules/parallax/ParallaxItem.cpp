@@ -1,21 +1,15 @@
 //* Source header
-#include "ParallaxItem.hpp"
+#include "modules/parallax/ParallaxItem.hpp"
+
+//* Game
+#include "graphics/image/Image.hpp"
+#include "modules/locator/Locator.hpp"
+#include "screen/ScreenItem.hpp"
 
 //* C++ std
 #include <algorithm>
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-#include "ScreenItem.hpp"
-//? Interfaces
-//? Modules
-#include "Locator.hpp"
-//? Wrappers
-#include "SpriteWrapper.hpp"
-//? Worlds
-//? Utilities
 
 ParallaxItem::ParallaxItem(				   //
 	const ScreenItem* parent_screen,	   //
@@ -31,8 +25,8 @@ ParallaxItem::ParallaxItem(				   //
 	//? Creating all sprites
 	for (size_t index{}; index < SidesQty; index++)
 	{
-		_Images.push_back(std::make_unique<SpriteWrapper>(_Screen, path,	//
-														  desired_width, desired_height));
+		_Images.push_back(std::make_unique<Image>(_Screen, path,	//
+												  desired_width, desired_height));
 	}
 
 	//? Creating shallow locator

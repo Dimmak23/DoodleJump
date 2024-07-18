@@ -2,15 +2,11 @@
 add_library(
 	gun
 	${LIB_TYPE}
-	${MOD_GUN}/Gun.cpp
-	${MOD_GUN}/Gun.hpp
+	${GAME_INCLUDES}/modules/gun/Gun.cpp
 )
 target_include_directories(
 	gun
-	PUBLIC ${UNI_FEATURES} # ? Compose IDynamicSpawn* and use it features
-	PUBLIC ${ACT_FEATURES} # ? Compose IShooter* and use it features
-	PUBLIC ${RECT} # ? define Point type
-	PUBLIC ${ACT_FEATURES} # ? Inherit from IShooter*
+	PUBLIC ${GAME_INCLUDES}
 )
 set_specific_definitions(
 	gun

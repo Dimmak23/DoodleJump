@@ -2,13 +2,11 @@
 add_library(
 	locator
 	${LIB_TYPE}
-	${MOD_LOCATOR}/Locator.cpp
-	${MOD_LOCATOR}/Locator.hpp
+	${GAME_INCLUDES}/modules/locator/Locator.cpp
 )
 target_include_directories(
 	locator
-	PUBLIC ${RECT} # ? Use features from RectangleCore
-	PUBLIC ${MOD_PENGINE} # ? Interface
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	locator

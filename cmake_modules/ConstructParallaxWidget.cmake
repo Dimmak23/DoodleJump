@@ -2,19 +2,15 @@
 add_library(
 	parallax_widget
 	${LIB_TYPE}
-	${MOD_PARALLAX}/ParallaxItem.cpp
-	${MOD_PARALLAX}/ParallaxItem.hpp
+	${GAME_INCLUDES}/modules/parallax/ParallaxItem.cpp
 )
 target_include_directories(
 	parallax_widget
-	PUBLIC ${MOD_LOCATOR} # ? Inherit interface IRelocatableActor
-	PUBLIC ${SCREEN} # ? Composes with ScreenItem*
-	PUBLIC ${WR_SPRITE} # ? Compose SpriteWrapper*
-	PUBLIC ${MOD_LOCATOR} # ? Compose Locator*
+	PUBLIC ${GAME_INCLUDES}
 )
 target_link_libraries(
 	parallax_widget
-	PRIVATE sprite_wrapper
+	PRIVATE image
 	PRIVATE locator
 	PRIVATE rectangle
 )

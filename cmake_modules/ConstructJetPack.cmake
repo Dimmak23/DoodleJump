@@ -2,12 +2,11 @@
 add_library(
 	jet_pack
 	${LIB_TYPE}
-	${ABL_JETPACK}/JetPack.cpp
-	${ABL_JETPACK}/JetPack.hpp
+	${GAME_INCLUDES}/abilities/jet_pack/JetPack.cpp
 )
 target_include_directories(
 	jet_pack
-	PUBLIC ${MOD_PENGINE} # ? Compose IMechanics* and use it features
+	PUBLIC ${GAME_INCLUDES}
 )
 set_specific_definitions(
 	jet_pack

@@ -1,12 +1,7 @@
 #pragma once
 
-//* twoDarKade: framework
-//? Interfaces
-//? Inheritance
-#include "RectangleCore.hpp"
-//? Utilities
-
-//* C++ std
+//* Game
+#include "rectangle/RectangleCore.hpp"
 
 //* Forward declarations
 struct ScreenItem;

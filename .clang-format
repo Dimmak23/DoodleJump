@@ -12,7 +12,7 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: true
+# AllowShortFunctionsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: true
 AlwaysBreakBeforeMultilineStrings: true
 BreakBeforeBinaryOperators: false
@@ -26,7 +26,7 @@ PointerBindsToType: true
 ExperimentalAutoDetectBinPacking: false
 IndentCaseLabels: true
 MaxEmptyLinesToKeep: 1
-NamespaceIndentation: true
+# NamespaceIndentation: true
 ObjCSpaceBeforeProtocolList: true
 PenaltyBreakBeforeFirstCallParameter: 19
 PenaltyBreakComment: 60

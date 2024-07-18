@@ -1,20 +1,13 @@
-//@ twoDarKade framework: property of Dmytro Kovryzhenko
 #pragma once
 
-//* Custom
-//? Interfaces
-#include "I_RelocatableActor.hpp"
-//? Inheritance
-// #include "RectangleCore.hpp"
-
-//* C++ std
+//* Game
+#include "modules/locator/I_RelocatableActor.hpp"
 
 //* Forward declarations
 class RectangleCore;
 struct Rectangle;
 struct Point;
 class IConnectable;
-// using ConnectCallBackType = void (IConnectable::*)(double, double);
 
 class Locator : public IRelocatableActor
 {

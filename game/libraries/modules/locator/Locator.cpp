@@ -1,17 +1,13 @@
 //* Source header
-#include "Locator.hpp"
+#include "modules/locator/Locator.hpp"
 
-//* DL_Framework
+//* Game
+#include "modules/physics_engine/I_Connectable.hpp"
+#include "rectangle/RectangleCore.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-#include "RectangleCore.hpp"
-//? Interfaces
-#include "I_Connectable.hpp"
 
 Locator::Locator(RectangleCore* rectangle) : _host((rectangle) ? rectangle->getBody() : nullptr)
 {

@@ -1,17 +1,14 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-#include "I_Shooter.hpp"
+//* Game
+#include "actor/interface/I_Shooter.hpp"
 
 //* C++ std
 #include <memory>
 
 //* Forward declarations
 struct ScreenItem;
-class AnimatedSpriteWrapper;
+class AnimatedImage;
 struct Point;
 class Locator;
 class PhysicsEngine;
@@ -86,7 +83,7 @@ private:
 	//@ Members
 
 	//* Core
-	std::unique_ptr<AnimatedSpriteWrapper> _DoodieAnimation{ nullptr };
+	std::unique_ptr<AnimatedImage> _DoodieAnimation{ nullptr };
 	std::unique_ptr<Point> _DoodieSpawnPoint{ nullptr };
 	std::unique_ptr<Locator> _DoodieLocator{ nullptr };
 	std::unique_ptr<PhysicsEngine> _DoodieMover{ nullptr };

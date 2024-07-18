@@ -1,10 +1,7 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
-#include "I_LocatableScene.hpp"
+//* Game
+#include "modules/scene/I_LocatableScene.hpp"
 
 //* C++ std
 #include <memory>

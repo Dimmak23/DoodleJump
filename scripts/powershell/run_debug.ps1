@@ -1,5 +1,5 @@
-# $targetPath = ".\source"
-$targetPath = ".\tests\launch_connector"
+$targetPath = ".\game\source"
+# $targetPath = ".\tests\launch_connector"
 
 # Get the *.cpp file in the folder
 $cppFile = Get-ChildItem -Path $targetPath -Filter "*.cpp" -File

@@ -2,13 +2,13 @@
 #include "Render.hpp"
 
 //* Vendor: SDL2
-// #ifdef _WIN32
+#ifdef _WIN32
 #include "SDL.h"
 #include "SDL_image.h"
-// #else
-// #include <SDL2/SDL.h>
-// #include <SDL2/SDL_image.h>
-// #endif
+#else
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#endif
 
 //* Vendor connection
 #include "Loger.hpp"
@@ -88,8 +88,6 @@ int Render::drawSprite(Sprite* sprite, int x, int y)
 	//^ Returns 0 on success or a negative error code on failure; call SDL_GetError() for more information.
 	int __render_result =
 		SDL_RenderCopyEx(_renderer,					//
-													// *sprite->getTexture(),	  //
-													//  *(sprite->getTexture()),	 //
 						 (sprite->getTexture()),	//
 						 nullptr,					//    the source SDL_Rect structure
 						 //				    or nullptr for the entire texture
@@ -126,10 +124,10 @@ void Render::destroySprite(Sprite** sprite)
 	*sprite = nullptr;	  //? make nullptr Image::Sprite* - copy pointer to Sprite created on heap
 }
 
-void Render::getSpriteSize(Sprite* sprite, int& x, int& y)
+void Render::getSpriteSize(Sprite* sprite, int& width, int& height)
 {
-	x = sprite->getDestination()->x;
-	y = sprite->getDestination()->y;
+	width = sprite->getDestination()->w;
+	height = sprite->getDestination()->h;
 }
 
-void Render::setSpriteSize(Sprite* sprite, int x, int y) { sprite->setSize(x, y); }
+void Render::setSpriteSize(Sprite* sprite, int width, int height) { sprite->setSize(width, height); }

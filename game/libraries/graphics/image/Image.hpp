@@ -1,6 +1,6 @@
 #pragma once
 
-//* Custom
+//* Game
 //? Interfaces
 #include "graphics/interface/IGraphicle.hpp"
 //? Inheritance
@@ -47,6 +47,6 @@ private:
 protected:
 	//@ Members
 
-	Sprite* _sprite{ nullptr };
+	Sprite* _Sprite{ nullptr };
 	bool _bIsHidden{ false };
 };

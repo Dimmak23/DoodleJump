@@ -1,20 +1,12 @@
-
 //* Source header
-#include "Stealth.hpp"
+#include "abilities/stealth/Stealth.hpp"
+
+//* Game
+#include "graphics/interface/IGraphicle.hpp"
 
 //* C++ std
 #include <format>
 #include <iostream>
-
-//* Custom
-//? Inheritance
-//? Interfaces
-#include "I_Graphicle.hpp"
-//? Modules
-//? Wrappers
-//? Projectiles
-//? Abilities
-//? Utilities
 
 Stealth::Stealth() {}
 
