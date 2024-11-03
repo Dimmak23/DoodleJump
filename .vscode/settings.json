@@ -89,7 +89,8 @@
     "semaphore": "cpp",
     "cfenv": "cpp",
     "shared_mutex": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "text_encoding": "cpp"
   },
   "workbench.colorCustomizations": {
     "scrollbarSlider.background": "#8b8442bb",

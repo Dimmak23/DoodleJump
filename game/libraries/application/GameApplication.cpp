@@ -3,6 +3,7 @@
 
 //* SDL2: Connector
 #include "SDL2_connector/Launcher.hpp"
+#include "SDL2_connector/Loger.hpp"
 
 //* Game
 #include "level/level/Level.hpp"
@@ -17,94 +18,113 @@
 
 GameApplication::GameApplication(int argc, char** argv)
 {
+	//? Preconstruction details
+	constexpr int minAppWidth{ 640 };
+	constexpr int minAppHeight{ 480 };
+
+	//? Commands, delimeter
+	const char* windowedModeCommand{ "-window" };
+	const char* fullscreenModeCommand{ "-fullscreen" };
+	const char* screenSizeDelimeter{ "x" };
+
 	//? Implement parsed parameters from program run
 	if (argc == 3)
 	{
 		//? console sizes
-		std::string original_window_command(_windowedModeCommand);
-		std::string parsed_window_command(argv[1]);
-		if (original_window_command == parsed_window_command)
+		std::string original_window_command(windowedModeCommand);
+		std::string original_fullscreen_command(fullscreenModeCommand);
+
+		std::string parsed_command(argv[1]);
+		if (original_window_command == parsed_command)
+		{
+			_bIsFullScreen = false;
+		}
+		//? fullscreen mode
+		else if (original_fullscreen_command == parsed_command)
+		{
+			_bIsFullScreen = true;
+		}
+		else
+		{
+			LogLine("Incorrect first option, should be -fullscreen or -window.");
+			FallBackToDefault(true);
+			_appWidth = minAppWidth;
+			_appHeight = minAppHeight;
+		}
+
+		//? can work further
+		std::string parsed_size_command(argv[2]);
+		size_t delimeter_position = parsed_size_command.find(screenSizeDelimeter);
+		if (delimeter_position != std::string::npos)
 		{
 			//? can work further
-			std::string parsed_size_command(argv[2]);
-			size_t delimeter_position = parsed_size_command.find(_screenSizeDelimeter);
-			if (delimeter_position != std::string::npos)
+			std::istringstream input_check(argv[2]);
+			char parsed_delimeter;
+			if (input_check >> _appWidth >> parsed_delimeter >> _appHeight &&
+				parsed_delimeter == *screenSizeDelimeter && input_check.eof())
 			{
 				//? can work further
-				std::istringstream input_check(argv[2]);
-				char parsed_delimeter;
-				if (input_check >> _appWidth >> parsed_delimeter >> _appHeight &&
-					parsed_delimeter == *_screenSizeDelimeter && input_check.eof())
+				if (_appWidth >= minAppWidth && _appHeight >= minAppHeight)
 				{
-					//? can work further
-					if (_appWidth >= _minAppWidth && _appHeight >= _minAppHeight)
+					if (_appWidth >= Sizes::Screen::MaximumWidth)
 					{
-						std::cout << "Input is valid. Width: " << _appWidth << ", Height: " << _appHeight << ".\n";
+						_appWidth = Sizes::Screen::MaximumWidth;
 					}
-					else
+					if (_appHeight >= Sizes::Screen::MaximumHeight)
 					{
-						std::cout << "[!]\t" << parsed_size_command << '\n';
-						std::cout << "Window size couldn't be negative or less then 400x300.\n";
-						FallBackToDefault(true);
+						_appHeight = Sizes::Screen::MaximumHeight;
 					}
+
+					LogLine("Input is valid. Width: ", _appWidth, ", Height: ", _appHeight);
 				}
 				else
 				{
-					std::cout << "Couldn't extract size from command. Possible contain forbidden letters. Correct "
-								 "format: 'WITHxHEIGHT'.\n";
+					LogLine("[!]\t", parsed_size_command);
+					LogLine("Size couldn't be negative or less then ", minAppWidth, "x", minAppHeight, ".");
 					FallBackToDefault(true);
+					_appWidth = minAppWidth;
+					_appHeight = minAppHeight;
 				}
 			}
 			else
 			{
-				std::cout << "Didn't found letter 'x' in the command. Correct format: 'WITHxHEIGHT'.\n";
+				LogLine(
+					"Couldn't extract size from command. Possible contain forbidden letters. Correct "	  //,
+					"format: 'WITHxHEIGHT'."															  //
+				);
 				FallBackToDefault(true);
+				_appWidth = minAppWidth;
+				_appHeight = minAppHeight;
 			}
 		}
 		else
 		{
-			std::cout << "Incorrect windowed mode command text. Correct text: '-window'.\n";
+			LogLine("Didn't found letter 'x' in the command. Correct format: 'WITHxHEIGHT'.");
 			FallBackToDefault(true);
-		}
-	}
-	else if (argc == 2)
-	{
-		//? fullscreen mode
-		std::string original_command(_fullscreenModeCommand);
-		std::string parsed_command(argv[1]);
-		if (original_command == parsed_command)
-		{
-			_bIsFullScreen = true;
-			Launcher::GetScreenSize(_appWidth, _appHeight);
-			std::cout << "getScreenSize... _appWidth: " << _appWidth << ", _appHeight: " << _appHeight << ".\n";
-			//! Don't work, possible bug in Dragon lake framework
-			//! output was _appWidth: 927843248, _appHeight: 553.
-			//! numbers changes but width always some high random number, and height some unrealistic small
-			_appWidth = Sizes::Screen::MaximumWidth;
-			_appHeight = Sizes::Screen::MaximumHeight;
-			std::cout << "Input is valid. Fullscreen mode. Resolution width: " << _appWidth
-					  << ", resolution height: " << _appHeight << ".\n";
-		}
-		else
-		{
-			std::cout << "Incorrect fullscreen mode command text. Correct text: '-fullscreen'.\n";
-			FallBackToDefault(true);
+			_appWidth = minAppWidth;
+			_appHeight = minAppHeight;
 		}
 	}
 	else if (argc == 1)
 	{
 		//? default sizes with no error
-		std::cout << "Input is valid. Windowed mode with 400x300 size.\n";
+		LogLine("Input is valid. Windowed mode with ", minAppWidth, "x", minAppHeight, " size.");
 		FallBackToDefault(false);
+		_appWidth = minAppWidth;
+		_appHeight = minAppHeight;
 	}
 	else
 	{
 		//? set default but don't run
 		//! error in the input
-		std::cout << "Too much commands. Use 'DoodleJump.exe', "
-				  << "'DoodleJump.exe -window WITHxHEIGHT' or "
-				  << "'DoodleJump.exe  -fullscreen' .\n";
+		LogLine("Too much commands. Use:\n",			   //
+				"'game.exe',\n or\n",					   //
+				"'game.exe -window WITHxHEIGHT'\nor\n",	   //
+				"'game.exe -fullscreen WITHxHEIGHT'."	   //
+		);
 		FallBackToDefault(true);
+		_appWidth = minAppWidth;
+		_appHeight = minAppHeight;
 	}
 
 	_applicationScaleX = float(_appWidth) / float(Sizes::Screen::MaximumWidth);
@@ -131,10 +151,6 @@ void GameApplication::PreInit(int& width, int& height, bool& fullscreen)
 bool GameApplication::Init()
 {
 	_Level->Initialize(_bIsRunning);
-
-	//! DragonLake framework bug: function don't working
-	// showCursor(true);
-	// std::cout << std::format("Constructed GameApplication size of: {}\n", sizeof(*this));
 	return true;
 }
 

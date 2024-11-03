@@ -184,20 +184,6 @@ uint64_t Launcher::GetTickCount() { return SDL_GetTicks64(); }
 
 void Launcher::GetScreenSize(int& width, int& height)
 {
-	// TODO: get resolution of the user screen
-	//  SDL_DisplayMode DisplayMode;
-	//  // if (SDL_GetCurrentDisplayMode(0, &DisplayMode) != 0)
-	//  if (SDL_GetDesktopDisplayMode(0, &DisplayMode) != 0)
-	//  {
-	//  	LogLine("SDL_GetDesktopDisplayMode failed: ", SDL_GetError());
-	//  }
-	//  else
-	//  {
-	//  	// LogLine(DisplayMode.format);
-	//  	w = DisplayMode.w;
-	//  	h = DisplayMode.h;
-	//  }
-
 	if (Render::getRenderer())
 	{
 		SDL_GetRendererOutputSize(Render::getRenderer(), &width, &height);
@@ -247,11 +233,6 @@ bool Launcher::InitializeWindow(IApplication* application)
 		//? Create fullscreen mode with specific resolution
 		CurrentWindowFlags = SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL;
 	}
-	//! Fix dissapearing textures issue, by setting to OPENGL
-	//! SDL_WINDOW_OPENGL
-
-	// SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN_DESKTOP
-	// SDL_WINDOW_RESIZABLE
 
 	Render::setWindow(					  //
 		SDL_CreateWindow(				  //
@@ -299,10 +280,6 @@ bool Launcher::InitializeRenderer()
 	// TODO: read return result
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");	 //? Enable linear texture filtering
 
-	// Set 'nullptr' texture as a rendering target
-	// SDL_SetRenderTarget(Render::getRenderer(), nullptr);
-	//? Don't we need this after renderer creation?
-
 	if (Render::getRenderer() == nullptr)
 	{
 		LogLine("Error: Couldn't create renderer = ", SDL_GetError());
@@ -319,16 +296,6 @@ bool Launcher::InitializeRenderer()
 	//? Output the name of the render driver.
 	SDL_RendererInfo rendererInfo;
 	SDL_GetRendererInfo(Render::getRenderer(), &rendererInfo);
-	// LogLine("Renderer: ", rendererInfo.name);
-	// std::cout << "max_texture_width = " << rendererInfo.max_texture_width << std::endl;
-	// std::cout << "max_texture_height = " << rendererInfo.max_texture_height << std::endl;
-	// LogLine("flags: ", rendererInfo.flags);
-	// LogLine("max_texture_width: ", rendererInfo.max_texture_width);
-	// LogLine("max_texture_height: ", rendererInfo.max_texture_height);
-	// LogLine("num_texture_formats: ", rendererInfo.num_texture_formats);
-	// LogLine("texture_formats: ", rendererInfo.texture_formats);
-	// std::cout << "num_texture_formats = " << rendererInfo.num_texture_formats << std::endl;
-	// std::cout << "num_texture_formats: " << rendererInfo.texture_formats << std::endl;
 
 	return true;
 }

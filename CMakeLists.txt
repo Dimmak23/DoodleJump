@@ -12,6 +12,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
 
+# ? Let's not use STATIC libraries for now,
+# ? this approach could unify build process for vendor, connector and game
+set(LIB_TYPE "SHARED")
+
 # ? Where we can find cmake modules
 set(CMAKE_MODS "${CMAKE_SOURCE_DIR}/cmake_modules")
 
@@ -94,15 +98,3 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 		)
 	endif()
 endif()
-
-# ? Create the content for the text file
-set(RESULT_STAMP_FILE ${CMAKE_SOURCE_DIR}/build_info.txt)
-set(CONTENT "Build completed at:")
-string(TIMESTAMP CURRENT_TIMESTAMP "%Y-%m-%d %H:%M:%S")
-set(CONTENT "${CONTENT} ${CURRENT_TIMESTAMP}\nBuild type: ${CMAKE_BUILD_TYPE}")
-set(CONTENT "${CONTENT}\nGenerator was used: ${CMAKE_GENERATOR}")
-set(CONTENT "${CONTENT}\nC compiler used: ${CMAKE_C_COMPILER}")
-set(CONTENT "${CONTENT}\nC++ compiler used: ${CMAKE_CXX_COMPILER}")
-
-# ? Create the text file
-file(WRITE "${RESULT_STAMP_FILE}" "${CONTENT}")

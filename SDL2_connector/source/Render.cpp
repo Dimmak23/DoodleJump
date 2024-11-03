@@ -21,8 +21,6 @@ Sprite* Render::createSprite(const char* path)
 {
 	Sprite* sprite = new Sprite();
 	sprite->initiaze(path, nullptr);
-	// LogLine("Sprite* Render::createSprite(const char* path)... * _renderer: ", _renderer);
-	// LogLine("created PointerToPointer texture: ", sprite->getCTexture());
 	return sprite;
 }
 
@@ -49,7 +47,6 @@ SDL_Surface* Render::loadSurface(const char* path)
 	//? View last three characters for extension
 	if (temporary.ends_with(".png"))
 	{
-		// LogLine("Returning surface from path: ", path);
 		return IMG_Load(path);
 	}
 	else if (temporary.ends_with(".bmp"))
@@ -82,9 +79,6 @@ int Render::drawSprite(Sprite* sprite, int x, int y)
 
 	sprite->setOrigin(x, y);
 
-	// auto Temp = sprite->getDestination();
-	// LogLine("Image at ---> x: ", Temp->x, ", y: ", Temp->y, ", w: ", Temp->w, ", h: ", Temp->h);
-
 	//^ Returns 0 on success or a negative error code on failure; call SDL_GetError() for more information.
 	int __render_result =
 		SDL_RenderCopyEx(_renderer,					//
@@ -108,10 +102,6 @@ int Render::drawSprite(Sprite* sprite, int x, int y)
 	if (__render_result)
 	{
 		LogLine("Failed to render texture: ", sprite->getTexture(), ", ", SDL_GetError());
-	}
-	else
-	{
-		// LogLine("SUCCESSES! Rendered texture: ", sprite->getTexture());
 	}
 
 	return __render_result;

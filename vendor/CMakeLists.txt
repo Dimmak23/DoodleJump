@@ -42,7 +42,7 @@ include(ExternalProject)
 # ? Install SDL2
 include("${VENDOR_MODS}/InstallSDL2.cmake")
 
-# ! some PC's would need PkgConfig also (possible place to found: L:/msys64/mingw64/bin/pkg-config.exe)
+# ! some PC's would need PkgConfig also (possible place to found: .../mingw64/bin/pkg-config.exe)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	# ! some PC's would need ZLIB also (possible place to found: C:/Program Files (x86)/zlib/lib/zlib.lib)
 	# ! or /usr/lib/x86_64-linux-gnu/libz.so
@@ -56,15 +56,3 @@ endif()
 
 # ? Install SDL2_image
 include("${VENDOR_MODS}/InstallSDL2_Image.cmake")
-
-# ? Create the content for the text file
-set(RESULT_STAMP_FILE ${CMAKE_SOURCE_DIR}/build_info.txt)
-set(CONTENT "Build completed at:")
-string(TIMESTAMP CURRENT_TIMESTAMP "%Y-%m-%d %H:%M:%S")
-set(CONTENT "${CONTENT} ${CURRENT_TIMESTAMP}\nBuild type: ${CMAKE_BUILD_TYPE}")
-set(CONTENT "${CONTENT}\nGenerator was used: ${CMAKE_GENERATOR}")
-set(CONTENT "${CONTENT}\nC compiler used: ${CMAKE_C_COMPILER}")
-set(CONTENT "${CONTENT}\nC++ compiler used: ${CMAKE_CXX_COMPILER}")
-
-# ? Create the text file
-file(WRITE "${RESULT_STAMP_FILE}" "${CONTENT}")

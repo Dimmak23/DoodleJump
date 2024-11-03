@@ -126,12 +126,11 @@ void Level::Initialize(bool& is_running_out)
 	_Gun = std::make_unique<Gun>();
 	_Gun->setOwner(_Player.get());
 	_Gun->setDynamicWorldConnection(_EnemiesWorld.get());
+	// ! This is working for the GNU generators, but compiling with VS assign this to 0xFFF...F, why?
 	_Gun->setOnSpawnCallBack(&IDynamicSpawn::onSpawnNewMoveableActor);
 
 	_bIsRunning = true;
 	is_running_out = _bIsRunning;
-
-	// std::cout << std::format("Initialized Level size of: {}\n", sizeof(*this));
 }
 
 void Level::Tick(float delta_t, bool& is_running_out)

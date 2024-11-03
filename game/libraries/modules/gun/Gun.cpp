@@ -1,6 +1,9 @@
 //* Source header
 #include "modules/gun/Gun.hpp"
 
+//* SDL2: Connector
+#include "SDL2_connector/Loger.hpp"
+
 //* Game
 #include "actor/interface/I_Shooter.hpp"
 #include "level/world/interface/I_DynamicSpawn.hpp"
@@ -25,7 +28,6 @@ void Gun::shoot(const Point& end, const float& delta_t)
 {
 	if (_CurrentDelay <= 1.f)
 	{
-		// std::cout << "shoot(const Point& end, const float& delta_t)\n";
 		//? Actually shoot
 		onSpawnAmmo(end);
 		//? Reset timer
@@ -52,6 +54,7 @@ void Gun::onSpawnAmmo(const Point& end)
 	{
 		//? Animate character
 		_OwningActor->setShootingSide(end);
+		LogLine("_SpawnAmmo: ", _SpawnAmmo);	//! why this 0xFFFFFF...F?
 		//? Doing re-calculations of spawn point only when it accessed
 		(_DynamicWorld->*_SpawnAmmo)(*(_OwningActor->getSpawnPoint()), end);
 	}

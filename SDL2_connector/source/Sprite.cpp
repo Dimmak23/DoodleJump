@@ -15,20 +15,16 @@
 
 //* C++ std
 
-Sprite::Sprite() { /* LogLine("--c--\tSprite object constructed on heap with size: ", sizeof(*this)); */ }
+Sprite::Sprite() { LogLine("--c--\tSprite object constructed on heap with size: ", sizeof(*this)); }
 
 Sprite::~Sprite()
 {
-	// LogLine("\t\tDestroying sprite _texture: ", _texture, /* ", _underTexture: ", _underTexture, */
-	// ", &_Destination: ", _Destination.get());
 	releaseTextureMemory();
-	// LogLine("--d--\tSprite object destroyed...");
+	LogLine("--d--\tSprite object destroyed...");
 }
 
-// SDL_Texture** Sprite::getTexture() { return _texture; }
 SDL_Texture* Sprite::getTexture() { return _texture; }
 
-// SDL_Texture** Sprite::getCTexture() const { return _texture; }
 SDL_Texture* Sprite::getCTexture() const { return _texture; }
 
 SDL_Rect* Sprite::getDestination() const { return _Destination.get(); }
@@ -121,7 +117,7 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 	else
 	{
 		// LogLine("SDL_CreateTextureFromSurface PointerToPointer texture: ", _texture);
-		// LogLine("--a--\tAssigned texture...");
+		LogLine("--a--\tAssigned texture...");
 	}
 
 	SDL_SetTextureBlendMode(_texture, SDL_BLENDMODE_BLEND);					  //! Check return value
@@ -134,5 +130,5 @@ void Sprite::releaseTextureMemory()
 {
 	SDL_DestroyTexture(_texture);
 	_texture = nullptr;
-	// LogLine("--r--\tTexture released...");
+	LogLine("--r--\tTexture released...");
 }

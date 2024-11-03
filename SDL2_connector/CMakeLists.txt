@@ -17,7 +17,8 @@ if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 endif()
 
 # ! where to find all installed vendors: ${VENDOR_FOLDER}
-set(VENDOR_FOLDER "${CMAKE_SOURCE_DIR}/../${VENDOR_FOLDER}")
+# set(VENDOR_FOLDER "${CMAKE_SOURCE_DIR}/../${VENDOR_FOLDER}")
+set(VENDOR_FOLDER "${CMAKE_SOURCE_DIR}/../vendor")
 
 # ? Where we can find sintructions to install SDL dependencies
 set(CONNECTOR_MODS "${CMAKE_SOURCE_DIR}/cmake_modules")
@@ -72,15 +73,3 @@ target_compile_definitions(
 
 # ? Finally install connector
 include("${CONNECTOR_MODS}/InstallSDL2Connector.cmake")
-
-# ? Create the content for the text file
-set(RESULT_STAMP_FILE ${CMAKE_SOURCE_DIR}/build_info.txt)
-set(CONTENT "Build completed at:")
-string(TIMESTAMP CURRENT_TIMESTAMP "%Y-%m-%d %H:%M:%S")
-set(CONTENT "${CONTENT} ${CURRENT_TIMESTAMP}\nBuild type: ${CMAKE_BUILD_TYPE}")
-set(CONTENT "${CONTENT}\nGenerator was used: ${CMAKE_GENERATOR}")
-set(CONTENT "${CONTENT}\nC compiler used: ${CMAKE_C_COMPILER}")
-set(CONTENT "${CONTENT}\nC++ compiler used: ${CMAKE_CXX_COMPILER}")
-
-# ? Create the text file
-file(WRITE "${RESULT_STAMP_FILE}" "${CONTENT}")
