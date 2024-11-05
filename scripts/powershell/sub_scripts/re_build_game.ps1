@@ -3,13 +3,7 @@ param (
     [string]$config
 )
 
-$directoryPath = "executables";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-	Write-Host "There is no directory: '$directoryPath' exist."
-} else {
-	Remove-Item $directoryPath -Recurse -Force
-};
+& "scripts/powershell/sub_scripts/delete.ps1" -directoryPath "executables"
 
 # Build
-& "sub_scripts/cmake_build.ps1" -directoryPath "build" -config $config
+& "scripts/powershell/sub_scripts/cmake_build.ps1" -directoryPath "build" -config $config

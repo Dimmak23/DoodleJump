@@ -8,8 +8,6 @@ vendor/build
 SDL2_connector/bin 
 SDL2_connector/lib 
 SDL2_connector/build 
-build_info.txt
-vendor/build_info.txt
-SDL2_connector/build_info.txt
+build_data.json
 
 *.bkp

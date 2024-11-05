@@ -16,8 +16,6 @@ int main(int argc, char** argv)
 	//^ Check if everything could be initialized properly
 	if (application->GetIsConstructWithError())
 	{
-		LogLine("Press any key to close...");
-		std::cin.get();
 		return -1;
 	}
 
