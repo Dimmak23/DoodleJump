@@ -198,8 +198,8 @@ Deltas PhysicsEngine::constantSpeedUp(float delta_t, float delta_x, float delta_
 	double _FramesY;
 	_FramesY = (delta_y != 0) ? std::abs(double(delta_y) / (_ConstVelocityY * double(delta_t))) : 0;
 
-	_deltaX = (static_cast<int>(_FramesX) != 0) ? (delta_x / _FramesX) : 0;
-	_deltaY = (static_cast<int>(_FramesY) != 0) ? (delta_y / _FramesY) : 0;
+	_deltaX = (static_cast<int>(_FramesX) != 0) ? (delta_x / float(_FramesX)) : 0;
+	_deltaY = (static_cast<int>(_FramesY) != 0) ? (delta_y / float(_FramesY)) : 0;
 
 	return { _deltaX, _deltaY };
 }
@@ -212,13 +212,13 @@ void PhysicsEngine::constantSpeedUpY(float delta_t, float delta_y)
 
 void PhysicsEngine::updateImpulse(float deltaT)
 {
-	_forceX *= _ImpulseLoss;
+	_forceX *= float(_ImpulseLoss);
 	_VelocityX = _forceX * deltaT / _Mass;
 	_VelocityX += _AccelerationX * double(deltaT);
 	// _VelocityX *= _FrictionX;
 	// _VelocityX *= double(1 - deltaT);
 
-	_forceY *= _ImpulseLoss;
+	_forceY *= float(_ImpulseLoss);
 	_VelocityY = _forceY * deltaT / _Mass;
 	_VelocityY += _AccelerationY * double(deltaT);
 	_VelocityY += _bIsGravityEnabled * (std::abs(_VelocityY) + _GRAVITY) * double(deltaT) * _AirFrictionY;
@@ -231,8 +231,8 @@ void PhysicsEngine::updateImpulse(float deltaT)
 
 void PhysicsEngine::updatePositions(float deltaT)
 {
-	_deltaX = _VelocityX * double(deltaT);
-	_deltaY = _VelocityY * double(deltaT);
+	_deltaX = float(_VelocityX * double(deltaT));
+	_deltaY = float(_VelocityY * double(deltaT));
 	// std::cout << std::format("_deltaX: {}, _deltaY: {}.\n", _deltaX, _deltaY);
 }
 
@@ -279,20 +279,20 @@ void PhysicsEngine::updateAmmoAccelerations(float deltaT)
 	auto SurfaceDecreaser = _SurfaceFriction * deltaT * 100;
 	auto AccDecreaser = _AccelerationFriction * deltaT * 100;
 
-	//! back this
+	//! test this again
 	// _AccelerationX += _deltaAccelerationX;
 	// _AccelerationX *= _FrictionX;
-	_deltaAccelerationX *= SurfaceDecreaser;
+	_deltaAccelerationX *= float(SurfaceDecreaser);
 	_AccelerationX += _deltaAccelerationX;
 	_AccelerationX *= AccDecreaser;
 
 	// _deltaAccelerationY -= _FrictionY * _forceY / _Mass;
 
-	//! back this
+	//! test this again
 	// _AccelerationY += _deltaAccelerationY;
 	// _AccelerationY *= _FrictionY;
-	_deltaAccelerationY *= SurfaceDecreaser;
-	_AccelerationY += _deltaAccelerationY;
+	_deltaAccelerationY *= float(SurfaceDecreaser);
+	_AccelerationY += double(_deltaAccelerationY);
 	_AccelerationY *= AccDecreaser;
 
 	_AccelerationX = std::clamp(_AccelerationX, _MinAccelerationX, _MaxAccelerationX);

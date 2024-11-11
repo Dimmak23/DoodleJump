@@ -6,7 +6,6 @@
 #include "modules/spawn/Randomizer.hpp"
 #include "rectangle/RectangleCore.hpp"
 
-
 //* C++ std
 #include <format>
 #include <iostream>
@@ -75,20 +74,21 @@ size_t RandomSpawn::orderNewActors(const Rectangle& new_place_boundary,	   //
 
 				if (!DoWeSkipThisPlaceX)
 				{
-					int SmallVarianceX = Randomizer::getRandomNumber(-float(_MinOffsetX) / 2, /* _MinOffsetX / 2 */ 0);
+					int SmallVarianceX =
+						Randomizer::getRandomNumber(int(-float(_MinOffsetX) / 2), /* _MinOffsetX / 2 */ 0);
 					SmallVarianceX += Randomizer::getRandomNumber(/* -_MinOffsetX / 2 */ 0, _MinOffsetX);
 					width += SmallVarianceX;
 					if (width < 0)
 					{
-						width = Randomizer::getRandomNumber(/* -_MinOffsetX / 2 */ 0, float(_MinOffsetX) / 4);
+						width = Randomizer::getRandomNumber(/* -_MinOffsetX / 2 */ 0, int(float(_MinOffsetX) / 4));
 					}
 					else if (width > (new_place_boundary.x + new_place_boundary.w - _SpriteWidth))
 					{
 						width = (new_place_boundary.x + new_place_boundary.w - _SpriteWidth);
-						width += Randomizer::getRandomNumber(-float(_MinOffsetX) / 4, 0);
+						width += Randomizer::getRandomNumber(int(-float(_MinOffsetX) / 4), 0);
 					}
 
-					int SmallVarianceY = Randomizer::getRandomNumber(-float(_MinOffsetY) / 8, 0);
+					int SmallVarianceY = Randomizer::getRandomNumber(int(-float(_MinOffsetY) / 8), 0);
 					height += SmallVarianceY;
 
 					quantity++;

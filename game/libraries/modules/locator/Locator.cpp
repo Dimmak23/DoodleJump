@@ -177,6 +177,6 @@ void Locator::onPhisicsEngineUpdate(double x, double y)
 {
 	if (_PhysicsEngine)
 	{
-		_PhysicsEngine->setPreciseCoordinate(x, y);
+		_PhysicsEngine->setPreciseCoordinate(int(x), int(y));
 	}
 }

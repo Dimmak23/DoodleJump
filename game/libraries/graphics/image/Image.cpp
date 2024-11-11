@@ -28,7 +28,7 @@ Image::Image(const char* path, const int& application_width) : RectangleShape()	
 	Render::getSpriteSize(_Sprite, original_width, original_height);
 
 	float scale_x = float(application_width) / float(original_width);
-	Render::setSpriteSize(_Sprite, scale_x * original_width, scale_x * original_height);
+	Render::setSpriteSize(_Sprite, int(scale_x * original_width), int(scale_x * original_height));
 
 	Render::getSpriteSize(_Sprite, _rectangle.w, _rectangle.h);
 
@@ -42,8 +42,8 @@ Image::Image(const ScreenItem* parent_screen,	 //
 			 )
 	: RectangleShape(parent_screen)	   //? width and height sets as disered
 {
-	_rectangle.w = _InitialScaleWidth * destination_width;
-	_rectangle.h = _InitialScaleHeight * destination_height;
+	_rectangle.w = int(_InitialScaleWidth * destination_width);
+	_rectangle.h = int(_InitialScaleHeight * destination_height);
 }
 
 Image::Image(const ScreenItem* parent_screen,	 //
@@ -54,7 +54,8 @@ Image::Image(const ScreenItem* parent_screen,	 //
 	: RectangleShape(parent_screen)	   //? width and height sets as disered
 {
 	_Sprite = Render::createSprite(path);
-	Render::setSpriteSize(_Sprite, _InitialScaleWidth * destination_width, _InitialScaleHeight * destination_height);
+	Render::setSpriteSize(_Sprite, int(_InitialScaleWidth * destination_width),
+						  int(_InitialScaleHeight * destination_height));
 	Render::getSpriteSize(_Sprite, _rectangle.w, _rectangle.h);
 
 	// LogLine("--c--\tConstructed Image size of: ", sizeof(*this));
@@ -69,7 +70,7 @@ Image::~Image()
 
 void Image::rescaleSprite(float scale_width, float scale_height)
 {
-	Render::setSpriteSize(_Sprite, scale_width * _rectangle.w, scale_height * _rectangle.h);
+	Render::setSpriteSize(_Sprite, int(scale_width * _rectangle.w), int(scale_height * _rectangle.h));
 	Render::getSpriteSize(_Sprite, _rectangle.w, _rectangle.h);
 }
 

@@ -18,7 +18,7 @@ Wormhole::Wormhole(const ScreenItem* parent_screen, IMechanics* character_engine
 	: _CharacterEngine(character_engine)
 	, _PossesingBody(character_body)
 	, _Aim(aim_body)
-	, _ActivationDistance(0.25f * parent_screen->ApplicationHeight)
+	, _ActivationDistance(int(0.25f * parent_screen->ApplicationHeight))
 {
 	_PossesingMover = std::make_unique<PhysicsEngine>(_PossesingBody);
 	_SharedLocator = std::make_unique<Locator>(nullptr);
@@ -67,8 +67,8 @@ void Wormhole::tick(float delta_t)
 		//? Actually move
 		auto DeltasOnFrame = _PossesingMover->constantSpeedUp(	  //
 			delta_t,											  //
-			Destination.x - Origin.x,							  //
-			Destination.y - Origin.y							  //
+			float(Destination.x - Origin.x),					  //
+			float(Destination.y - Origin.y)						  //
 		);
 		// std::cout << std::format("Wormhole found player and generates deltas x: {}, y: {}.\n", DeltasOnFrame.x,
 		// 						 DeltasOnFrame.y);

@@ -66,9 +66,9 @@ void ScoreBoard::initialize()
 	);
 	_SharedLocator->resetBody(_DistanceLabel->getBody());
 	//? Placing according to design and given point
-	_SharedLocator->setLTCornerLocation(										//
-		_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::LabelsOffsetX,	//
-		_Placement->y															//
+	_SharedLocator->setLTCornerLocation(											 //
+		int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::LabelsOffsetX),	 //
+		_Placement->y																 //
 	);
 
 	//? Load sprite for score platforms lavel
@@ -79,9 +79,9 @@ void ScoreBoard::initialize()
 	);
 	_SharedLocator->resetBody(_PlatformsCountLabel->getBody());
 	//? Placing according to design and given point
-	_SharedLocator->setLTCornerLocation(										//
-		_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::LabelsOffsetX,	//
-		_Placement->y + _Screen->ScaleHeight * Sizes::Widgets::LabelsOffsetY	//
+	_SharedLocator->setLTCornerLocation(											 //
+		int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::LabelsOffsetX),	 //
+		int(_Placement->y + _Screen->ScaleHeight * Sizes::Widgets::LabelsOffsetY)	 //
 	);
 
 	//? Load animated sprite container for 8 digits pixels score
@@ -96,9 +96,9 @@ void ScoreBoard::initialize()
 		_SharedLocator->resetBody(_DistanceDigits.back()->getBody());
 		//? place every digit next to each other with offset
 		_SharedLocator->setLTCornerLocation(	//
-			_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::DigitsOffsetX +
-				index * _Screen->ScaleWidth * Sizes::Widgets::DigitsLabelOffsetX,	 //
-			_Placement->y															 //
+			int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::DigitsOffsetX +
+				index * _Screen->ScaleWidth * Sizes::Widgets::DigitsLabelOffsetX),	  //
+			_Placement->y															  //
 		);
 		//? Initially hiding all digits except first
 		if (index)
@@ -119,9 +119,9 @@ void ScoreBoard::initialize()
 		_SharedLocator->resetBody(_PlatformsDigits.back()->getBody());
 		//? place every digit next to each other with offset
 		_SharedLocator->setLTCornerLocation(	//
-			_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::DigitsOffsetX +
-				index * _Screen->ScaleWidth * Sizes::Widgets::DigitsLabelOffsetX,	 //
-			_Placement->y + _Screen->ScaleHeight * Sizes::Widgets::LabelsOffsetY	 //
+			int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::DigitsOffsetX +
+				index * _Screen->ScaleWidth * Sizes::Widgets::DigitsLabelOffsetX),		 //
+			int(_Placement->y + _Screen->ScaleHeight * Sizes::Widgets::LabelsOffsetY)	 //
 		);
 		//? Initially hiding all digits except first
 		if (index)

@@ -114,13 +114,13 @@ if($config -or $generator){
     # * build.ps1 -config 'Debug'/'Release' -generator 'Ninja'/'MinGW'/'VS'
     if($config -and $generator){
         # Check if the current parameters match the JSON file values
-        $isMatch = ($config -eq $jsonData.Config) -and ($generator -eq $jsonData.Generator)
+        # $isMatch = ($config -eq $jsonData.Config) -and ($generator -eq $jsonData.Generator)
 
         # TODO: don't check for match
         # TODO:     if config and generator didn't chaned but specified - it's intentional re-config and re-build of all
-        if (-not $isMatch) {
+        # if (-not $isMatch) {
             # Parameters differ from JSON file values
-            Write-Output "Parameters differ. Performing action for differing parameters."
+            # Write-Output "Parameters differ. Performing action for differing parameters."
         
             # Re-config vendor, connector and game; also build vendor and connector
             Write-Output "redo with config: $config, generator: $generator"
@@ -128,7 +128,7 @@ if($config -or $generator){
         
             # Build
             # ? No build step here... just wait for it
-        }
+        # }
         
         # ? If generator and configuration didn't changed - treat this command as re-build game:
         # Now we can re-build game itself
@@ -157,7 +157,7 @@ else{
         exit 0
     }
     
-    # TODO: If not only code has changed
+    # TODO: If not only code has changed: but also some source/header files have been added to the SDL2_connector
     # * build.ps1 -reconfig connector -rebuild connector 
 
     # * build.ps1 -rebuild 'connector'

@@ -39,7 +39,7 @@ ParallaxItem::ParallaxItem(				   //
 		if (variant == MoveVariants::UP_DOWN)
 		{
 			_Locator->resetBody(_Images[index].get()->getBody());
-			_Locator->setLTCornerLocation(0, (index == 0) ? 0 : -_Images[index].get()->height());
+			_Locator->setLTCornerLocation(0, (index == 0) ? 0 : -int(_Images[index].get()->height()));
 			// std::cout << std::format("Placed image for parallax... x: {}, y: {}.\n", _Locator->getX(),
 			// 						 _Locator->getY());
 		}
@@ -69,7 +69,7 @@ void ParallaxItem::relocate(int delta_x, int delta_y)
 		//? Use locator for the first image
 		_Locator->resetBody(_Images.begin()->get()->getBody());
 		//? Place first image to the place which be empty soon
-		_Locator->setLTCornerLocation(0, -_Images.begin()->get()->height());
+		_Locator->setLTCornerLocation(0, -int(_Images.begin()->get()->height()));
 		//? Finally swap images to repeat process again later
 		std::iter_swap(_Images.begin(), _Images.end() - 1);
 	}

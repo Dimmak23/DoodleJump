@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 		//^ Release applicaiton resources whould be don on destruction of 'application' variable
 	}
 
-	LogLine("Application exit...");
+	LogLine(run_result, ": application exit...");
 	return run_result;
 
 	// return Launcher::Run(application.get());

@@ -14,10 +14,9 @@ if (-not (Test-Path -Path $directoryPath -PathType Container)) {
 };
 Set-Location $directoryPath ;
 # Build type code for re-using
-# if($config -eq "Debug"){
-# 	cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Debug $generatorOption
-# }
-# else{
-# 	cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Release $generatorOption
-# }
-cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Release $generatorOption
+if($config -eq "Debug"){
+	cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Debug $generatorOption
+}
+else{
+	cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Release $generatorOption
+}

@@ -211,9 +211,10 @@ void Camera::traceCharacter(float deltaT)
 		{
 			return;
 		}
-		auto CameraDeltas = _ViewPortMover->constantSpeedUp(deltaT, _info->size.width, _info->size.height);
+		auto CameraDeltas =
+			_ViewPortMover->constantSpeedUp(deltaT, float(_info->size.width), float(_info->size.height));
 		// _ViewPortMover->move(); //! turned off, to move scene instead
-		onRelocateScene(-CameraDeltas.x, -CameraDeltas.y);
+		onRelocateScene(-int(CameraDeltas.x), -int(CameraDeltas.y));
 
 		if (!_CharacterEngine->getOnPlatform())
 		{

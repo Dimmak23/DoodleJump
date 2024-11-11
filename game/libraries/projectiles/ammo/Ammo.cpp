@@ -51,10 +51,10 @@ Ammo::Ammo(const ScreenItem* parent_screen, const Point& begin, const Point& end
 	_Mover->setConstantVelocity(CathetusVelocityX, CathetusVelocityY);
 	//? Dynamic part
 	_Mover->setMass(_Mass);
-	_Mover->addForceX(5.2 * SignX * CathetusVelocityX);
-	_Mover->addForceY(5.2 * SignY * CathetusVelocityY);
-	_Mover->accelerateX(1.5 * SignX * CathetusVelocityX);
-	_Mover->accelerateY(1.5 * SignY * CathetusVelocityY);
+	_Mover->addForceX(5.2f * SignX * float(CathetusVelocityX));
+	_Mover->addForceY(5.2f * SignY * float(CathetusVelocityY));
+	_Mover->accelerateX(1.5f * SignX * float(CathetusVelocityX));
+	_Mover->accelerateY(1.5f * SignY * float(CathetusVelocityY));
 	_Mover->setAirFrictionY(0.008);
 
 	_Locator->setPhysicsEngineConnection(_Mover.get());
@@ -82,10 +82,10 @@ void Ammo::tick(float delta_t)
 		!(_Mover->getIsGravityEnabled())							   //
 		)															   //
 	{
-		_Mover->constantSpeedUp(						 //
-			delta_t,									 //
-			_Destination->x - _Locator->getCenterX(),	 //
-			_Destination->y - _Locator->getCenterY());
+		_Mover->constantSpeedUp(								//
+			delta_t,											//
+			float(_Destination->x - _Locator->getCenterX()),	//
+			float(_Destination->y - _Locator->getCenterY()));
 		_Mover->move();
 	}
 	//? later enable gravity

@@ -15,7 +15,7 @@
 
 Player::Player(const ScreenItem* parent_screen, const char* path)
 	: _Screen(parent_screen)
-	, _SpawnPointHeight(Sizes::Player::DefaultSpawnPointHeight * _Screen->ScaleHeight)
+	, _SpawnPointHeight((const unsigned int)(Sizes::Player::DefaultSpawnPointHeight * _Screen->ScaleHeight))
 	, _FlightDestination(_Screen->ApplicationHeight / 4)
 	, _ImagePath(path)
 {
@@ -105,12 +105,12 @@ void Player::tick(float delta_t)
 
 			auto Deltas = _DoodieMover->getLinearSpeed();
 
-			_DoodieMover->addForceX(Deltas._Vx * _SideTilt);
+			_DoodieMover->addForceX(float(Deltas._Vx * _SideTilt));
 
-			_JumpImpulse -= std::abs(Deltas._Vx) * 50;
+			_JumpImpulse -= float(std::abs(Deltas._Vx) * 50);
 			_DoodieMover->addForceY(_JumpImpulse);
 
-			_DoodieMover->accelerateX(Deltas._Vx * _SideTilt);
+			_DoodieMover->accelerateX(float(Deltas._Vx) * _SideTilt);
 			_DoodieMover->accelerateY(_JumpImpulse / 100);
 
 			_bForceAdded = true;
@@ -121,7 +121,7 @@ void Player::tick(float delta_t)
 		_DoodieMover->move();
 
 		auto Deltas = _DoodieMover->getMoveDeltas();
-		_CurrentFlightDistance += std::sqrt(std::pow(Deltas.x, 2) + std::pow(Deltas.y, 2));
+		_CurrentFlightDistance += (unsigned int)(std::sqrt(std::pow(Deltas.x, 2) + std::pow(Deltas.y, 2)));
 
 		if (_CurrentFlightDistance >= _FlightDestination)
 		{

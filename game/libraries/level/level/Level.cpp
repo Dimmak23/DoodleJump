@@ -165,11 +165,11 @@ void Level::Tick(float delta_t, bool& is_running_out)
 	_EnemiesWorld->cleaner();
 
 	//? Camera focus update
-	if (_Player->getCenterY() <= ApplicationHeight / 2)
+	if (_Player->getCenterY() <= int(ApplicationHeight / 2))
 	{
 		_bCameraEnabled = true;
 	}
-	else if (_PlaformsWorld->getPlatformsBottom() <= ApplicationHeight)
+	else if (_PlaformsWorld->getPlatformsBottom() <= int(ApplicationHeight))
 	{
 		_bCameraEnabled = false;
 	}

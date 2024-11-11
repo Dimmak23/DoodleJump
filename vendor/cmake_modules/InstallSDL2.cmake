@@ -1,8 +1,8 @@
 # ? Define SDL version and URLs
-set(SDL_VERSION "2.30.0")
+set(SDL_VERSION "2.30.1")
 
 # ? Link to source code
-set(SDL_URL "https://github.com/libsdl-org/SDL/archive/refs/tags/release-${SDL_VERSION}.zip")
+set(SDL_URL "https://github.com/libsdl-org/SDL/releases/download/release-${SDL_VERSION}/SDL2-${SDL_VERSION}.zip")
 
 message(STATUS "\tDownloading SDL-v.${SDL_VERSION} from ${SDL_URL}...")
 

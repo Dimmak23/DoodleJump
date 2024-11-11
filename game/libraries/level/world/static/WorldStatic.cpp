@@ -22,13 +22,13 @@ WorldStatic::WorldStatic(const ScreenItem* parent_screen,	 //
 						 const char* path_adder,			 //
 						 const unsigned int quantity)
 	: _Screen(parent_screen)
-	, _PlatformWidth(parent_screen->ScaleWidth * Sizes::Environment::PlatformWidth)
-	, _PlatformHeight(parent_screen->ScaleHeight * Sizes::Environment::PlatformHeight)
+	, _PlatformWidth((const unsigned int)(parent_screen->ScaleWidth * Sizes::Environment::PlatformWidth))
+	, _PlatformHeight((const unsigned int)(parent_screen->ScaleHeight * Sizes::Environment::PlatformHeight))
 	, _PlatformsPathCut(path_cut)
 	, _PlatformsPathAdder(path_adder)
 	, _PlatformsQuantity(quantity)
 {
-	_ThresholdY = float(_Screen->ApplicationHeight) / 4;
+	_ThresholdY = int(float(_Screen->ApplicationHeight) / 4);
 
 	// std::cout << std::format("Constructed WorldStatic size of: {}\n", sizeof(*this));
 }

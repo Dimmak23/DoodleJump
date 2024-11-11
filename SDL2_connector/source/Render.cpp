@@ -110,8 +110,11 @@ int Render::drawSprite(Sprite* sprite, int x, int y)
 void Render::destroySprite(Sprite** sprite)
 {
 	// TODO: test here, do right sprite texture pointers will be destroyed
-	delete *sprite;		  //? calling destructor Image::~Sprite() for Sprite created on heap
-	*sprite = nullptr;	  //? make nullptr Image::Sprite* - copy pointer to Sprite created on heap
+	if (*sprite)
+	{
+		delete *sprite;		  //? calling destructor Image::~Sprite() for Sprite created on heap
+		*sprite = nullptr;	  //? make nullptr Image::Sprite* - copy pointer to Sprite created on heap
+	}
 }
 
 void Render::getSpriteSize(Sprite* sprite, int& width, int& height)
