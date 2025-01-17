@@ -117,7 +117,7 @@ if($config -or $generator){
         # $isMatch = ($config -eq $jsonData.Config) -and ($generator -eq $jsonData.Generator)
 
         # TODO: don't check for match
-        # TODO:     if config and generator didn't chaned but specified - it's intentional re-config and re-build of all
+        # TODO:     if config and generator didn't chaned but specified - it's intentional re-config and re-build for all
         # if (-not $isMatch) {
             # Parameters differ from JSON file values
             # Write-Output "Parameters differ. Performing action for differing parameters."
@@ -161,6 +161,8 @@ else{
     # * build.ps1 -reconfig connector -rebuild connector 
 
     # * build.ps1 -rebuild 'connector'
+    # ? Help you to re-build SDL2_connector libraries and later game,
+    # ? if only source code in SDL2_connector have been changed
     if($rebuild -eq "connector"){
         # Rebuilding connector first
         & "scripts/powershell/sub_scripts/re_build_connector.ps1" -config $jsonData.Config -generator $jsonData.Generator
