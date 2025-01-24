@@ -1,71 +1,22 @@
-$directoryPath = "executables";
+# List of folder destinations
+$folderList = @(
+    "executables",
+    "build",
+    "SDL2_connector/build",
+    "SDL2_connector/bin",
+    "vendor/build",
+    "vendor/SDL2",
+    "vendor/ZLIB",
+    "vendor/JPEG",
+    "vendor/PNG",
+    "vendor/SDL2_image"
+)
 
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "There is no directory: '$directoryPath' exist."
-} else {
-	Remove-Item $directoryPath -Recurse -Force
-};
+# Path to the sub-script file
+$subScriptPath = "scripts/powershell/sub_scripts/delete.ps1"
 
-$directoryPath = "build";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "There is no directory: '$directoryPath' exist."
-} else {
-	Remove-Item .\build -Recurse -Force
-};
-
-$directoryPath = "SDL2_connector/build";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "There is no directory: '$directoryPath' exist."
-} else {
-	Remove-Item $directoryPath -Recurse -Force
-};
-
-$directoryPath = "SDL2_connector/bin";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "Directory: '$directoryPath' doesn't exist."
-} else {
-	Remove-Item .\$directoryPath -Recurse -Force
-};
-
-$directoryPath = "vendor/build";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "There is no directory: '$directoryPath' exist."
-} else {
-	Remove-Item $directoryPath -Recurse -Force
-};
-
-$directoryPath = "vendor/SDL2";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "Directory: '$directoryPath' doesn't exist."
-} else {
-	Remove-Item .\$directoryPath -Recurse -Force
-};
-
-$directoryPath = "vendor/SDL2_image";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "Directory: '$directoryPath' doesn't exist."
-} else {
-	Remove-Item .\$directoryPath -Recurse -Force
-};
-
-$directoryPath = "vendor/JPEG";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "Directory: '$directoryPath' doesn't exist."
-} else {
-	Remove-Item .\$directoryPath -Recurse -Force
-};
-
-$directoryPath = "vendor/PNG";
-
-if (-not (Test-Path -Path $directoryPath -PathType Container)) {
-    Write-Host "Directory: '$directoryPath' doesn't exist."
-} else {
-	Remove-Item .\$directoryPath -Recurse -Force
-};
+# Run the sub-script for each folder
+foreach ($folder in $folderList) {
+    Write-Host "Processing folder: $folder"
+    PowerShell -File $subScriptPath -directoryPath $folder
+}

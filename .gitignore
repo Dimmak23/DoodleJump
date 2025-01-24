@@ -1,9 +1,10 @@
 build
 executables
 vendor/SDL2
-vendor/SDL2_image
+vendor/ZLIB 
 vendor/PNG 
 vendor/JPEG 
+vendor/SDL2_image
 vendor/build 
 SDL2_connector/bin 
 SDL2_connector/lib 

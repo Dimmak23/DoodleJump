@@ -14,7 +14,8 @@
       ],
       "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
       "windowsSdkVersion": "10.0.22000.0",
-      "compilerPath": "g++.exe",
+      "compilerPath": "E:/compilers/gcc_14.2.0/mingw64/bin/g++.exe",
+      // "compilerPath": "g++.exe",
       "cStandard": "c17",
       "cppStandard": "c++20",
       "intelliSenseMode": "windows-gcc-x64"

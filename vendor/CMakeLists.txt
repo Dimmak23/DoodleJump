@@ -26,6 +26,11 @@ set(SDL_IMAGE_INCLUDE "${SDL_IMAGE_INSTALL_DIR}/include/SDL2")
 set(SDL_IMAGE_BINARY "${SDL_IMAGE_INSTALL_DIR}/bin")
 set(SDL_IMAGE_LIB "${SDL_IMAGE_INSTALL_DIR}/lib")
 
+# ? Set the installation directory for zlib
+set(ZLIB_INSTALL_DIR "${CMAKE_SOURCE_DIR}/ZLIB")
+set(ZLIB_INCLUDE_DIR "${ZLIB_INSTALL_DIR}/include")
+set(ZLIB_LIBRARY "${ZLIB_INSTALL_DIR}/bin")
+
 # ? Set the installation directory for jpeg
 set(JPEG_INSTALL_DIR "${CMAKE_SOURCE_DIR}/JPEG")
 set(JPEG_INCLUDE_DIR "${JPEG_INSTALL_DIR}/include")
@@ -44,8 +49,10 @@ include("${VENDOR_MODS}/InstallSDL2.cmake")
 
 # ! some PC's would need PkgConfig also (possible place to found: .../mingw64/bin/pkg-config.exe)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-	# ! some PC's would need ZLIB also (possible place to found: C:/Program Files (x86)/zlib/lib/zlib.lib)
+	# ! some PC's would need ZLIB also (possible place to found: ???:/Program Files (x86)/zlib/lib/zlib.lib)
 	# ! or /usr/lib/x86_64-linux-gnu/libz.so
+
+	include("${VENDOR_MODS}/InstallZLib.cmake")
 
 	# ? SDL2_image would need jpeg
 	include("${VENDOR_MODS}/InstallJPEG.cmake")
@@ -54,5 +61,5 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	include("${VENDOR_MODS}/InstallPNG.cmake")
 endif()
 
-# ? Install SDL2_image
+# # ? Install SDL2_image
 include("${VENDOR_MODS}/InstallSDL2_Image.cmake")
