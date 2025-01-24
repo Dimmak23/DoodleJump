@@ -41,18 +41,18 @@ public:
 	//@ API: for level
 
 	//* Setters
-	void setPlayerBodyConnection(RectangleCore* body);
+	void SetPlayerBodyConnection(RectangleCore* body);
 	//? We gonna use WorldStatic API to fetch count variables (delted platforms and existing bellow platforms)
-	void setStaticWorldConnection(IAccounting* world);
+	void SetStaticWorldConnection(IAccounting* world);
 
 	//* Manipulators
-	void initialize();
-	virtual void relocate(int delta_x, int delta_y) override;
-	void tick(float delta_t);
-	void clear();
+	void Initialize();
+	virtual void Relocate(int delta_x, int delta_y) override;
+	void Tick(float delta_t);
+	void Clear();
 
 	//* Graphics
-	void render();
+	void Render();
 
 private:
 	//@ Methods
@@ -62,42 +62,42 @@ private:
 	ScoreBoard& operator=(const ScoreBoard&) = delete;
 
 	//* Reusable widget updater
-	void updateWidgetsContainer(const size_t& new_counter, size_t& current_counter,
+	void UpdateWidgetsContainer(const size_t& new_counter, size_t& current_counter,
 								std::vector<std::unique_ptr<AnimatedImage>>& Digits);
 
 	//@ Members
 
-	//* Connections
-	RectangleCore* _PlayerBody{ nullptr };
-	IAccounting* _PlatformsWorld{ nullptr };
-
 	//* Widgets
-	std::unique_ptr<Image> _DistanceLabel{ nullptr };
-	std::unique_ptr<Image> _PlatformsCountLabel{ nullptr };
-	std::vector<std::unique_ptr<AnimatedImage>> _DistanceDigits;
-	std::vector<std::unique_ptr<AnimatedImage>> _PlatformsDigits;
-	std::unique_ptr<Locator> _SharedLocator{ nullptr };
+	std::vector<std::unique_ptr<AnimatedImage>> _distanceDigits;
+	std::vector<std::unique_ptr<AnimatedImage>> _platformsDigits;
+	std::unique_ptr<Image> _distanceLabel{ nullptr };
+	std::unique_ptr<Image> _platformsCountLabel{ nullptr };
+	std::unique_ptr<Locator> _sharedLocator{ nullptr };
 
 	//* Geometry
-	std::unique_ptr<Point> _Placement{ nullptr };
-	std::unique_ptr<Point> _Origin{ nullptr };
+	std::unique_ptr<Point> _placement{ nullptr };
+	std::unique_ptr<Point> _origin{ nullptr };
+
+	//* Connections
+	RectangleCore* _playerBody{ nullptr };
+	IAccounting* _platformsWorld{ nullptr };
 
 	//* Graphics
-	const ScreenItem* _Screen{ nullptr };
-
-	//* Scores
-	size_t _PixelsCounter{};
-	size_t _CurrentPixelsCounter{};
-	size_t _PlatformsCounter{};
-	size_t _CurrentPlatformsCounter{};
-
-	//* Utilities
-	const unsigned int _DistanceCountDigits{ 8 };
-	const unsigned int _PlatformsCountDigits{ 6 };
+	const ScreenItem* _screen{ nullptr };
 
 	//* Images path
-	const char* _DistanceLabelPath;
-	const char* _PlatformsLabelPath;
-	const char* _DigitsLabelsPath;
-	const unsigned int _DigitsQuantity{};
+	const char* _distanceLabelPath;
+	const char* _platformsLabelPath;
+	const char* _digitsLabelsPath;
+
+	//* Scores
+	size_t _pixelsCounter{};
+	size_t _currentPixelsCounter{};
+	size_t _platformsCounter{};
+	size_t _currentPlatformsCounter{};
+
+	//* Utilities
+	const unsigned int _distanceCountDigits{ 8 };
+	const unsigned int _platformsCountDigits{ 6 };
+	const unsigned int _digitsQuantity{};
 };

@@ -16,15 +16,15 @@ public:
 
 	//* Setters
 
-	void setOwner(IShooter* owner);
-	void setDynamicWorldConnection(IDynamicSpawn* dynamic_world);
-	void setOnSpawnCallBack(SpawnCallBackType function);
-	void setShootingRate(const float& new_rate);
+	void SetOwner(IShooter* owner);
+	void SetDynamicWorldConnection(IDynamicSpawn* dynamic_world);
+	void SetOnSpawnCallBack(SpawnCallBackType function);
+	void SetShootingRate(const float& new_rate);
 
 	//* Manipulators
 
-	void shoot(const Point& end, const float& delta_t);
-	void reload(float delta_t);
+	void Shoot(const Point& end, const float& delta_t);
+	void Reload(float delta_t);
 
 private:
 	//@ Methods
@@ -34,20 +34,20 @@ private:
 	Gun& operator=(const Gun&) = delete;
 
 	//* Safe callbacks
-	void onSpawnAmmo(const Point&);
+	void OnSpawnAmmo(const Point&);
 
 	//@ Members
 
-	//* Timers
-	float _ShootingRate{ 200.f };	 //? in milliseconds
-	float _CurrentDelay{ 0.f };
-
 	//* World
-	IDynamicSpawn* _DynamicWorld{ nullptr };
+	IDynamicSpawn* _dynamicWorld{ nullptr };
 
 	//* Player access
-	IShooter* _OwningActor{ nullptr };
+	IShooter* _owningActor{ nullptr };
 
 	//* Spawn callback
-	SpawnCallBackType _SpawnAmmo{ nullptr };
+	SpawnCallBackType _spawnAmmo{ nullptr };
+
+	//* Timers
+	float _shootingRate{ 200.f };	 //? in milliseconds
+	float _currentDelay{ 0.f };
 };

@@ -22,15 +22,15 @@ public:
 
 	//* Getters
 	bool IsEnabled() const;
-	IGraphicle* getPlatformImage() const;
+	IGraphicle* GetPlatformImage() const;
 
 	//* Setters
-	void resetSpriteConnection(IGraphicle* image);
-	void emptySpriteConnection();
+	void ResetSpriteConnection(IGraphicle* image);
+	void EmptySpriteConnection();
 
 	//* Manipulators
 	//? Checks if 'this' IsEnabled, ticks and hide platform
-	void tick(float delta_t);
+	void Tick(float delta_t);
 
 private:
 	//@ Methods
@@ -41,11 +41,11 @@ private:
 
 	//@ Members
 
-	IGraphicle* _PlatformImage{ nullptr };
+	IGraphicle* _platformImage{ nullptr };
 
 	//* Timers
-	float _VisibilityTimer{ 2000.f };
-	const float _VisibilityDuration{ 2000.f };	  // ms
+	float _visibilityTimer{ 2000.f };
+	const float _visibilityDuration{ 2000.f };	  // ms
 
 	//* States
 	bool _bIsEnabled{ false };

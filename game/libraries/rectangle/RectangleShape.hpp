@@ -17,16 +17,16 @@ public:
 
 	//* Getters
 
-	double* getAngle();	   //! Called from the PhysicsEngine, and possibly from Locator
+	double* GetAngle();	   //! Called from the PhysicsEngine, and possibly from Locator
 
 	//* Setters
 
-	void scale(float symmetrical_scale);
-	void scale(float scale_width, float scale_height);
+	void Scale(float symmetrical_scale);
+	void Scale(float scale_width, float scale_height);
 
 	//* Manipulators
 
-	void resetCenterPoint();
+	void ResetCenterPoint();
 
 protected:
 	//@ API: only for the childrens inner use only
@@ -36,12 +36,12 @@ protected:
 	//* Non-core elements
 
 	//? Geometry
-	double _angle{};					  //? PhysicsEngine accessed this
 	Point* _centerRotation{ nullptr };	  //? PhysicsEngine accessed this
+	double _angle{};					  //? PhysicsEngine accessed this
 
 	//? Scalling
-	const float _InitialScaleWidth{};
-	const float _InitialScaleHeight{};
+	const float _initialScaleWidth{};
+	const float _initialScaleHeight{};
 
 private:
 	//? Let's prevent copying of the rectangle

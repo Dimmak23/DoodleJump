@@ -9,7 +9,7 @@
 #include <format>
 #include <iostream>
 
-Locator::Locator(RectangleCore* rectangle) : _host((rectangle) ? rectangle->getBody() : nullptr)
+Locator::Locator(RectangleCore* rectangle) : _host((rectangle) ? rectangle->GetBody() : nullptr)
 {
 	// std::cout << "Locator received host with x: " << _host->x << ", y: " << _host->y << ", w: " << _host->w
 	//   << ", h: " << _host->h << '\n';
@@ -23,47 +23,47 @@ Locator::~Locator()
 	// std::cout << "Deleted Locator...\n";
 }
 
-Locator* Locator::parseBody(Rectangle* body)
+Locator* Locator::ParseBody(Rectangle* body)
 {
 	_host = body;
 	return this;
 }
 
-void Locator::resetBody(Rectangle* body) { _host = body; }
+void Locator::ResetBody(Rectangle* body) { _host = body; }
 
-void Locator::clearBody() { _host = nullptr; }
+void Locator::ClearBody() { _host = nullptr; }
 
-void Locator::setPhysicsEngineConnection(IConnectable* physics_engine) { _PhysicsEngine = physics_engine; }
+void Locator::SetPhysicsEngineConnection(IConnectable* physics_engine) { _physicsEngine = physics_engine; }
 
-void Locator::setLoggingEnabled(bool new_state) { _bLoggingEnabled = new_state; }
+void Locator::SetLoggingEnabled(bool new_state) { _bLoggingEnabled = new_state; }
 
 // void Locator::setUpdatePreciseCoordinatesCallBack(ConnectCallBackType function)
 // {
-// 	_UpdatePreciseCoordinates = function;
+// 	_updatePreciseCoordinates = function;
 // }
 
-void Locator::setCenterLocation(const int& x, const int& y)
+void Locator::SetCenterLocation(const int& x, const int& y)
 {
 	_host->x = x - _host->w / 2;
 	_host->y = y - _host->h / 2;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setCenterLocation(Point coordinate)
+void Locator::SetCenterLocation(Point coordinate)
 {
 	_host->x = coordinate.x - _host->w / 2;
 	_host->y = coordinate.y - _host->h / 2;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setCenterLocation(Coordinate coordinate)
+void Locator::SetCenterLocation(Coordinate coordinate)
 {
 	_host->x = coordinate.x - _host->w / 2;
 	_host->y = coordinate.y - _host->h / 2;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setTopCLocation(const int& x, const int& y)
+void Locator::SetTopCLocation(const int& x, const int& y)
 {
 	if (int temp = (x - _host->w / 2); temp < 0)
 	{
@@ -72,74 +72,74 @@ void Locator::setTopCLocation(const int& x, const int& y)
 	else
 		_host->x = temp;
 	_host->y = y;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setBottomCLocation(const int& x, const int& y)
+void Locator::SetBottomCLocation(const int& x, const int& y)
 {
 	_host->x = x - _host->w / 2;
 	_host->y = y - _host->h;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setLeftCLocation(const int& x, const int& y)
+void Locator::SetLeftCLocation(const int& x, const int& y)
 {
 	_host->x = x;
 	_host->y = y - _host->h / 2;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setRightCLocation(const int& x, const int& y)
+void Locator::SetRightCLocation(const int& x, const int& y)
 {
 	_host->x = x - _host->w;
 	_host->y = y - _host->h / 2;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setLTCornerLocation(const int& x, const int& y)
+void Locator::SetLTCornerLocation(const int& x, const int& y)
 {
 	_host->x = x;
 	_host->y = y;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setLBCornerLocation(const int& x, const int& y)
+void Locator::SetLBCornerLocation(const int& x, const int& y)
 {
 	_host->x = x;
 	_host->y = y - _host->h;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setRTCornerLocation(const int& x, const int& y)
+void Locator::SetRTCornerLocation(const int& x, const int& y)
 {
 	_host->x = x - _host->w;
 	_host->y = y;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setRBCornerLocation(const int& x, const int& y)
+void Locator::SetRBCornerLocation(const int& x, const int& y)
 {
 	_host->x = x - _host->w;
 	_host->y = y - _host->h;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setLeft(const int& x)
+void Locator::SetLeft(const int& x)
 {
 	_host->x = x;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::setTop(const int& y)
+void Locator::SetTop(const int& y)
 {
 	_host->y = y;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
-void Locator::alignYAxis(const int& x)
+void Locator::AlignYAxis(const int& x)
 {
 	_host->x = x - _host->w / 2;
-	onPhisicsEngineUpdate(_host->x, _host->y);
+	OnPhisicsEngineUpdate(_host->x, _host->y);
 }
 
 //  int Locator::getTop() const { return _host->y; }
@@ -150,33 +150,33 @@ void Locator::alignYAxis(const int& x)
 
 //  int Locator::getRight() const { return _host->x + _host->w; }
 
-Locator::Coordinate Locator::getTopCLocation() const { return Coordinate(_host->x + _host->w / 2, _host->y); }
+Locator::Coordinate Locator::GetTopCLocation() const { return Coordinate(_host->x + _host->w / 2, _host->y); }
 
-Locator::Coordinate Locator::getCenter() const { return Coordinate(_host->x + _host->w / 2, _host->y + _host->h / 2); }
+Locator::Coordinate Locator::GetCenter() const { return Coordinate(_host->x + _host->w / 2, _host->y + _host->h / 2); }
 
-int Locator::getCenterX() const { return _host->x + _host->w / 2; }
+int Locator::GetCenterX() const { return _host->x + _host->w / 2; }
 
-int Locator::getCenterY() const { return _host->y + _host->h / 2; }
+int Locator::GetCenterY() const { return _host->y + _host->h / 2; }
 
-int Locator::getX() const { return _host->x; }
+int Locator::GetX() const { return _host->x; }
 
-int Locator::getY() const { return _host->y; }
+int Locator::GetY() const { return _host->y; }
 
-void Locator::relocate(int deltaX, int deltaY)
+void Locator::Relocate(int deltaX, int deltaY)
 {
 	_host->x += deltaX;
 	_host->y += deltaY;
 	// onPhisicsEngineUpdate(_host->x, _host->y);
-	if (_PhysicsEngine)
+	if (_physicsEngine)
 	{
-		_PhysicsEngine->moveByCamera(Point{ deltaX, deltaY });
+		_physicsEngine->MoveByCamera(Point{ deltaX, deltaY });
 	}
 }
 
-void Locator::onPhisicsEngineUpdate(double x, double y)
+void Locator::OnPhisicsEngineUpdate(double x, double y)
 {
-	if (_PhysicsEngine)
+	if (_physicsEngine)
 	{
-		_PhysicsEngine->setPreciseCoordinate(int(x), int(y));
+		_physicsEngine->SetPreciseCoordinate(int(x), int(y));
 	}
 }

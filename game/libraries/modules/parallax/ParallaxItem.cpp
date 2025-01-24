@@ -18,19 +18,19 @@ ParallaxItem::ParallaxItem(				   //
 	const unsigned int& desired_height,	   //
 	const MoveVariants& variant			   //
 	)
-	: _Screen(parent_screen)
+	: _screen(parent_screen)
 {
 	int SidesQty = (variant == MoveVariants::BOTH) ? 4 : 2;
 
 	//? Creating all sprites
 	for (size_t index{}; index < SidesQty; index++)
 	{
-		_Images.push_back(std::make_unique<Image>(_Screen, path,	//
+		_images.push_back(std::make_unique<Image>(_screen, path,	//
 												  desired_width, desired_height));
 	}
 
 	//? Creating shallow locator
-	_Locator = std::make_unique<Locator>(nullptr);
+	_locator = std::make_unique<Locator>(nullptr);
 
 	//? Placing all sprites
 	// TODO: implement for BOTH variant
@@ -38,8 +38,8 @@ ParallaxItem::ParallaxItem(				   //
 	{
 		if (variant == MoveVariants::UP_DOWN)
 		{
-			_Locator->resetBody(_Images[index].get()->getBody());
-			_Locator->setLTCornerLocation(0, (index == 0) ? 0 : -int(_Images[index].get()->height()));
+			_locator->ResetBody(_images[index].get()->GetBody());
+			_locator->SetLTCornerLocation(0, (index == 0) ? 0 : -int(_images[index].get()->Height()));
 			// std::cout << std::format("Placed image for parallax... x: {}, y: {}.\n", _Locator->getX(),
 			// 						 _Locator->getY());
 		}
@@ -52,33 +52,33 @@ ParallaxItem::ParallaxItem(				   //
 
 ParallaxItem::~ParallaxItem() {}
 
-void ParallaxItem::relocate(int delta_x, int delta_y)
+void ParallaxItem::Relocate(int delta_x, int delta_y)
 {
-	for (auto& Image : _Images)
+	for (auto& Image : _images)
 	{
-		_Locator->resetBody(Image.get()->getBody());
-		_Locator->relocate(delta_x, delta_y);
+		_locator->ResetBody(Image.get()->GetBody());
+		_locator->Relocate(delta_x, delta_y);
 	}
 
-	if (_Images.empty()) return;
+	if (_images.empty()) return;
 
 	// TODO: this implements only UP/DOWN movements
 	//? Wait until last iamge will be at the screen top
-	if ((_Images.end() - 1)->get()->top() >= 0)
+	if ((_images.end() - 1)->get()->Top() >= 0)
 	{
 		//? Use locator for the first image
-		_Locator->resetBody(_Images.begin()->get()->getBody());
+		_locator->ResetBody(_images.begin()->get()->GetBody());
 		//? Place first image to the place which be empty soon
-		_Locator->setLTCornerLocation(0, -int(_Images.begin()->get()->height()));
+		_locator->SetLTCornerLocation(0, -int(_images.begin()->get()->Height()));
 		//? Finally swap images to repeat process again later
-		std::iter_swap(_Images.begin(), _Images.end() - 1);
+		std::iter_swap(_images.begin(), _images.end() - 1);
 	}
 }
 
-void ParallaxItem::render()
+void ParallaxItem::Render()
 {
-	for (auto& Image : _Images)
+	for (auto& Image : _images)
 	{
-		Image->render();
+		Image->Render();
 	}
 }

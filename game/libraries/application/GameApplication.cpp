@@ -131,10 +131,10 @@ GameApplication::GameApplication(int argc, char** argv)
 	_applicationScaleY = float(_appHeight) / float(Sizes::Screen::MaximumHeight);
 
 	//? Here pass screen details to populate inside libraries
-	_Level = std::make_unique<Level>(_appWidth, _appHeight, _applicationScaleX, _applicationScaleY);
+	_level = std::make_unique<Level>(_appWidth, _appHeight, _applicationScaleX, _applicationScaleY);
 
 	//? Invoke memory for MousePosition point
-	_MousePosition = std::make_unique<Point>(0, 0);
+	_mousePosition = std::make_unique<Point>(0, 0);
 
 	// std::cout << "Constructed GameApplication size of:" << sizeof(*this) << '\n';
 }
@@ -150,7 +150,7 @@ void GameApplication::PreInit(int& width, int& height, bool& fullscreen)
 
 bool GameApplication::Init()
 {
-	_Level->Initialize(_bIsRunning);
+	_level->Initialize(_bIsRunning);
 	return true;
 }
 
@@ -162,47 +162,47 @@ bool GameApplication::Tick()
 	{
 		//& Checking keyboard
 
-		if (_pressedLeft)
+		if (_bPressedLeft)
 		{
-			_Level->onLeftArrowClicked();
+			_level->OnLeftArrowClicked();
 		}
-		if (_pressedRight)
+		if (_bPressedRight)
 		{
-			_Level->onRightArrowClicked();
+			_level->OnRightArrowClicked();
 		}
-		if (_pressedUp)
+		if (_bPressedUp)
 		{
-			_Level->onUpArrowClicked();
+			_level->OnUpArrowClicked();
 		}
-		if (_pressedDown)
+		if (_bPressedDown)
 		{
-			_Level->onDownArrowClicked();
-		}
-
-		if (!_pressedLeft && !_pressedRight)
-		{
-			_Level->onHorizontalArrowsReleased();
-		}
-		if (!_pressedUp && !_pressedDown)
-		{
-			_Level->onVerticalArrowsReleased();
+			_level->OnDownArrowClicked();
 		}
 
-		_Level->Tick(_deltaT, _bIsRunning);
+		if (!_bPressedLeft && !_bPressedRight)
+		{
+			_level->OnHorizontalArrowsReleased();
+		}
+		if (!_bPressedUp && !_bPressedDown)
+		{
+			_level->OnVerticalArrowsReleased();
+		}
+
+		_level->Tick(_deltaT, _bIsRunning);
 
 		if (_bLeftMouseButtonClicked)
 		{
-			_Level->onMouseLeftButtonClick(*_MousePosition);
+			_level->OnMouseLeftButtonClick(*_mousePosition);
 		}
 		else
 		{
-			_Level->onMouseLeftButtonReleased();
+			_level->OnMouseLeftButtonReleased();
 		}
 	}
 	else
 	{
-		_Level->Clear();					//? tested
-		_Level->Initialize(_bIsRunning);	//? tested
+		_level->Clear();					//? tested
+		_level->Initialize(_bIsRunning);	//? tested
 
 		_bLeftMouseButtonClicked = false;
 	}
@@ -214,13 +214,13 @@ bool GameApplication::Tick()
 	return false;
 }
 
-void GameApplication::onMouseMove(int x, int y, int xrelative, int yrelative)
+void GameApplication::OnMouseMove(int x, int y, int xrelative, int yrelative)
 {
-	_MousePosition->x = x;
-	_MousePosition->y = y;
+	_mousePosition->x = x;
+	_mousePosition->y = y;
 }
 
-void GameApplication::onMouseButtonClick(IAMouseButton button, bool isReleased)
+void GameApplication::OnMouseButtonClick(IAMouseButton button, bool isReleased)
 {
 	switch (button)
 	{
@@ -247,29 +247,29 @@ void GameApplication::onMouseButtonClick(IAMouseButton button, bool isReleased)
 	}
 }
 
-void GameApplication::onKeyPressed(IAKey k)
+void GameApplication::OnKeyPressed(IAKey k)
 {
-	if (_Level)
+	if (_level)
 	{
-		_Level->enablePlayerGravity(true);
+		_level->EnablePlayerGravity(true);
 	}
 
 	switch (k)
 	{
 		case IAKey::UP: {
-			_pressedUp = true;
+			_bPressedUp = true;
 			break;
 		}
 		case IAKey::DOWN: {
-			_pressedDown = true;
+			_bPressedDown = true;
 			break;
 		}
 		case IAKey::RIGHT: {
-			_pressedRight = true;
+			_bPressedRight = true;
 			break;
 		}
 		case IAKey::LEFT: {
-			_pressedLeft = true;
+			_bPressedLeft = true;
 			break;
 		}
 		default: {
@@ -278,20 +278,20 @@ void GameApplication::onKeyPressed(IAKey k)
 	}
 }
 
-void GameApplication::onKeyReleased(IAKey k)
+void GameApplication::OnKeyReleased(IAKey k)
 {
 	switch (k)
 	{
 		case IAKey::UP:
 		case IAKey::DOWN: {
-			_pressedUp = false;
-			_pressedDown = false;
+			_bPressedUp = false;
+			_bPressedDown = false;
 			break;
 		}
 		case IAKey::RIGHT:
 		case IAKey::LEFT: {
-			_pressedRight = false;
-			_pressedLeft = false;
+			_bPressedRight = false;
+			_bPressedLeft = false;
 			break;
 		}
 

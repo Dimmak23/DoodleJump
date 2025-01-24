@@ -11,5 +11,5 @@
 class IRelocatableActor
 {
 public:
-	virtual void relocate(int, int) = 0;
+	virtual void Relocate(int, int) = 0;
 };

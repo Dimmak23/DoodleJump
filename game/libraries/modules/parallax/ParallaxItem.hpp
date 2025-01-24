@@ -48,11 +48,11 @@ public:
 
 	//* Manipulators
 
-	virtual void relocate(int delta_x, int delta_y) override;
+	virtual void Relocate(int delta_x, int delta_y) override;
 
 	//* Graphics
 
-	void render();
+	void Render();
 
 private:
 	//@ Methods
@@ -64,11 +64,11 @@ private:
 	//@ Members
 
 	//* Modules
-	std::vector<std::unique_ptr<Image>> _Images;
-	std::unique_ptr<Locator> _Locator{ nullptr };
+	std::vector<std::unique_ptr<Image>> _images;
+	std::unique_ptr<Locator> _locator{ nullptr };
 
 	//* Parent window
-	const ScreenItem* _Screen{ nullptr };
+	const ScreenItem* _screen{ nullptr };
 
 	bool _bNotMovedYet{ true };
 };

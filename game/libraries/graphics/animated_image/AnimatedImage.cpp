@@ -13,7 +13,7 @@ AnimatedImage::AnimatedImage(const ScreenItem* parent_screen,								//
 							 const char* path, const unsigned int& sprites_quantity,		//
 							 const int& destination_width, const int& destination_height	//
 							 )
-	: Image(parent_screen, destination_width, destination_height), _FramesQty(sprites_quantity)
+	: Image(parent_screen, destination_width, destination_height), _framesQty(sprites_quantity)
 {
 	std::string path_to_sprite(path);
 	std::string delimeter;
@@ -21,13 +21,13 @@ AnimatedImage::AnimatedImage(const ScreenItem* parent_screen,								//
 	for (size_t index{}; index < sprites_quantity; index++)
 	{
 		delimeter = std::to_string(index);
-		_Sprites.push_back(Render::createSprite((path_to_sprite + delimeter + adder).c_str()));
+		_sprites.push_back(Render::CreateSprite((path_to_sprite + delimeter + adder).c_str()));
 		//? Set initial size
-		Render::setSpriteSize(_Sprites.back(), _rectangle.w, _rectangle.h);
+		Render::SetSpriteSize(_sprites.back(), _rectangle.w, _rectangle.h);
 	}
 
 	//? Set inital sprite
-	_Sprite = _Sprites[0];
+	_sprite = _sprites[0];
 
 	// std::cout << std::format("Constructed AnimatedImage with size: {}.\n", sizeof(*this));
 }
@@ -36,22 +36,22 @@ AnimatedImage::~AnimatedImage()
 {
 	// std::cout << "Destructor ~AnimatedImage()\n";
 	//? Releasing resources
-	for (auto& sprite : _Sprites)
+	for (auto& sprite : _sprites)
 	{
 		//? Deleting only non-active frames
-		if (sprite != _Sprite)
+		if (sprite != _sprite)
 		{
-			Render::destroySprite(&sprite);
+			Render::DestroySprite(&sprite);
 			// std::cout << "Deleted single frame from AnimatedImage...\n";
 		}
 	}
 	// std::cout << "Deleted AnimatedImage...\n";
 }
 
-void AnimatedImage::setCharacterFrame(size_t index)
+void AnimatedImage::SetCharacterFrame(size_t index)
 {
-	if (index < _FramesQty)
+	if (index < _framesQty)
 	{
-		_Sprite = _Sprites[index];	  //? This will be rendered later
+		_sprite = _sprites[index];	  //? This will be rendered later
 	}
 }

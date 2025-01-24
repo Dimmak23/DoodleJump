@@ -38,91 +38,91 @@ public:
 	//* Manipulators: Angle movement
 
 	//? Call every frame to update angles and rotate
-	void updateTheta(float deltaT);
-	void updateOmega(float deltaT);
-	void rotate();
+	void UpdateTheta(float deltaT);
+	void UpdateOmega(float deltaT);
+	void Rotate();
 
 	//* Manipulators: Linear movement
 
 	//? Call after button pressed or any other condition
-	void accelerateX(float deltaAccelerationX);
-	virtual void accelerateY(float deltaAccelerationY) override;
-	void clearAccelerationX();
-	virtual void clearAccelerationY() override;
+	void AccelerateX(float deltaAccelerationX);
+	virtual void AccelerateY(float deltaAccelerationY) override;
+	void ClearAccelerationX();
+	virtual void ClearAccelerationY() override;
 
-	void clearAll();
+	void ClearAll();
 
-	void speedUpX(float deltaVelocityX);
-	virtual void speedUpY(float deltaVelocityY) override;
+	void SpeedUpX(float deltaVelocityX);
+	virtual void SpeedUpY(float deltaVelocityY) override;
 
-	Deltas constantSpeedUp(float delta_t, float delta_x, float delta_y);
-	virtual void constantSpeedUpY(float delta_t, float delta_y) override;
+	Deltas ConstantSpeedUp(float delta_t, float delta_x, float delta_y);
+	virtual void ConstantSpeedUpY(float delta_t, float delta_y) override;
 
 	//? Call every frame to update linear parameters and move
-	void updateImpulse(float deltaT);
-	void updatePositions(float deltaT);
-	void updateVelocities(float deltaT);
-	void updateAmmoAccelerations(float deltaT);
-	void updateAccelerations(float deltaT);
-	virtual void move() override;
-	virtual void move(Point point) override;
-	virtual void moveByCamera(Point point) override;
+	void UpdateImpulse(float deltaT);
+	void UpdatePositions(float deltaT);
+	void UpdateVelocities(float deltaT);
+	void UpdateAmmoAccelerations(float deltaT);
+	void UpdateAccelerations(float deltaT);
+	virtual void Move() override;
+	virtual void Move(Point point) override;
+	virtual void MoveByCamera(Point point) override;
 
 	//* Manipulators: Forcing
 
-	void addForceX(float deltaForceX);
-	virtual void addForceY(float deltaForceY) override;
+	void AddForceX(float deltaForceX);
+	virtual void AddForceY(float deltaForceY) override;
 
-	void clearForceX();
-	virtual void clearForceY() override;
+	void ClearForceX();
+	virtual void ClearForceY() override;
 
-	void enableGravity(bool enable);
-	void updateGravityOnly(float delta_t);
+	void EnableGravity(bool enable);
+	void UpdateGravityOnly(float delta_t);
 
 	//* Getters
 
 	//? Host API
-	Rectangle* getHost();
+	Rectangle* GetHost();
 
 	//? Angle movement
-	double getDeltaTheta() const;
-	double getTheta() const;
-	double getDeltaOmega() const;
-	double getOmega() const;
+	double GetDeltaTheta() const;
+	double GetTheta() const;
+	double GetDeltaOmega() const;
+	double GetOmega() const;
 
 	//? Linear movement
-	Speed_2D getSpeed() const;	  //!
-	virtual LinearSpeed getLinearSpeed() override;
-	Acceleration_2D getAcceleration() const;
-	Deltas getMoveDeltas() const;
-	Deltas getForces() const;
+	Speed_2D GetSpeed() const;
+	virtual LinearSpeed GetLinearSpeed() override;
+	Acceleration_2D GetAcceleration() const;
+	Deltas GetMoveDeltas() const;
+	Deltas GetForces() const;
 
 	//? States
-	virtual bool getIsJumping() const override;
-	virtual bool getIsFalling() const override;
-	virtual bool getOnPlatform() const override;
-	bool getIsGravityEnabled() const;
+	virtual bool GetIsJumping() const override;
+	virtual bool GetIsFalling() const override;
+	virtual bool GetOnPlatform() const override;
+	bool GetIsGravityEnabled() const;
 
 	//* Setters
 
 	//! Need to link Locator with PhysicsEngine cause after relocate engine don't know about it
 	//? Save only when it's different, so precise data won't be loosed
-	virtual void setPreciseCoordinate(int x, int y) override;
-	virtual void setCoordinate(int x, int y) override;
+	virtual void SetPreciseCoordinate(int x, int y) override;
+	virtual void SetCoordinate(int x, int y) override;
 
 	//? Angle movement
-	bool speedUpOmega(double wSource, double wDestination, float timeDuration, float deltaTime);
-	void setOmega(double omega);
-	void clearOmega();
-	void clearDeltaOmega();
-	void setDeltaTheta(double deltaTh);
-	void clearDeltaTheta();
+	bool SpeedUpOmega(double wSource, double wDestination, float timeDuration, float deltaTime);
+	void SetOmega(double omega);
+	void ClearOmega();
+	void ClearDeltaOmega();
+	void SetDeltaTheta(double deltaTh);
+	void ClearDeltaTheta();
 
 	//? Linear movement
 	// bool speedUpVelocity(double wSource, double wDestination, float timeDuration, float deltaTime);
-	void setVelocity(double velocityX, double velocityY);
-	virtual void setConstantVelocity(double velocity_x, double velocity_y) override;
-	void clearVelocity();
+	void SetVelocity(double velocityX, double velocityY);
+	virtual void SetConstantVelocity(double velocity_x, double velocity_y) override;
+	void ClearVelocity();
 	// void clearDeltaVelocity();
 	// void setDeltaAcceleration(double deltaAccelerationX, double deltaAccelerationY);
 	// void clearDeltaAcceleration();
@@ -130,18 +130,18 @@ public:
 	// void clearDeltaAccelerationY();
 
 	//? Update body position
-	void resetBody(Rectangle* body);
+	void ResetBody(Rectangle* body);
 
 	//? Mechanics
-	virtual void setOnTopOfFrame(bool NewValue) override;
-	virtual void setOnTopOfAnyPlatform(bool NewValue) override;
-	virtual void setIsJumping(bool new_state) override;
-	virtual void setIsFalling(bool new_state) override;
+	virtual void SetOnTopOfFrame(bool NewValue) override;
+	virtual void SetOnTopOfAnyPlatform(bool NewValue) override;
+	virtual void SetIsJumping(bool new_state) override;
+	virtual void SetIsFalling(bool new_state) override;
 
 	//* Setters: parameters
-	void setMass(float NewMass);
-	void setSurfaceFriction(double new_surface_friction);
-	virtual void setAirFrictionY(double new_air_friction) override;
+	void SetMass(float NewMass);
+	void SetSurfaceFriction(double new_surface_friction);
+	virtual void SetAirFrictionY(double new_air_friction) override;
 
 	//@ Members
 
@@ -158,7 +158,7 @@ private:
 	PhysicsEngine& operator=(const PhysicsEngine&) = delete;
 
 	//* Utilities
-	void clearTimer();
+	void ClearTimer();
 
 	//@ Members
 
@@ -173,6 +173,45 @@ private:
 	double _deltaOmega{};	 //? velocity
 	double _deltaAlpha{};	 //? acceleration
 
+	//* Absolete
+
+	//? Angle movement
+	// double _Theta{}; //? angle
+	double _omega{};	//? velocity
+	double _alpha{};	//? acceleration
+
+	//? Linear movement
+	double _x{};
+	double _y{};
+	double _velocityX{};
+	double _maxVelocityX{ 0.3 };
+	double _minVelocityX{ -0.3 };
+	double _velocityY{};
+	double _maxVelocityY{ 0.3 };
+	double _minVelocityY{ -0.3 };
+	double _accelerationX{};
+	double _maxAccelerationX{ 5.5 };
+	double _minAccelerationX{ -5.5 };
+	double _accelerationY{};
+	double _maxAccelerationY{ 5.5 };
+	double _minAccelerationY{ -5.5 };
+
+	double _constVelocityX{};
+	double _constVelocityY{};
+
+	//? Manipulators
+	double _surfaceFriction{ 0.002 };
+	double _accelerationFriction{ 0.003 };
+	double _impulseX{};
+	double _impulseY{};
+	double _airFrictionY{ 0.002 };
+	double _impulseLoss{ 0.999 };
+
+	double _mass{ 0.25 };
+
+	//* Utitlities
+	float _spentTime{};
+
 	//? Linear movement
 	float _deltaX{};
 	float _deltaY{};
@@ -186,48 +225,12 @@ private:
 	float _deltaImpulseY{ 0.f };
 	float _forceX{};
 	float _forceY{};
+
+	//* States
+
 	bool _bOnPlatform{ true };
 	bool _bOnFrame{ false };
 	bool _bIsGravityEnabled{ false };
 	bool _bIsJumping{ false };
 	bool _bIsFalling{ false };
-
-	//* Absolete
-
-	//? Angle movement
-	// double _Theta{}; //? angle
-	double _Omega{};	//? velocity
-	double _Alpha{};	//? acceleration
-
-	//? Linear movement
-	double _X{};
-	double _Y{};
-	double _VelocityX{};
-	double _MaxVelocityX{ 0.3 };
-	double _MinVelocityX{ -0.3 };
-	double _VelocityY{};
-	double _MaxVelocityY{ 0.3 };
-	double _MinVelocityY{ -0.3 };
-	double _AccelerationX{};
-	double _MaxAccelerationX{ 5.5 };
-	double _MinAccelerationX{ -5.5 };
-	double _AccelerationY{};
-	double _MaxAccelerationY{ 5.5 };
-	double _MinAccelerationY{ -5.5 };
-
-	double _ConstVelocityX{};
-	double _ConstVelocityY{};
-
-	//? Manipulators
-	double _SurfaceFriction{ 0.002 };
-	double _AccelerationFriction{ 0.003 };
-	double _ImpulseX{};
-	double _ImpulseY{};
-	double _AirFrictionY{ 0.002 };
-	double _ImpulseLoss{ 0.999 };
-
-	double _Mass{ 0.25 };
-
-	//* Utitlities
-	float __SpentTime{};
 };

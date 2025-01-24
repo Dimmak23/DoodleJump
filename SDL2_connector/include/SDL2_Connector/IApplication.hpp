@@ -41,15 +41,15 @@ public:
 
 	//? param: xrel, yrel: The relative motion in the X/Y direction
 	//? param: x, y : coordinate, relative to window
-	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) = 0;
+	virtual void OnMouseMove(int x, int y, int xrelative, int yrelative) = 0;
 
-	virtual void onMouseButtonClick(IAMouseButton button, bool isReleased) = 0;
+	virtual void OnMouseButtonClick(IAMouseButton button, bool isReleased) = 0;
 
-	virtual void onKeyPressed(IAKey k) = 0;
+	virtual void OnKeyPressed(IAKey k) = 0;
 
-	virtual void onKeyReleased(IAKey k) = 0;
+	virtual void OnKeyReleased(IAKey k) = 0;
 
 	virtual const char* GetTitle() = 0;
 
-	virtual ~IApplication(){};
+	virtual ~IApplication() {};
 };

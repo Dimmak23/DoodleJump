@@ -10,7 +10,7 @@
 #include <SDL2/SDL_image.h>
 #endif
 
-//* Vendor connection
+//* SDL2: connector
 #include "IApplication.hpp"
 #include "Loger.hpp"
 #include "Render.hpp"
@@ -36,7 +36,7 @@ int Launcher::Run(IApplication* application)
 	//? Create renderer
 	if (!Launcher::InitializeRenderer())
 	{
-		SDL_DestroyWindow(Render::getWindow());
+		SDL_DestroyWindow(Render::GetWindow());
 		IMG_Quit();
 		SDL_Quit();
 		return -1;
@@ -52,16 +52,18 @@ int Launcher::Run(IApplication* application)
 	while (!quit)
 	{
 		//? Clear before any rendering
-		SDL_RenderClear(Render::getRenderer());
+		SDL_RenderClear(Render::GetRenderer());
 
 		//? Here we play
+		// ? It's GameApplication (which implements IApplication class) responsibility
+		// ? to return true when game should be over by game reasons (lifes exceeded, etc.)
 		if (application->Tick())
 		{
 			break;
 		}
 
 		//? Enable after
-		SDL_RenderPresent(Render::getRenderer());
+		SDL_RenderPresent(Render::GetRenderer());
 
 		//* Event handling
 		while (SDL_PollEvent(_events.get()))
@@ -83,19 +85,19 @@ int Launcher::Run(IApplication* application)
 				//? Handle arrows
 				if (_events->key.keysym.sym == SDLK_LEFT)
 				{
-					application->onKeyPressed(IAKey::LEFT);
+					application->OnKeyPressed(IAKey::LEFT);
 				}
 				if (_events->key.keysym.sym == SDLK_RIGHT)
 				{
-					application->onKeyPressed(IAKey::RIGHT);
+					application->OnKeyPressed(IAKey::RIGHT);
 				}
 				if (_events->key.keysym.sym == SDLK_UP)
 				{
-					application->onKeyPressed(IAKey::UP);
+					application->OnKeyPressed(IAKey::UP);
 				}
 				if (_events->key.keysym.sym == SDLK_DOWN)
 				{
-					application->onKeyPressed(IAKey::DOWN);
+					application->OnKeyPressed(IAKey::DOWN);
 				}
 			}
 
@@ -105,26 +107,26 @@ int Launcher::Run(IApplication* application)
 				//? Handle arrows
 				if (_events->key.keysym.sym == SDLK_LEFT)
 				{
-					application->onKeyReleased(IAKey::LEFT);
+					application->OnKeyReleased(IAKey::LEFT);
 				}
 				if (_events->key.keysym.sym == SDLK_RIGHT)
 				{
-					application->onKeyReleased(IAKey::RIGHT);
+					application->OnKeyReleased(IAKey::RIGHT);
 				}
 				if (_events->key.keysym.sym == SDLK_UP)
 				{
-					application->onKeyReleased(IAKey::UP);
+					application->OnKeyReleased(IAKey::UP);
 				}
 				if (_events->key.keysym.sym == SDLK_DOWN)
 				{
-					application->onKeyReleased(IAKey::DOWN);
+					application->OnKeyReleased(IAKey::DOWN);
 				}
 			}
 
 			//? Did mouse have been moved?
 			if (_events->type == SDL_MOUSEMOTION)
 			{
-				application->onMouseMove(					 //
+				application->OnMouseMove(					 //
 					_events->motion.x, _events->motion.y,	 //
 					_events->motion.xrel, _events->motion.yrel);
 			}
@@ -136,15 +138,15 @@ int Launcher::Run(IApplication* application)
 			{
 				if (_events->button.button == SDL_BUTTON_LEFT)
 				{
-					application->onMouseButtonClick(IAMouseButton::LEFT, false);
+					application->OnMouseButtonClick(IAMouseButton::LEFT, false);
 				}
 				if (_events->button.button == SDL_BUTTON_MIDDLE)
 				{
-					application->onMouseButtonClick(IAMouseButton::MIDDLE, false);
+					application->OnMouseButtonClick(IAMouseButton::MIDDLE, false);
 				}
 				if (_events->button.button == SDL_BUTTON_RIGHT)
 				{
-					application->onMouseButtonClick(IAMouseButton::RIGHT, false);
+					application->OnMouseButtonClick(IAMouseButton::RIGHT, false);
 				}
 			}
 
@@ -153,15 +155,15 @@ int Launcher::Run(IApplication* application)
 			{
 				if (_events->button.button == SDL_BUTTON_LEFT)
 				{
-					application->onMouseButtonClick(IAMouseButton::LEFT, true);
+					application->OnMouseButtonClick(IAMouseButton::LEFT, true);
 				}
 				if (_events->button.button == SDL_BUTTON_MIDDLE)
 				{
-					application->onMouseButtonClick(IAMouseButton::MIDDLE, true);
+					application->OnMouseButtonClick(IAMouseButton::MIDDLE, true);
 				}
 				if (_events->button.button == SDL_BUTTON_RIGHT)
 				{
-					application->onMouseButtonClick(IAMouseButton::RIGHT, true);
+					application->OnMouseButtonClick(IAMouseButton::RIGHT, true);
 				}
 			}
 		}
@@ -171,8 +173,8 @@ int Launcher::Run(IApplication* application)
 	application->Close();
 
 	//? Release Renderer, Window and other SDL2 resources
-	SDL_DestroyRenderer(Render::getRenderer());
-	SDL_DestroyWindow(Render::getWindow());
+	SDL_DestroyRenderer(Render::GetRenderer());
+	SDL_DestroyWindow(Render::GetWindow());
 	IMG_Quit();
 	SDL_Quit();
 	LogLine("--r--\tSDL features released...");
@@ -184,9 +186,9 @@ uint64_t Launcher::GetTickCount() { return SDL_GetTicks64(); }
 
 void Launcher::GetScreenSize(int& width, int& height)
 {
-	if (Render::getRenderer())
+	if (Render::GetRenderer())
 	{
-		SDL_GetRendererOutputSize(Render::getRenderer(), &width, &height);
+		SDL_GetRendererOutputSize(Render::GetRenderer(), &width, &height);
 		LogLine("Resolution-> width: ", width, ", height: ", height);
 	}
 	else
@@ -234,7 +236,7 @@ bool Launcher::InitializeWindow(IApplication* application)
 		CurrentWindowFlags = SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL;
 	}
 
-	Render::setWindow(					  //
+	Render::SetWindow(					  //
 		SDL_CreateWindow(				  //
 			application->GetTitle(),	  //? We need application title:
 			SDL_WINDOWPOS_UNDEFINED,	  //
@@ -245,7 +247,7 @@ bool Launcher::InitializeWindow(IApplication* application)
 	//! But also have to provide a hint, because Windows fallback to the Direct3D
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 
-	if (Render::getWindow() == nullptr)
+	if (Render::GetWindow() == nullptr)
 	{
 		LogLine("Error: Couldn't create window = ", SDL_GetError());
 		return false;
@@ -263,8 +265,8 @@ bool Launcher::InitializeWindow(IApplication* application)
 bool Launcher::InitializeRenderer()
 {
 	//? Create a renderer for GPU accelerated drawing
-	Render::setRenderer(																  //
-		SDL_CreateRenderer(Render::getWindow(),											  //
+	Render::SetRenderer(																  //
+		SDL_CreateRenderer(Render::GetWindow(),											  //
 						   -1,															  //
 						   SDL_RENDERER_ACCELERATED /* | SDL_RENDERER_PRESENTVSYNC */)	  //
 	);
@@ -280,7 +282,7 @@ bool Launcher::InitializeRenderer()
 	// TODO: read return result
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");	 //? Enable linear texture filtering
 
-	if (Render::getRenderer() == nullptr)
+	if (Render::GetRenderer() == nullptr)
 	{
 		LogLine("Error: Couldn't create renderer = ", SDL_GetError());
 		return false;
@@ -291,11 +293,11 @@ bool Launcher::InitializeRenderer()
 	}
 
 	//? Ensure transparent graphics are drawn correctly.
-	SDL_SetRenderDrawBlendMode(Render::getRenderer(), SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(Render::GetRenderer(), SDL_BLENDMODE_BLEND);
 
 	//? Output the name of the render driver.
 	SDL_RendererInfo rendererInfo;
-	SDL_GetRendererInfo(Render::getRenderer(), &rendererInfo);
+	SDL_GetRendererInfo(Render::GetRenderer(), &rendererInfo);
 
 	return true;
 }

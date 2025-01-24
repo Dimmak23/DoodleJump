@@ -1,20 +1,20 @@
 //* Source header
 #include "rectangle/RectangleCore.hpp"
 
-Rectangle* RectangleCore::getBody() { return &_rectangle; }
+Rectangle* RectangleCore::GetBody() { return &_rectangle; }
 
-int RectangleCore::top() const { return _rectangle.y; }
+int RectangleCore::Top() const { return _rectangle.y; }
 
-int RectangleCore::bottom() const { return (_rectangle.y + _rectangle.h); }
+int RectangleCore::Bottom() const { return (_rectangle.y + _rectangle.h); }
 
-int RectangleCore::left() const { return _rectangle.x; }
+int RectangleCore::Left() const { return _rectangle.x; }
 
-int RectangleCore::right() const { return _rectangle.x + _rectangle.w; }
+int RectangleCore::Right() const { return _rectangle.x + _rectangle.w; }
 
-Point RectangleCore::center() const { return { _rectangle.x + _rectangle.w / 2, _rectangle.y + _rectangle.h / 2 }; }
+Point RectangleCore::Center() const { return { _rectangle.x + _rectangle.w / 2, _rectangle.y + _rectangle.h / 2 }; }
 
-unsigned int RectangleCore::width() const { return _rectangle.w; }
+unsigned int RectangleCore::Width() const { return _rectangle.w; }
 
-unsigned int RectangleCore::height() const { return _rectangle.h; }
+unsigned int RectangleCore::Height() const { return _rectangle.h; }
 
-void RectangleCore::setBody(const Rectangle& new_body) { _rectangle = new_body; }
+void RectangleCore::SetBody(const Rectangle& new_body) { _rectangle = new_body; }

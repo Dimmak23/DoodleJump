@@ -1,9 +1,6 @@
 #pragma once
 
 //* Game
-//? Modules
-//? Inheritance
-//? Interfaces
 #include "level/world/interface/I_DynamicSpawn.hpp"
 #include "level/world/interface/I_Universe.hpp"
 
@@ -27,10 +24,9 @@ class Wormhole;
 class RectangleShape;
 class IStoppable;
 
-//* Custom types
-
 class WorldDynamic : public IUniverse, public IDynamicSpawn
 {
+	//* Custom types
 	using SpawnCallBackType = void (WorldDynamic::*)(const int&, const int&, const unsigned int&);
 	using ContainerPopulationCallBackType = void (WorldDynamic::*)(const int);
 
@@ -44,9 +40,8 @@ public:
 	virtual ~WorldDynamic();
 
 	//* Empty
-	// TODO: find a way to get rid of empty implementations from interfaces
-	virtual UniverseDot traverseNewPlatforms(size_t index) override;
-	virtual void onSpawnNewActor(const int& x, const int& y, const unsigned int& variance) override;
+	virtual UniverseDot TraverseNewPlatforms(size_t index) override;
+	virtual void OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance) override;
 
 	//@ API for other worlds
 
@@ -54,36 +49,36 @@ public:
 
 	//* Manipulators
 
-	void onSpawnNewEnemy(const int& x, const int& y, const unsigned int& variance);
-	void onSpawnNewWormhole(const int& x, const int& y, const unsigned int& variance);
-	virtual void onSpawnNewMoveableActor(const Point& begin, const Point& end) override;
+	void OnSpawnNewEnemy(const int& x, const int& y, const unsigned int& variance);
+	void OnSpawnNewWormhole(const int& x, const int& y, const unsigned int& variance);
+	virtual void OnSpawnNewMoveableActor(const Point& begin, const Point& end) override;
 
 	//@ API for level
 
 	//* Setters
 
-	void setLevelConnection(IStoppable* new_level);
-	void setStaticWorldConnection(IUniverse* new_world);
-	void setSceneConnection(ILocatableScene* new_scene);
-	void setPlayerColliderConnection(ICollidable* new_collider);
-	void setPlayerBodyConnection(RectangleShape* character_body);
-	void setPlayerEngineConnection(IMechanics* character_engine);
+	void SetLevelConnection(IStoppable* new_level);
+	void SetStaticWorldConnection(IUniverse* new_world);
+	void SetSceneConnection(ILocatableScene* new_scene);
+	void SetPlayerColliderConnection(ICollidable* new_collider);
+	void SetPlayerBodyConnection(RectangleShape* character_body);
+	void SetPlayerEngineConnection(IMechanics* character_engine);
 
 	//* Manipulators
 
-	void initialize();
-	void checkForSpawnNewEnemies(size_t* new_platforms_quantity);
-	void checkForSpawnNewWormholes();
-	void onEnemyKilled(size_t index);	   //? Calling only Scene there
-	void onAmmoDestroyed(size_t index);	   //? Calling only Scene there
+	void Initialize();
+	void CheckForSpawnNewEnemies(size_t* new_platforms_quantity);
+	void CheckForSpawnNewWormholes();
+	void OnEnemyKilled(size_t index);	   //? Calling only Scene there
+	void OnAmmoDestroyed(size_t index);	   //? Calling only Scene there
 	//? Call it every frame to check if we can delete some platforms
-	void cleaner();
+	void Cleaner();
 
-	void tick(float delta_t);
+	void Tick(float delta_t);
 
 	//* Graphics
-	//! Maybe all renders should be const methods
-	void render();
+	//! Maybe all renders should be const methods?
+	void Render();
 
 private:
 	//@ Methods
@@ -93,66 +88,69 @@ private:
 	WorldDynamic& operator=(const WorldDynamic&) = delete;
 
 	//* Safe funstions to add new actor
-	void onAddNewActorToScene(IRelocatableActor* new_actor);
-	void onAddNewActorToPlayerCollider(RectangleCore* new_actor);
-	void onAddNewWormholeToScene(IRelocatableActor* new_actor);
-	void onAddNewWormholeToPlayerCollider(RectangleCore* new_actor);
-	void onAddNewAmmoToScene(IRelocatableActor* new_actor);
-	void onAddNewAmmoToPlayerCollider(RectangleCore* new_actor, IMechanics* engine);
+	void OnAddNewActorToScene(IRelocatableActor* new_actor);
+	void OnAddNewActorToPlayerCollider(RectangleCore* new_actor);
+	void OnAddNewWormholeToScene(IRelocatableActor* new_actor);
+	void OnAddNewWormholeToPlayerCollider(RectangleCore* new_actor);
+	void OnAddNewAmmoToScene(IRelocatableActor* new_actor);
+	void OnAddNewAmmoToPlayerCollider(RectangleCore* new_actor, IMechanics* engine);
 
 	//* Safe functions to remove front actor
-	void onRemoveFrontActorFromScene();
-	void onRemoveFrontActorFromPlayerCollider();
-	void onRemoveFrontWormholeFromScene();
-	void onRemoveFrontWormholeFromPlayerCollider();
-	void onRemoveAmmoMissed(size_t index);
-	void onRemoveFrontAmmoFromScene();
-	void onRemoveFrontAmmoFromPlayerCollider();
+	void OnRemoveFrontActorFromScene();
+	void OnRemoveFrontActorFromPlayerCollider();
+	void OnRemoveFrontWormholeFromScene();
+	void OnRemoveFrontWormholeFromPlayerCollider();
+	void OnRemoveAmmoMissed(size_t index);
+	void OnRemoveFrontAmmoFromScene();
+	void OnRemoveFrontAmmoFromPlayerCollider();
 
-	void doIndexTraversing(int& counter, RandomSpawn* spawner, SpawnCallBackType onSpawn,
+	void DoIndexTraversing(int& counter, RandomSpawn* spawner, SpawnCallBackType onSpawn,
 						   ContainerPopulationCallBackType onSave);
-	void onSaveAvailablePlaces(const int);
+	void OnSaveAvailablePlaces(const int);
 
 	//@ Members
 
 	//* Containers
-	std::vector<std::unique_ptr<Image>> _Enemies;
-	std::vector<std::unique_ptr<Locator>> _EnemyLocators;	 // TODO: find a way to use single locator for all
-	std::vector<std::unique_ptr<Ammo>> _AmmoTiles;
-	std::vector<std::unique_ptr<Image>> _Wormholes;
-	std::vector<std::unique_ptr<Locator>> _WormholesLocators;	 // TODO: find a way to use single locator for all
-	std::vector<std::unique_ptr<Wormhole>> _WormholesEngines;
-	std::vector<int> _EmptyPlatformsIndecies;
+	std::vector<std::unique_ptr<Image>> _enemies;
+	std::vector<std::unique_ptr<Locator>> _enemyLocators;	 // TODO: find a way to use single locator for all
+	std::vector<std::unique_ptr<Ammo>> _ammoTiles;
+	std::vector<std::unique_ptr<Image>> _wormholes;
+	std::vector<std::unique_ptr<Locator>> _wormholesLocators;	 // TODO: find a way to use single locator for all
+	std::vector<std::unique_ptr<Wormhole>> _wormholesEngines;
+	std::vector<int> _emptyPlatformsIndecies;
 
-	std::unique_ptr<RandomSpawn> _EnemySpawner{ nullptr };
-	std::unique_ptr<RandomSpawn> _WormholeSpawner{ nullptr };
+	std::unique_ptr<RandomSpawn> _enemySpawner{ nullptr };
+	std::unique_ptr<RandomSpawn> _wormholeSpawner{ nullptr };
 
 	//* Level connectors
-	ILocatableScene* _Scene{ nullptr };
-	ICollidable* _PlayerCollider{ nullptr };
-	RectangleShape* _PlayerBody{ nullptr };
-	IMechanics* _PlayerEngine{ nullptr };
+	ILocatableScene* _scene{ nullptr };
+	ICollidable* _playerCollider{ nullptr };
+	RectangleShape* _playerBody{ nullptr };
+	IMechanics* _playerEngine{ nullptr };
 
 	//* Connection to the Static World
-	IUniverse* _StaticWorld;
+	IUniverse* _staticWorld;
 
 	//* Parents
-	const ScreenItem* _Screen{ nullptr };
-	IStoppable* _Level{ nullptr };
-
-	//* Checker
-	int _ThresholdY{};
-
-	//* Debugging
-	size_t _OverallDeleted{};			  // TODO: serialize this and set after level reload
-	size_t _OverallDeletedAmmos{};		  // TODO: serialize this and set after level reload
-	size_t _OverallDeletedWormholes{};	  // TODO: serialize this and set after level reload
-	bool _bOneWormholeSpawned{ false };
+	const ScreenItem* _screen{ nullptr };
+	IStoppable* _level{ nullptr };
 
 	//* Images path
-	const char* _EnemiesPathCut{};
-	const char* _EnemiesPathAdder{};
-	const unsigned int _EnemiesQuantity{};
-	const char* _WormholePath{};
-	const char* _AmmoPath{};
+	const char* _enemiesPathCut{};
+	const char* _enemiesPathAdder{};
+	const char* _wormholePath{};
+	const char* _ammoPath{};
+
+	//* Checker
+	int _thresholdY{};
+
+	/*
+	//* Debugging
+	size_t _overallDeleted{};			  // TODO: serialize this and set after level reload
+	size_t _overallDeletedAmmos{};		  // TODO: serialize this and set after level reload
+	size_t _overallDeletedWormholes{};	  // TODO: serialize this and set after level reload
+	 */
+	const unsigned int _enemiesQuantity{};
+
+	bool _bOneWormholeSpawned{ false };
 };

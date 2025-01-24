@@ -16,46 +16,46 @@ Gun::Gun() {}
 
 Gun::~Gun() {}
 
-void Gun::setOwner(IShooter* owner) { _OwningActor = owner; }
+void Gun::SetOwner(IShooter* owner) { _owningActor = owner; }
 
-void Gun::setDynamicWorldConnection(IDynamicSpawn* dynamic_world) { _DynamicWorld = dynamic_world; }
+void Gun::SetDynamicWorldConnection(IDynamicSpawn* dynamic_world) { _dynamicWorld = dynamic_world; }
 
-void Gun::setOnSpawnCallBack(SpawnCallBackType function) { _SpawnAmmo = function; }
+void Gun::SetOnSpawnCallBack(SpawnCallBackType function) { _spawnAmmo = function; }
 
-void Gun::setShootingRate(const float& new_rate) { _ShootingRate = new_rate; }
+void Gun::SetShootingRate(const float& new_rate) { _shootingRate = new_rate; }
 
-void Gun::shoot(const Point& end, const float& delta_t)
+void Gun::Shoot(const Point& end, const float& delta_t)
 {
-	if (_CurrentDelay <= 1.f)
+	if (_currentDelay <= 1.f)
 	{
 		//? Actually shoot
-		onSpawnAmmo(end);
+		OnSpawnAmmo(end);
 		//? Reset timer
-		_CurrentDelay = _ShootingRate;
+		_currentDelay = _shootingRate;
 	}
 	else
 	{
-		_CurrentDelay -= delta_t;
+		_currentDelay -= delta_t;
 	}
 }
 
-void Gun::reload(float delta_t)
+void Gun::Reload(float delta_t)
 {
-	_CurrentDelay -= delta_t;
-	if (_CurrentDelay <= 1.f)
+	_currentDelay -= delta_t;
+	if (_currentDelay <= 1.f)
 	{
-		_CurrentDelay = 0.f;
+		_currentDelay = 0.f;
 	}
 }
 
-void Gun::onSpawnAmmo(const Point& end)
+void Gun::OnSpawnAmmo(const Point& end)
 {
-	if (_DynamicWorld && _SpawnAmmo && _OwningActor)
+	if (_dynamicWorld && _spawnAmmo && _owningActor)
 	{
 		//? Animate character
-		_OwningActor->setShootingSide(end);
-		LogLine("_SpawnAmmo: ", _SpawnAmmo);	//! why this 0xFFFFFF...F?
+		_owningActor->SetShootingSide(end);
+		LogLine("_SpawnAmmo: ", _spawnAmmo);	//! why this 0xFFFFFF...F?
 		//? Doing re-calculations of spawn point only when it accessed
-		(_DynamicWorld->*_SpawnAmmo)(*(_OwningActor->getSpawnPoint()), end);
+		(_dynamicWorld->*_spawnAmmo)(*(_owningActor->GetSpawnPoint()), end);
 	}
 }

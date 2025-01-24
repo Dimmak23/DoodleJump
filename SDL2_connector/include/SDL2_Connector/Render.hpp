@@ -1,9 +1,6 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
+//* Game
 
 //* C++ std
 #include <memory>
@@ -43,27 +40,27 @@ public:
 	//@ API
 
 	//* Vendor connections
-	static DLL_EXPORT Sprite* createSprite(const char* path);
-	static DLL_EXPORT int drawSprite(Sprite* sprite, int x, int y);
-	static DLL_EXPORT void destroySprite(Sprite** sprite);
-	static DLL_EXPORT void getSpriteSize(Sprite* sprite, int& x, int& y);
-	static DLL_EXPORT void setSpriteSize(Sprite* sprite, int x, int y);
+	static DLL_EXPORT Sprite* CreateSprite(const char* path);
+	static DLL_EXPORT int DrawSprite(Sprite* sprite, int x, int y);
+	static DLL_EXPORT void DestroySprite(Sprite** sprite);
+	static DLL_EXPORT void GetSpriteSize(Sprite* sprite, int& x, int& y);
+	static DLL_EXPORT void SetSpriteSize(Sprite* sprite, int x, int y);
 
 private:
 	//@ Methods
 
 	//* Getters
-	static SDL_Window* getWindow();
+	static SDL_Window* GetWindow();
 	// static SDL_Renderer** getRenderer();
-	static SDL_Renderer* getRenderer();
+	static SDL_Renderer* GetRenderer();
 
 	//* Setters
-	static void setWindow(SDL_Window* new_window);
-	static void setRenderer(SDL_Renderer* new_renderer);
+	static void SetWindow(SDL_Window* new_window);
+	static void SetRenderer(SDL_Renderer* new_renderer);
 
 	//* Manipulators
-	static SDL_Surface* loadSurface(const char* path);
-	static void releaseRenderer();
+	static SDL_Surface* LoadSurface(const char* path);
+	static void ReleaseRenderer();
 
 	//@ Members
 

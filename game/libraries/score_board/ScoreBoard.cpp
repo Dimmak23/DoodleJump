@@ -20,177 +20,177 @@ ScoreBoard::ScoreBoard(const ScreenItem* parent_screen,			   //
 					   const char* platforms_label_path,		   //
 					   const char* digits_label_path,			   //
 					   const unsigned int digits_qty)
-	: _Screen(parent_screen)
-	, _DistanceLabelPath(distance_label_path)
-	, _PlatformsLabelPath(platforms_label_path)
-	, _DigitsLabelsPath(digits_label_path)
-	, _DigitsQuantity(digits_qty)
+	: _screen(parent_screen)
+	, _distanceLabelPath(distance_label_path)
+	, _platformsLabelPath(platforms_label_path)
+	, _digitsLabelsPath(digits_label_path)
+	, _digitsQuantity(digits_qty)
 {
 	//? Where scaore board will be placed
-	_Placement = std::make_unique<Point>(right_top_corner_placement);
+	_placement = std::make_unique<Point>(right_top_corner_placement);
 	//? Need to know how far player now
-	_Origin = std::make_unique<Point>(0, 0);
+	_origin = std::make_unique<Point>(0, 0);
 	//? This locator will place everything
-	_SharedLocator = std::make_unique<Locator>(nullptr);	//? initialized as empty, later will be initialized
+	_sharedLocator = std::make_unique<Locator>(nullptr);	//? initialized as empty, later will be initialized
 	//? Initialize other utilities
-	initialize();
+	Initialize();
 }
 
 ScoreBoard::~ScoreBoard() {}
 
-void ScoreBoard::setPlayerBodyConnection(RectangleCore* body)
+void ScoreBoard::SetPlayerBodyConnection(RectangleCore* body)
 {
-	_PlayerBody = body;
+	_playerBody = body;
 	//? Place origin point using player body
-	if (_PlayerBody && _Origin)
+	if (_playerBody && _origin)
 	{
-		_Origin->x = _PlayerBody->right();
-		_Origin->y = _PlayerBody->bottom();
+		_origin->x = _playerBody->Right();
+		_origin->y = _playerBody->Bottom();
 		// std::cout << std::format("Origin x: {}, y: {}.\n", _Origin->x, _Origin->y);
 	}
 }
 
-void ScoreBoard::setStaticWorldConnection(IAccounting* world) { _PlatformsWorld = world; }
+void ScoreBoard::SetStaticWorldConnection(IAccounting* world) { _platformsWorld = world; }
 
-void ScoreBoard::initialize()
+void ScoreBoard::Initialize()
 {
 	// TODO: a lot of resources in the application could be initialize at the start
 	// TODO: after level reload they could be simply showed up in a initial state
 	// TODO: so no need to reset some pointers
 	//? Load sprite for score pixels label
-	_DistanceLabel = std::make_unique<Image>(	 //
-		_Screen,								 //
-		_DistanceLabelPath,						 //
+	_distanceLabel = std::make_unique<Image>(	 //
+		_screen,								 //
+		_distanceLabelPath,						 //
 		Sizes::Widgets::PlatformsLabelWidth,	 //
 		Sizes::Widgets::PlatformsLabelHeight	 //
 	);
-	_SharedLocator->resetBody(_DistanceLabel->getBody());
+	_sharedLocator->ResetBody(_distanceLabel->GetBody());
 	//? Placing according to design and given point
-	_SharedLocator->setLTCornerLocation(											 //
-		int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::LabelsOffsetX),	 //
-		_Placement->y																 //
+	_sharedLocator->SetLTCornerLocation(											  //
+		int(_placement->x - _screen->_scaleWidth * Sizes::Widgets::LabelsOffsetX),	  //
+		_placement->y																  //
 	);
 
 	//? Load sprite for score platforms lavel
-	_PlatformsCountLabel = std::make_unique<Image>(_Screen,								   //
-												   _PlatformsLabelPath,					   //
+	_platformsCountLabel = std::make_unique<Image>(_screen,								   //
+												   _platformsLabelPath,					   //
 												   Sizes::Widgets::PlatformsLabelWidth,	   //
 												   Sizes::Widgets::PlatformsLabelHeight	   //
 	);
-	_SharedLocator->resetBody(_PlatformsCountLabel->getBody());
+	_sharedLocator->ResetBody(_platformsCountLabel->GetBody());
 	//? Placing according to design and given point
-	_SharedLocator->setLTCornerLocation(											 //
-		int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::LabelsOffsetX),	 //
-		int(_Placement->y + _Screen->ScaleHeight * Sizes::Widgets::LabelsOffsetY)	 //
+	_sharedLocator->SetLTCornerLocation(											  //
+		int(_placement->x - _screen->_scaleWidth * Sizes::Widgets::LabelsOffsetX),	  //
+		int(_placement->y + _screen->_scaleHeight * Sizes::Widgets::LabelsOffsetY)	  //
 	);
 
 	//? Load animated sprite container for 8 digits pixels score
-	for (size_t index{}; index < _DistanceCountDigits; index++)
+	for (size_t index{}; index < _distanceCountDigits; index++)
 	{
-		_DistanceDigits.push_back(std::make_unique<AnimatedImage>(_Screen,							   //
-																  _DigitsLabelsPath,				   //
-																  _DigitsQuantity,					   //
+		_distanceDigits.push_back(std::make_unique<AnimatedImage>(_screen,							   //
+																  _digitsLabelsPath,				   //
+																  _digitsQuantity,					   //
 																  Sizes::Widgets::DigitsLabelWidth,	   //
 																  Sizes::Widgets::DigitsLabelHeight	   //
 																  ));								   //
-		_SharedLocator->resetBody(_DistanceDigits.back()->getBody());
+		_sharedLocator->ResetBody(_distanceDigits.back()->GetBody());
 		//? place every digit next to each other with offset
-		_SharedLocator->setLTCornerLocation(	//
-			int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::DigitsOffsetX +
-				index * _Screen->ScaleWidth * Sizes::Widgets::DigitsLabelOffsetX),	  //
-			_Placement->y															  //
+		_sharedLocator->SetLTCornerLocation(	//
+			int(_placement->x - _screen->_scaleWidth * Sizes::Widgets::DigitsOffsetX +
+				index * _screen->_scaleWidth * Sizes::Widgets::DigitsLabelOffsetX),	   //
+			_placement->y															   //
 		);
 		//? Initially hiding all digits except first
 		if (index)
 		{
-			_DistanceDigits.back()->setIsHidden(true);
+			_distanceDigits.back()->SetIsHidden(true);
 		}
 	}
 
 	//? Load animated sprite container for 6 digits platforms score
-	for (size_t index{}; index < _PlatformsCountDigits; index++)
+	for (size_t index{}; index < _platformsCountDigits; index++)
 	{
-		_PlatformsDigits.push_back(std::make_unique<AnimatedImage>(_Screen,								//
-																   _DigitsLabelsPath,					//
-																   _DigitsQuantity,						//
+		_platformsDigits.push_back(std::make_unique<AnimatedImage>(_screen,								//
+																   _digitsLabelsPath,					//
+																   _digitsQuantity,						//
 																   Sizes::Widgets::DigitsLabelWidth,	//
 																   Sizes::Widgets::DigitsLabelHeight	//
 																   ));									//
-		_SharedLocator->resetBody(_PlatformsDigits.back()->getBody());
+		_sharedLocator->ResetBody(_platformsDigits.back()->GetBody());
 		//? place every digit next to each other with offset
-		_SharedLocator->setLTCornerLocation(	//
-			int(_Placement->x - _Screen->ScaleWidth * Sizes::Widgets::DigitsOffsetX +
-				index * _Screen->ScaleWidth * Sizes::Widgets::DigitsLabelOffsetX),		 //
-			int(_Placement->y + _Screen->ScaleHeight * Sizes::Widgets::LabelsOffsetY)	 //
+		_sharedLocator->SetLTCornerLocation(	//
+			int(_placement->x - _screen->_scaleWidth * Sizes::Widgets::DigitsOffsetX +
+				index * _screen->_scaleWidth * Sizes::Widgets::DigitsLabelOffsetX),		  //
+			int(_placement->y + _screen->_scaleHeight * Sizes::Widgets::LabelsOffsetY)	  //
 		);
 		//? Initially hiding all digits except first
 		if (index)
 		{
-			_PlatformsDigits.back()->setIsHidden(true);
+			_platformsDigits.back()->SetIsHidden(true);
 		}
 	}
 
-	_CurrentPixelsCounter = 0;
-	_CurrentPlatformsCounter = 0;
+	_currentPixelsCounter = 0;
+	_currentPlatformsCounter = 0;
 }
 
-void ScoreBoard::relocate(int delta_x, int delta_y)
+void ScoreBoard::Relocate(int delta_x, int delta_y)
 {
 	//? Relocate pixels counter origin point, because scene was moved
-	_Origin->x += delta_x;
-	_Origin->y += delta_y;
+	_origin->x += delta_x;
+	_origin->y += delta_y;
 }
 
-void ScoreBoard::tick(float delta_t)
+void ScoreBoard::Tick(float delta_t)
 {
 	//? Update pixels distance using player current location
-	int Offset = _Origin->y - _PlayerBody->bottom();
-	_PixelsCounter = (Offset < 0) ? 0 : Offset;
+	int Offset = _origin->y - _playerBody->Bottom();
+	_pixelsCounter = (Offset < 0) ? 0 : Offset;
 	// std::cout << std::format("_PixelsCounter: {}.\n", _PixelsCounter);
 
 	//? Update platforms counter widget
-	_PlatformsCounter = _PlatformsWorld->getDeletedPlatformsCount() +
-						_PlatformsWorld->getAllBellowPlatformsCount(_PlayerBody->bottom());
+	_platformsCounter = _platformsWorld->GetDeletedPlatformsCount() +
+						_platformsWorld->GetAllBellowPlatformsCount(_playerBody->Bottom());
 	// std::cout << std::format("_PlatformsCounter: {}.\n", _PlatformsCounter);
 
 	//? If distance changed it will be updated on the widget
-	updateWidgetsContainer(_PixelsCounter, _CurrentPixelsCounter, _DistanceDigits);
+	UpdateWidgetsContainer(_pixelsCounter, _currentPixelsCounter, _distanceDigits);
 
 	//? If bellow platforms changed it will be updated on the widget
-	updateWidgetsContainer(_PlatformsCounter, _CurrentPlatformsCounter, _PlatformsDigits);
+	UpdateWidgetsContainer(_platformsCounter, _currentPlatformsCounter, _platformsDigits);
 }
 
-void ScoreBoard::clear()
+void ScoreBoard::Clear()
 {
 	//? Reset smart pointers
-	for (auto& PlatformsDigit : _PlatformsDigits)
+	for (auto& PlatformsDigit : _platformsDigits)
 	{
 		PlatformsDigit.reset();
 	}
-	for (auto& DistanceDigit : _DistanceDigits)
+	for (auto& DistanceDigit : _distanceDigits)
 	{
 		DistanceDigit.reset();
 	}
-	_PlatformsCountLabel.reset();
-	_DistanceLabel.reset();
+	_platformsCountLabel.reset();
+	_distanceLabel.reset();
 }
 
-void ScoreBoard::render()
+void ScoreBoard::Render()
 {
 	//? Render sprites here
-	_DistanceLabel->render();
-	_PlatformsCountLabel->render();
-	for (auto& DistanceDigit : _DistanceDigits)
+	_distanceLabel->Render();
+	_platformsCountLabel->Render();
+	for (auto& DistanceDigit : _distanceDigits)
 	{
-		DistanceDigit->render();
+		DistanceDigit->Render();
 	}
-	for (auto& PlatformsDigit : _PlatformsDigits)
+	for (auto& PlatformsDigit : _platformsDigits)
 	{
-		PlatformsDigit->render();
+		PlatformsDigit->Render();
 	}
 }
 
-void ScoreBoard::updateWidgetsContainer(const size_t& new_counter, size_t& current_counter,
+void ScoreBoard::UpdateWidgetsContainer(const size_t& new_counter, size_t& current_counter,
 										std::vector<std::unique_ptr<AnimatedImage>>& Digits)
 {
 	if (new_counter == current_counter) return;
@@ -207,14 +207,14 @@ void ScoreBoard::updateWidgetsContainer(const size_t& new_counter, size_t& curre
 	//? Hide all for now
 	for (auto& DistanceDigit : Digits)
 	{
-		DistanceDigit->setIsHidden(true);
+		DistanceDigit->SetIsHidden(true);
 	}
 
 	//? Set iamges, unhide what need
 	for (size_t index{}; index < NewDigits.size(); index++)
 	{
-		Digits[index]->setCharacterFrame(NewDigits[NewDigits.size() - 1 - index]);
-		Digits[index]->setIsHidden(false);
+		Digits[index]->SetCharacterFrame(NewDigits[NewDigits.size() - 1 - index]);
+		Digits[index]->SetIsHidden(false);
 	}
 
 	//? Change current counter

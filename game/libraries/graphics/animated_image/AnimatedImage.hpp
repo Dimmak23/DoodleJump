@@ -25,7 +25,7 @@ public:
 
 	//* Manipulators
 
-	void setCharacterFrame(size_t index);
+	void SetCharacterFrame(size_t index);
 
 private:
 	//@ Methods
@@ -37,8 +37,8 @@ private:
 	//@ Members
 
 	//* Frames
-	std::vector<Sprite*> _Sprites;
+	std::vector<Sprite*> _sprites;
 
 	//* Utilities
-	const unsigned int _FramesQty{};
+	const unsigned int _framesQty{};
 };

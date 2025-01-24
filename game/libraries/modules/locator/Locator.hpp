@@ -25,39 +25,39 @@ public:
 	};
 
 	//* Body
-	Locator* parseBody(Rectangle* body);
-	void resetBody(Rectangle* body);
-	void clearBody();
+	Locator* ParseBody(Rectangle* body);
+	void ResetBody(Rectangle* body);
+	void ClearBody();
 
 	//* Setters: callbacks
 
-	void setPhysicsEngineConnection(IConnectable* physics_engine);
+	void SetPhysicsEngineConnection(IConnectable* physics_engine);
 	// void setUpdatePreciseCoordinatesCallBack(ConnectCallBackType function);
 
 	//* Setters: states
 
-	void setLoggingEnabled(bool new_state);
+	void SetLoggingEnabled(bool new_state);
 
 	//* Setters: location
 
 	//? Two-Dimensional
-	void setCenterLocation(const int& x, const int& y);
-	void setCenterLocation(Point coordinate);
-	void setCenterLocation(Coordinate coordinate);
-	void setTopCLocation(const int& x, const int& y);
-	void setBottomCLocation(const int& x, const int& y);
-	void setLeftCLocation(const int& x, const int& y);
-	void setRightCLocation(const int& x, const int& y);
-	void setLTCornerLocation(const int& x, const int& y);
-	void setLBCornerLocation(const int& x, const int& y);
-	void setRTCornerLocation(const int& x, const int& y);
-	void setRBCornerLocation(const int& x, const int& y);
+	void SetCenterLocation(const int& x, const int& y);
+	void SetCenterLocation(Point coordinate);
+	void SetCenterLocation(Coordinate coordinate);
+	void SetTopCLocation(const int& x, const int& y);
+	void SetBottomCLocation(const int& x, const int& y);
+	void SetLeftCLocation(const int& x, const int& y);
+	void SetRightCLocation(const int& x, const int& y);
+	void SetLTCornerLocation(const int& x, const int& y);
+	void SetLBCornerLocation(const int& x, const int& y);
+	void SetRTCornerLocation(const int& x, const int& y);
+	void SetRBCornerLocation(const int& x, const int& y);
 
 	//? One-Dimensional
 	// void setRight(const  int& x);
-	void setLeft(const int& x);
-	void setTop(const int& y);
-	void alignYAxis(const int& x);
+	void SetLeft(const int& x);
+	void SetTop(const int& y);
+	void AlignYAxis(const int& x);
 
 	//* Getters: location
 
@@ -65,16 +65,16 @@ public:
 	//  int getBottom() const;
 	//  int getleft() const;
 	//  int getRight() const;
-	Coordinate getTopCLocation() const;
-	Coordinate getCenter() const;
-	int getCenterX() const;
-	int getCenterY() const;
-	int getX() const;
-	int getY() const;
+	Coordinate GetTopCLocation() const;
+	Coordinate GetCenter() const;
+	int GetCenterX() const;
+	int GetCenterY() const;
+	int GetX() const;
+	int GetY() const;
 
 	//* Setters: relocation
 
-	virtual void relocate(int deltaX, int deltaY) override;
+	virtual void Relocate(int deltaX, int deltaY) override;
 
 private:
 	//@ Methods
@@ -83,16 +83,15 @@ private:
 	Locator(const Locator&) = delete;
 	Locator& operator=(const Locator&) = delete;
 
-	void onPhisicsEngineUpdate(double x, double y);
+	void OnPhisicsEngineUpdate(double x, double y);
 
 	//@ Members
 
 	Rectangle* _host{ nullptr };
-
-	IConnectable* _PhysicsEngine{ nullptr };
+	IConnectable* _physicsEngine{ nullptr };
 
 	//* Callbacks
-	// ConnectCallBackType _UpdatePreciseCoordinates{ nullptr };
+	// ConnectCallBackType _updatePreciseCoordinates{ nullptr };
 
 	//* States
 	bool _bLoggingEnabled{ false };

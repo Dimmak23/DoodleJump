@@ -13,13 +13,13 @@ public:
 
 	//* Manipulators
 
-	void initialize();
-	void setPhysicsEngineConnection(IMechanics* parent_engine);
-	void tick(float delta_t);
+	void Init();
+	void SetPhysicsEngineConnection(IMechanics* parent_engine);
+	void Tick(float delta_t);
 	//? Call with 'true' when button clicked
 	//? and call with 'false' when button released
-	void enable(bool new_state);
-	void clear();
+	void Enable(bool new_state);
+	void Clear();
 
 private:
 	//@ Methods
@@ -33,10 +33,10 @@ private:
 	IMechanics* _hostEngine{ nullptr };
 
 	//* Timers
-	float _JumpTimer{ 0.f };
-	const float _JumpDuration{ 10000.f };	 // ms
-	float _LoadTimer{ 0.f };
-	const float _LoadDuration{ 2000.f };	// ms
+	float _jumpTimer{ 0.f };
+	const float _jumpDuration{ 10000.f };	 // ms
+	float _loadTimer{ 0.f };
+	const float _loadDuration{ 2000.f };	// ms
 
 	//* States
 	bool _bIsEnabled{ false };

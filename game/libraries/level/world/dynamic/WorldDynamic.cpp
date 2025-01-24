@@ -1,6 +1,9 @@
 //* Source header
 #include "level/world/dynamic/WorldDynamic.hpp"
 
+//* SDL2: Connector
+#include "SDL2_connector/Loger.hpp"
+
 //* Game
 #include "abilities/wormhole/Wormhole.hpp"
 #include "graphics/image/Image.hpp"
@@ -26,36 +29,36 @@ WorldDynamic::WorldDynamic(const ScreenItem* parent_screen,		   //
 						   const unsigned int enemies_quantity,	   //
 						   const char* wormhole_path,			   //
 						   const char* ammo_path)
-	: _Screen(parent_screen)
-	, _EnemiesPathCut(enemies_path_cut)
-	, _EnemiesPathAdder(enemies_path_adder)
-	, _EnemiesQuantity(enemies_quantity)
-	, _WormholePath(wormhole_path)
-	, _AmmoPath(ammo_path)
+	: _screen(parent_screen)
+	, _enemiesPathCut(enemies_path_cut)
+	, _enemiesPathAdder(enemies_path_adder)
+	, _enemiesQuantity(enemies_quantity)
+	, _wormholePath(wormhole_path)
+	, _ammoPath(ammo_path)
 {
-	_ThresholdY = int(float(_Screen->ApplicationHeight) / 4);
+	_thresholdY = int(float(_screen->_applicationHeight) / 4);
 
 	// std::cout << "Constructed WorldDynamic size of: " << sizeof(*this) << '\n';
 }
 
 WorldDynamic::~WorldDynamic()
 {
-	// std::cout << std::format("During the game overall deleted: {} enemies.\n", _OverallDeleted);
+	// std::cout << std::format("During the game overall deleted: {} enemies.\n", _overallDeleted);
 	// std::cout << std::format("Game left with enemies container of size: {}.\n", _Enemies.size());
 }
 
-UniverseDot WorldDynamic::traverseNewPlatforms(size_t index) { return UniverseDot(); }
+UniverseDot WorldDynamic::TraverseNewPlatforms(size_t index) { return UniverseDot(); }
 
-void WorldDynamic::onSpawnNewActor(const int& x, const int& y, const unsigned int& variance) {}
+void WorldDynamic::OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance) {}
 
-void WorldDynamic::checkForSpawnNewEnemies(size_t* new_platforms_quantity)
+void WorldDynamic::CheckForSpawnNewEnemies(size_t* new_platforms_quantity)
 {
 	//? Here we clear container with empty places for wormholes
 	//? If there would be new places after enemy spawn
 	//? container will be populated again
-	_EmptyPlatformsIndecies.clear();
+	_emptyPlatformsIndecies.clear();
 
-	if (new_platforms_quantity && (*new_platforms_quantity != 0) && _StaticWorld)
+	if (new_platforms_quantity && (*new_platforms_quantity != 0) && _staticWorld)
 	{
 		//? Init counter, go thru all available indecies on the back
 		int Counter = static_cast<int>(*new_platforms_quantity - 1);	// N-1, ..., 3, 2, 1, 0
@@ -63,8 +66,8 @@ void WorldDynamic::checkForSpawnNewEnemies(size_t* new_platforms_quantity)
 		while (Counter >= 0)
 		{
 			//? Here available places for wormholes could be populated
-			doIndexTraversing(Counter, _EnemySpawner.get(), &WorldDynamic::onSpawnNewEnemy,
-							  &WorldDynamic::onSaveAvailablePlaces);
+			DoIndexTraversing(Counter, _enemySpawner.get(), &WorldDynamic::OnSpawnNewEnemy,
+							  &WorldDynamic::OnSaveAvailablePlaces);
 		}
 
 		//? Clear new_platform_quantity
@@ -72,103 +75,103 @@ void WorldDynamic::checkForSpawnNewEnemies(size_t* new_platforms_quantity)
 	}
 }
 
-void WorldDynamic::checkForSpawnNewWormholes()
+void WorldDynamic::CheckForSpawnNewWormholes()
 {
-	for (auto& Index : _EmptyPlatformsIndecies)
+	for (auto& Index : _emptyPlatformsIndecies)
 	{
 		auto CopyIndex = Index;	   //? To respect traverser signature
 		//? Last argument is nullptr because we don't save empty spaces for anyone else
-		doIndexTraversing(CopyIndex, _WormholeSpawner.get(), &WorldDynamic::onSpawnNewWormhole, nullptr);
+		DoIndexTraversing(CopyIndex, _wormholeSpawner.get(), &WorldDynamic::OnSpawnNewWormhole, nullptr);
 		//* CopyIndex were decremented, but we don't need this functional
 		//* and we can't rid of this functional because enemy spawning need this
 	}
 }
 
-void WorldDynamic::onSpawnNewEnemy(const int& x, const int& y, const unsigned int& variance)
+void WorldDynamic::OnSpawnNewEnemy(const int& x, const int& y, const unsigned int& variance)
 {
 	//? Create sprite with image variance as index
-	std::string Path(_EnemiesPathCut + std::to_string(variance + 1) + _EnemiesPathAdder);
-	_Enemies.push_back(std::make_unique<Image>(_Screen, Path.c_str(),	 //
+	std::string Path(_enemiesPathCut + std::to_string(variance + 1) + _enemiesPathAdder);
+	_enemies.push_back(std::make_unique<Image>(_screen, Path.c_str(),	 //
 											   Sizes::Environment::EnemyWidth[variance],
 											   Sizes::Environment::EnemyHeight[variance]));
-	onAddNewActorToPlayerCollider(_Enemies.back().get());	 //? Don't forget to tell player
+	OnAddNewActorToPlayerCollider(_enemies.back().get());	 //? Don't forget to tell player
 
 	//? Place image in the x,y Bottom-Center coordinate
-	_EnemyLocators.push_back(std::make_unique<Locator>(_Enemies.back().get()));
-	_EnemyLocators.back()->setBottomCLocation(x, y);
+	_enemyLocators.push_back(std::make_unique<Locator>(_enemies.back().get()));
+	_enemyLocators.back()->SetBottomCLocation(x, y);
 
-	onAddNewActorToScene(_EnemyLocators.back().get());	  //? Don't forget to tell scene
+	OnAddNewActorToScene(_enemyLocators.back().get());	  //? Don't forget to tell scene
 }
 
-void WorldDynamic::onSpawnNewWormhole(const int& x, const int& y, const unsigned int& variance)
+void WorldDynamic::OnSpawnNewWormhole(const int& x, const int& y, const unsigned int& variance)
 {
 	// variance //! unused here
 
 	//? Create sprite with image variance as index
-	_Wormholes.push_back(std::make_unique<Image>(_Screen, _WormholePath,			   //
+	_wormholes.push_back(std::make_unique<Image>(_screen, _wormholePath,			   //
 												 Sizes::Environment::WormholeWidth,	   //
 												 Sizes::Environment::WormholeHeight));
-	onAddNewWormholeToPlayerCollider(_Wormholes.back().get());	  //? Don't forget to tell player
+	OnAddNewWormholeToPlayerCollider(_wormholes.back().get());	  //? Don't forget to tell player
 
 	//? Place image in the x,y Bottom-Center coordinate
-	_WormholesLocators.push_back(std::make_unique<Locator>(_Wormholes.back().get()));
-	_WormholesLocators.back()->setBottomCLocation(x, y);
+	_wormholesLocators.push_back(std::make_unique<Locator>(_wormholes.back().get()));
+	_wormholesLocators.back()->SetBottomCLocation(x, y);
 
-	onAddNewWormholeToScene(_WormholesLocators.back().get());	 //? Don't forget to tell scene
+	OnAddNewWormholeToScene(_wormholesLocators.back().get());	 //? Don't forget to tell scene
 
 	//* And we use wormhole engine
-	_WormholesEngines.push_back(
-		std::make_unique<Wormhole>(_Screen, _PlayerEngine, _PlayerBody, _Wormholes.back().get()));
+	_wormholesEngines.push_back(
+		std::make_unique<Wormhole>(_screen, _playerEngine, _playerBody, _wormholes.back().get()));
 }
 
-void WorldDynamic::onSpawnNewMoveableActor(const Point& begin, const Point& end)
+void WorldDynamic::OnSpawnNewMoveableActor(const Point& begin, const Point& end)
 {
-	_AmmoTiles.push_back(std::make_unique<Ammo>(_Screen, begin, end, _AmmoPath));
+	_ammoTiles.push_back(std::make_unique<Ammo>(_screen, begin, end, _ammoPath));
 	//? Ammo is a relocatable actor
 	//? And it is implement it's relocate() according to own structure
-	onAddNewAmmoToScene(_AmmoTiles.back().get());
+	OnAddNewAmmoToScene(_ammoTiles.back().get());
 	//? Collider also should know that we have added new actor
-	onAddNewAmmoToPlayerCollider(_AmmoTiles.back()->getBoundary(), _AmmoTiles.back()->getEngine());
+	OnAddNewAmmoToPlayerCollider(_ammoTiles.back()->GetBoundary(), _ammoTiles.back()->GetEngine());
 }
 
-void WorldDynamic::cleaner()
+void WorldDynamic::Cleaner()
 {
 	size_t count{};
 
-	while (!_Enemies.empty())
+	while (!_enemies.empty())
 	{
 		//! bottom()
-		if (_Enemies.begin()->get()->bottom() >= ((int)_Screen->ApplicationHeight + 4 * _ThresholdY))
+		if (_enemies.begin()->get()->Bottom() >= ((int)_screen->_applicationHeight + 4 * _thresholdY))
 		{
-			_EnemyLocators.erase(_EnemyLocators.begin());
-			onRemoveFrontActorFromScene();
-			_Enemies.erase(_Enemies.begin());
-			onRemoveFrontActorFromPlayerCollider();
+			_enemyLocators.erase(_enemyLocators.begin());
+			OnRemoveFrontActorFromScene();
+			_enemies.erase(_enemies.begin());
+			OnRemoveFrontActorFromPlayerCollider();
 
 			count++;
 		}
 		else
 		{
-			if (count)
-			{
-				_OverallDeleted += count;
-				// std::cout << std::format("\t\t\tdeleted {} enemies.\n", count);
-			}
+			// if (count)
+			// {
+			// 	_overallDeleted += count;
+			// 	LogLine("\t\t\tdeleted {} enemies.\n", count);
+			// }
 			break;
 		}
 	}
 
-	while (!_AmmoTiles.empty())
+	while (!_ammoTiles.empty())
 	{
 		//! bottom()
-		if (_AmmoTiles.begin()->get()->getBoundary()->bottom() >= ((int)_Screen->ApplicationHeight + 4 * _ThresholdY))
+		if (_ammoTiles.begin()->get()->GetBoundary()->Bottom() >= ((int)_screen->_applicationHeight + 4 * _thresholdY))
 		{
-			onRemoveFrontAmmoFromScene();
-			onRemoveFrontAmmoFromPlayerCollider();
-			_AmmoTiles.erase(_AmmoTiles.begin());
+			OnRemoveFrontAmmoFromScene();
+			OnRemoveFrontAmmoFromPlayerCollider();
+			_ammoTiles.erase(_ammoTiles.begin());
 
-			_OverallDeletedAmmos++;
-			// std::cout << std::format("\t\t\tdeleted {} ammos.\n", _OverallDeletedAmmos);
+			// _overallDeletedAmmos++;
+			// LogLine("\t\t\tdeleted {} ammos.\n", _overallDeletedAmmos);
 		}
 		else
 		{
@@ -176,19 +179,19 @@ void WorldDynamic::cleaner()
 		}
 	}
 
-	while (!_Wormholes.empty())
+	while (!_wormholes.empty())
 	{
 		//! bottom()
-		if (_Wormholes.begin()->get()->bottom() >= ((int)_Screen->ApplicationHeight + 4 * _ThresholdY))
+		if (_wormholes.begin()->get()->Bottom() >= ((int)_screen->_applicationHeight + 4 * _thresholdY))
 		{
-			onRemoveFrontWormholeFromScene();
-			onRemoveFrontWormholeFromPlayerCollider();
-			_WormholesEngines.erase(_WormholesEngines.begin());
-			_WormholesLocators.erase(_WormholesLocators.begin());
-			_Wormholes.erase(_Wormholes.begin());
+			OnRemoveFrontWormholeFromScene();
+			OnRemoveFrontWormholeFromPlayerCollider();
+			_wormholesEngines.erase(_wormholesEngines.begin());
+			_wormholesLocators.erase(_wormholesLocators.begin());
+			_wormholes.erase(_wormholes.begin());
 
-			_OverallDeletedWormholes++;
-			// std::cout << std::format("\t\t\tdeleted {} wormholes.\n", _OverallDeletedWormholes);
+			// _overallDeletedWormholes++;
+			// LogLine("\t\t\tdeleted {} wormholes.\n", _overallDeletedWormholes);
 		}
 		else
 		{
@@ -197,11 +200,11 @@ void WorldDynamic::cleaner()
 	}
 }
 
-void WorldDynamic::tick(float delta_t)
+void WorldDynamic::Tick(float delta_t)
 {
-	for (auto& Ammo : _AmmoTiles)
+	for (auto& Ammo : _ammoTiles)
 	{
-		Ammo->tick(delta_t);
+		Ammo->Tick(delta_t);
 	}
 
 	//! TESTS: deletes ammo that gets to target point
@@ -217,213 +220,213 @@ void WorldDynamic::tick(float delta_t)
 	// 	}
 	// }
 
-	for (auto& WormholeEngine : _WormholesEngines)
+	for (auto& WormholeEngine : _wormholesEngines)
 	{
-		WormholeEngine->tick(delta_t);
-		if ((WormholeEngine->IsStucked()) && _Level)
+		WormholeEngine->Tick(delta_t);
+		if ((WormholeEngine->IsStucked()) && _level)
 		{
-			_Level->onLevelStop();
+			_level->OnLevelStop();
 		}
 	}
 }
 
-void WorldDynamic::setLevelConnection(IStoppable* new_level) { _Level = new_level; }
+void WorldDynamic::SetLevelConnection(IStoppable* new_level) { _level = new_level; }
 
-void WorldDynamic::setStaticWorldConnection(IUniverse* new_world) { _StaticWorld = new_world; }
+void WorldDynamic::SetStaticWorldConnection(IUniverse* new_world) { _staticWorld = new_world; }
 
-void WorldDynamic::setSceneConnection(ILocatableScene* new_scene) { _Scene = new_scene; }
+void WorldDynamic::SetSceneConnection(ILocatableScene* new_scene) { _scene = new_scene; }
 
-void WorldDynamic::setPlayerColliderConnection(ICollidable* new_collider) { _PlayerCollider = new_collider; }
+void WorldDynamic::SetPlayerColliderConnection(ICollidable* new_collider) { _playerCollider = new_collider; }
 
-void WorldDynamic::setPlayerBodyConnection(RectangleShape* character_body) { _PlayerBody = character_body; }
+void WorldDynamic::SetPlayerBodyConnection(RectangleShape* character_body) { _playerBody = character_body; }
 
-void WorldDynamic::setPlayerEngineConnection(IMechanics* character_engine) { _PlayerEngine = character_engine; }
+void WorldDynamic::SetPlayerEngineConnection(IMechanics* character_engine) { _playerEngine = character_engine; }
 
-void WorldDynamic::initialize()
+void WorldDynamic::Initialize()
 {
 	// std::cout << "Initializing WorldDynamic...\n";
 
 	//* How we spawn new enemies
 	//? Later we will use spawner to create new enemy in the world
-	_EnemySpawner = std::make_unique<RandomSpawn>(this);
+	_enemySpawner = std::make_unique<RandomSpawn>(this);
 	//? Offset by Y will be used to roll dice on spawn: right>left == spawn
-	_EnemySpawner->setOffsetsY(10, 23);	   // TODO: get rid of magic number
+	_enemySpawner->SetOffsetsY(10, 23);	   // TODO: get rid of magic number
 	//? Offset by X will be used to roll dice on what type of enemy to spawn
 	//? there would be enemies with indecies: [0, 4] - 5 overall
-	_EnemySpawner->setOffsetsX(0, 4);	 // TODO: get rid of magic number
+	_enemySpawner->SetOffsetsX(0, 4);	 // TODO: get rid of magic number
 
 	//* How we spawn new wormholes
 	//? Later we will use spawner to create new wormhole in the world
-	_WormholeSpawner = std::make_unique<RandomSpawn>(this);
+	_wormholeSpawner = std::make_unique<RandomSpawn>(this);
 	//? Offset by Y will be used to roll dice on spawn: right>left == spawn
-	_WormholeSpawner->setOffsetsY(2, 67);	 // TODO: get rid of magic number
+	_wormholeSpawner->SetOffsetsY(2, 67);	 // TODO: get rid of magic number
 	//? Offset by X will be used to roll dice on what type of wormhole to spawn
 	//? there would be only one wormhole with index '0'
-	_WormholeSpawner->setOffsetsX(0, 0);	// TODO: get rid of magic number
+	_wormholeSpawner->SetOffsetsX(0, 0);	// TODO: get rid of magic number
 }
 
-void WorldDynamic::onEnemyKilled(size_t index)
+void WorldDynamic::OnEnemyKilled(size_t index)
 {
 	//? Tell scene index of killed enemy
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->onEnemyKilled(index);
+		_scene->OnEnemyKilled(index);
 	}
 	//? Delete here
-	if (!_Enemies.empty())
+	if (!_enemies.empty())
 	{
-		_Enemies.erase(_Enemies.begin() + index);
-		_OverallDeleted++;
+		_enemies.erase(_enemies.begin() + index);
+		// _overallDeleted++;
 	}
 }
 
-void WorldDynamic::onAmmoDestroyed(size_t index)
+void WorldDynamic::OnAmmoDestroyed(size_t index)
 {
 	//? Tell scene index of destroyed ammo
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->onAmmoDestroyed(index);
+		_scene->OnAmmoDestroyed(index);
 	}
 	//? Delete here
-	if (!_AmmoTiles.empty())
+	if (!_ammoTiles.empty())
 	{
-		_AmmoTiles.erase(_AmmoTiles.begin() + index);
-		_OverallDeletedAmmos++;
+		_ammoTiles.erase(_ammoTiles.begin() + index);
+		// _overallDeletedAmmos++;
 	}
 }
 
-void WorldDynamic::render()
+void WorldDynamic::Render()
 {
-	for (auto& Enemy : _Enemies)
+	for (auto& Enemy : _enemies)
 	{
-		Enemy.get()->render();
+		Enemy.get()->Render();
 	}
-	for (auto& AmmoTile : _AmmoTiles)
+	for (auto& AmmoTile : _ammoTiles)
 	{
-		AmmoTile.get()->render();
+		AmmoTile.get()->Render();
 	}
-	for (auto& Wormhole : _Wormholes)
+	for (auto& Wormhole : _wormholes)
 	{
-		Wormhole.get()->render();
+		Wormhole.get()->Render();
 	}
 }
 
-void WorldDynamic::onAddNewActorToScene(IRelocatableActor* new_actor)
+void WorldDynamic::OnAddNewActorToScene(IRelocatableActor* new_actor)
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->addRelocatableEnemy(new_actor);
+		_scene->AddRelocatableEnemy(new_actor);
 	}
 }
 
-void WorldDynamic::onAddNewActorToPlayerCollider(RectangleCore* new_actor)
+void WorldDynamic::OnAddNewActorToPlayerCollider(RectangleCore* new_actor)
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->addBlockedEnemy(new_actor);
+		_playerCollider->AddBlockedEnemy(new_actor);
 	}
 }
 
-void WorldDynamic::onAddNewWormholeToScene(IRelocatableActor* new_actor)
+void WorldDynamic::OnAddNewWormholeToScene(IRelocatableActor* new_actor)
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->addRelocatableWormhole(new_actor);
+		_scene->AddRelocatableWormhole(new_actor);
 	}
 }
 
-void WorldDynamic::onAddNewWormholeToPlayerCollider(RectangleCore* new_actor)
+void WorldDynamic::OnAddNewWormholeToPlayerCollider(RectangleCore* new_actor)
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->addBlockedWormhole(new_actor);
+		_playerCollider->AddBlockedWormhole(new_actor);
 	}
 }
 
-void WorldDynamic::onAddNewAmmoToScene(IRelocatableActor* new_actor)
+void WorldDynamic::OnAddNewAmmoToScene(IRelocatableActor* new_actor)
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->addRelocatableAmmo(new_actor);
+		_scene->AddRelocatableAmmo(new_actor);
 	}
 }
 
-void WorldDynamic::onAddNewAmmoToPlayerCollider(RectangleCore* new_actor, IMechanics* engine)
+void WorldDynamic::OnAddNewAmmoToPlayerCollider(RectangleCore* new_actor, IMechanics* engine)
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->addShooterAmmo(new_actor, engine);
+		_playerCollider->AddShooterAmmo(new_actor, engine);
 	}
 }
 
-void WorldDynamic::onRemoveFrontActorFromScene()
+void WorldDynamic::OnRemoveFrontActorFromScene()
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->removeRelocatableEnemyAtFront();
+		_scene->RemoveRelocatableEnemyAtFront();
 	}
 }
 
-void WorldDynamic::onRemoveFrontActorFromPlayerCollider()
+void WorldDynamic::OnRemoveFrontActorFromPlayerCollider()
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->removeEnemyAtFront();
+		_playerCollider->RemoveEnemyAtFront();
 	}
 }
 
-void WorldDynamic::onRemoveFrontWormholeFromScene()
+void WorldDynamic::OnRemoveFrontWormholeFromScene()
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->removeRelocatableWormholeAtFront();
+		_scene->RemoveRelocatableWormholeAtFront();
 	}
 }
 
-void WorldDynamic::onRemoveFrontWormholeFromPlayerCollider()
+void WorldDynamic::OnRemoveFrontWormholeFromPlayerCollider()
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->removeWormholeAtFront();
+		_playerCollider->RemoveWormholeAtFront();
 	}
 }
 
-void WorldDynamic::onRemoveAmmoMissed(size_t index)
+void WorldDynamic::OnRemoveAmmoMissed(size_t index)
 {
 	//? First delete from scene
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->onAmmoMissed(index);
+		_scene->OnAmmoMissed(index);
 	}
 	//? Delete here
-	if (!_AmmoTiles.empty())
+	if (!_ammoTiles.empty())
 	{
-		_AmmoTiles.erase(_AmmoTiles.begin() + index);
-		// _OverallDeleted++;//TODO: maybe counter here
+		_ammoTiles.erase(_ammoTiles.begin() + index);
+		// _overallDeleted++;//TODO: maybe counter here
 	}
 }
 
-void WorldDynamic::onRemoveFrontAmmoFromScene()
+void WorldDynamic::OnRemoveFrontAmmoFromScene()
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->removeRelocatableAmmoAtFront();
+		_scene->RemoveRelocatableAmmoAtFront();
 	}
 }
 
-void WorldDynamic::onRemoveFrontAmmoFromPlayerCollider()
+void WorldDynamic::OnRemoveFrontAmmoFromPlayerCollider()
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->removeAmmoAtFront();
+		_playerCollider->RemoveAmmoAtFront();
 	}
 }
 
-void WorldDynamic::doIndexTraversing(int& counter, RandomSpawn* spawner, SpawnCallBackType onSpawn,
+void WorldDynamic::DoIndexTraversing(int& counter, RandomSpawn* spawner, SpawnCallBackType onSpawn,
 									 ContainerPopulationCallBackType onSave)
 {
 	//? Do we skip this index?
-	if (!spawner->doWeSpawnByHeight())
+	if (!spawner->DoWeSpawnByHeight())
 	{
 		if (onSave)
 		{
@@ -435,15 +438,15 @@ void WorldDynamic::doIndexTraversing(int& counter, RandomSpawn* spawner, SpawnCa
 	}
 
 	//? What image we will be using
-	int ImageVariant = spawner->orderVariantByWidth();
+	int ImageVariant = spawner->OrderVariantByWidth();
 	//? Traverse new platforms: post-condition coordinates to place Enemy will be given
-	auto NewPlacement = _StaticWorld->traverseNewPlatforms(counter);
+	auto NewPlacement = _staticWorld->TraverseNewPlatforms(counter);
 
 	(this->*onSpawn)(NewPlacement.x, NewPlacement.y, ImageVariant);
 	counter--;
 }
 
-void WorldDynamic::onSaveAvailablePlaces(const int available_place_to_spawn_wormhole)
+void WorldDynamic::OnSaveAvailablePlaces(const int available_place_to_spawn_wormhole)
 {
-	_EmptyPlatformsIndecies.push_back(available_place_to_spawn_wormhole);
+	_emptyPlatformsIndecies.push_back(available_place_to_spawn_wormhole);
 }

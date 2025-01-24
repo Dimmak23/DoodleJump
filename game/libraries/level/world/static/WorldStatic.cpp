@@ -21,14 +21,14 @@ WorldStatic::WorldStatic(const ScreenItem* parent_screen,	 //
 						 const char* path_cut,				 //
 						 const char* path_adder,			 //
 						 const unsigned int quantity)
-	: _Screen(parent_screen)
-	, _PlatformWidth((const unsigned int)(parent_screen->ScaleWidth * Sizes::Environment::PlatformWidth))
-	, _PlatformHeight((const unsigned int)(parent_screen->ScaleHeight * Sizes::Environment::PlatformHeight))
-	, _PlatformsPathCut(path_cut)
-	, _PlatformsPathAdder(path_adder)
-	, _PlatformsQuantity(quantity)
+	: _screen(parent_screen)
+	, _platformWidth((const unsigned int)(parent_screen->_scaleWidth * Sizes::Environment::PlatformWidth))
+	, _platformHeight((const unsigned int)(parent_screen->_scaleHeight * Sizes::Environment::PlatformHeight))
+	, _platformsPathCut(path_cut)
+	, _platformsPathAdder(path_adder)
+	, _platformsQuantity(quantity)
 {
-	_ThresholdY = int(float(_Screen->ApplicationHeight) / 4);
+	_thresholdY = int(float(_screen->_applicationHeight) / 4);
 
 	// std::cout << std::format("Constructed WorldStatic size of: {}\n", sizeof(*this));
 }
@@ -41,14 +41,14 @@ WorldStatic::~WorldStatic()
 	// std::cout << "deleted _PlatformSpawner...\n";
 }
 
-size_t WorldStatic::getDeletedPlatformsCount() { return _OverallDeleted; }
+size_t WorldStatic::GetDeletedPlatformsCount() { return _overallDeleted; }
 
-size_t WorldStatic::getAllBellowPlatformsCount(const int& actor_bottom)
+size_t WorldStatic::GetAllBellowPlatformsCount(const int& actor_bottom)
 {
 	size_t result{};
-	for (auto& Platform : _Platforms)
+	for (auto& Platform : _platforms)
 	{
-		if (Platform->top() >= actor_bottom)
+		if (Platform->Top() >= actor_bottom)
 		{
 			result++;
 		}
@@ -57,106 +57,106 @@ size_t WorldStatic::getAllBellowPlatformsCount(const int& actor_bottom)
 	return result;
 }
 
-UniverseDot WorldStatic::traverseNewPlatforms(size_t index)
+UniverseDot WorldStatic::TraverseNewPlatforms(size_t index)
 {
-	if (!_DynamicWorld) return UniverseDot();
+	if (!_dynamicWorld) return UniverseDot();
 
 	//? Need coordinates to place Enemy
 	//? index will be changing from N-1 to 0
 	//? going from bottom to top (.begin() at bottom, .end() at top)
-	auto LocatorIterator = _PlatformsLocators.end() - 1 - index;
+	auto LocatorIterator = _platformsLocators.end() - 1 - index;
 	// TODO: a lot of types such Deltas, Point, Locator::Coordinate, UniverseDot
 	// TODO: which is the same, and only one should be used everywhere
-	Locator::Coordinate NewPlacement = LocatorIterator->get()->getTopCLocation();
+	Locator::Coordinate NewPlacement = LocatorIterator->get()->GetTopCLocation();
 
 	return UniverseDot{ NewPlacement.x, NewPlacement.y };
 }
 
-void WorldStatic::setDynamicWorldConnection(IUniverse* new_world) { _DynamicWorld = new_world; }
+void WorldStatic::SetDynamicWorldConnection(IUniverse* new_world) { _dynamicWorld = new_world; }
 
-void WorldStatic::setSceneConnection(ILocatableScene* new_scene) { _Scene = new_scene; }
+void WorldStatic::SetSceneConnection(ILocatableScene* new_scene) { _scene = new_scene; }
 
-void WorldStatic::setPlayerColliderConnection(ICollidable* new_collider) { _PlayerCollider = new_collider; }
+void WorldStatic::SetPlayerColliderConnection(ICollidable* new_collider) { _playerCollider = new_collider; }
 
-int WorldStatic::getPlatformsBottom() const { return _Platforms.begin()->get()->bottom(); }
+int WorldStatic::GetPlatformsBottom() const { return _platforms.begin()->get()->Bottom(); }
 
-Point WorldStatic::getFirstPlatformTopCLocation() const
+Point WorldStatic::GetFirstPlatformTopCLocation() const
 {
-	return Point(_Platforms.begin()->get()->center().x, _Platforms.begin()->get()->top());
+	return Point(_platforms.begin()->get()->Center().x, _platforms.begin()->get()->Top());
 }
 
-size_t* WorldStatic::getNewPlatformsQuantity() { return &_NewPlatformsQuantity; }
+size_t* WorldStatic::GetNewPlatformsQuantity() { return &_newPlatformsQuantity; }
 
-void WorldStatic::initialize()
+void WorldStatic::Initialize()
 {
 	//? Later we will use spawner to create new platform in the world
 	// TODO: terrible initializing
 	// TODO: maybe set platforms width and height variables on the construction
-	_PlatformSpawner = std::make_unique<RandomSpawn>(this, _PlatformWidth, _PlatformHeight);
+	_platformSpawner = std::make_unique<RandomSpawn>(this, _platformWidth, _platformHeight);
 
 	//? How far new plaforms would be offseted
-	_PlatformSpawner->setOffsetsX(_PlatformWidth + 20, 20);	   // TODO: get rid of magic number
-	_PlatformSpawner->setOffsetsY(6 * _PlatformHeight, 40);	   // TODO: get rid of magic number
+	_platformSpawner->SetOffsetsX(_platformWidth + 20, 20);	   // TODO: get rid of magic number
+	_platformSpawner->SetOffsetsY(6 * _platformHeight, 40);	   // TODO: get rid of magic number
 
 	//? Initially we create only one platform for player stand on it
-	_PlatformSpawner->orderSingleActor(_Screen->ApplicationHeight, _Screen->ApplicationWidth, _PlatformsQuantity,
-									   &IUniverse::onSpawnNewActor);
+	_platformSpawner->OrderSingleActor(_screen->_applicationHeight, _screen->_applicationWidth, _platformsQuantity,
+									   &IUniverse::OnSpawnNewActor);
 
 	//? And spawning another set of platforms so player not be boring :)
-	checkForSpawnNewPlatforms(0);
+	CheckForSpawnNewPlatforms(0);
 
-	_Stealth = std::make_unique<Stealth>();
-	_Stealth->resetSpriteConnection(_Platforms[0].get());
+	_stealth = std::make_unique<Stealth>();
+	_stealth->ResetSpriteConnection(_platforms[0].get());
 }
 
 // TODO: call this method in the initializer to spawn first platform for player
-void WorldStatic::onSpawnNewActor(const int& x, const int& y, const unsigned int& variance)
+void WorldStatic::OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance)
 {
-	std::string Path(_PlatformsPathCut + std::to_string(variance + 1) + _PlatformsPathAdder);
-	_Platforms.push_back(std::make_unique<Image>(_Screen, Path.c_str(),	   //
+	std::string Path(_platformsPathCut + std::to_string(variance + 1) + _platformsPathAdder);
+	_platforms.push_back(std::make_unique<Image>(_screen, Path.c_str(),	   //
 												 Sizes::Environment::PlatformWidth,
 												 Sizes::Environment::PlatformHeight));
-	onAddNewActorToPlayerCollider(_Platforms.back().get());	   //? Don't forget to tell player
+	OnAddNewActorToPlayerCollider(_platforms.back().get());	   //? Don't forget to tell player
 
-	_PlatformsLocators.push_back(std::make_unique<Locator>(_Platforms.back().get()));
-	_PlatformsLocators.back()->setLBCornerLocation(x, y);
-	onAddNewActorToScene(_PlatformsLocators.back().get());	  //? Don't forget to tell scene
+	_platformsLocators.push_back(std::make_unique<Locator>(_platforms.back().get()));
+	_platformsLocators.back()->SetLBCornerLocation(x, y);
+	OnAddNewActorToScene(_platformsLocators.back().get());	  //? Don't forget to tell scene
 }
 
-void WorldStatic::checkForSpawnNewPlatforms(const int& player_y)
+void WorldStatic::CheckForSpawnNewPlatforms(const int& player_y)
 {
-	if (_Platforms.empty()) return;
+	if (_platforms.empty()) return;
 
-	if (player_y < (_Platforms.back()->top() + _ThresholdY))
+	if (player_y < (_platforms.back()->Top() + _thresholdY))
 	{
 		//? Ordering new actors
 		// TODO: get rid of magic number
 		Rectangle NewActorsArea{
-			0,																									  // x
-			_Platforms.back()->top() - (int)_Screen->ApplicationHeight - 7 * (int)_Platforms.back()->height(),	  // y
-			int(_Screen->ApplicationWidth), int(_Screen->ApplicationHeight)	   // size
+			0,																									   // x
+			_platforms.back()->Top() - (int)_screen->_applicationHeight - 7 * (int)_platforms.back()->Height(),	   // y
+			int(_screen->_applicationWidth), int(_screen->_applicationHeight)	 // size
 		};
-		_NewPlatformsQuantity =
-			_PlatformSpawner->orderNewActors(NewActorsArea, _PlatformsQuantity, &IUniverse::onSpawnNewActor);
+		_newPlatformsQuantity =
+			_platformSpawner->OrderNewActors(NewActorsArea, _platformsQuantity, &IUniverse::OnSpawnNewActor);
 	}
 }
 
-void WorldStatic::cleaner()
+void WorldStatic::Cleaner()
 {
-	if (_Platforms.empty()) return;
+	if (_platforms.empty()) return;
 
 	size_t count{};
 
 	while (true)
 	{
-		if (_Platforms.begin()->get()->top() >= ((int)_Screen->ApplicationHeight + 4 * _ThresholdY))
+		if (_platforms.begin()->get()->Top() >= ((int)_screen->_applicationHeight + 4 * _thresholdY))
 		{
 			// std::cout << std::format("{} >= {}. erasing...\n", _Platforms.begin()->get()->top(),
 			// 						 (int)_appHeight + 4*_ThresholdY);
-			_PlatformsLocators.erase(_PlatformsLocators.begin());
-			onRemoveFrontActorFromScene();
-			_Platforms.erase(_Platforms.begin());
-			onRemoveFrontActorFromPlayerCollider();
+			_platformsLocators.erase(_platformsLocators.begin());
+			OnRemoveFrontActorFromScene();
+			_platforms.erase(_platforms.begin());
+			OnRemoveFrontActorFromPlayerCollider();
 
 			count++;
 		}
@@ -164,7 +164,7 @@ void WorldStatic::cleaner()
 		{
 			if (count)
 			{
-				_OverallDeleted += count;
+				_overallDeleted += count;
 				// std::cout << std::format("\t\tdeleted {} actors.\n", count);
 			}
 			break;
@@ -173,55 +173,55 @@ void WorldStatic::cleaner()
 	}
 }
 
-void WorldStatic::tick(float delta_t) { _Stealth->tick(delta_t); }
+void WorldStatic::Tick(float delta_t) { _stealth->Tick(delta_t); }
 
-void WorldStatic::render()
+void WorldStatic::Render()
 {
-	for (auto& Platform : _Platforms)
+	for (auto& Platform : _platforms)
 	{
-		Platform->render();
+		Platform->Render();
 	}
 }
 
-void WorldStatic::onTopOfPlatformMessaging(size_t index)
+void WorldStatic::OnTopOfPlatformMessaging(size_t index)
 {
 	//? Checking if module not taking by platform already
-	if (_Stealth->getPlatformImage() != dynamic_cast<IGraphicle*>(_Platforms[index].get()))
+	if (_stealth->GetPlatformImage() != dynamic_cast<IGraphicle*>(_platforms[index].get()))
 	{
-		_Stealth->resetSpriteConnection(_Platforms[index].get());
+		_stealth->ResetSpriteConnection(_platforms[index].get());
 	}
 }
 
-void WorldStatic::onFlyingMessaging() { _Stealth->emptySpriteConnection(); }
+void WorldStatic::OnFlyingMessaging() { _stealth->EmptySpriteConnection(); }
 
-void WorldStatic::onAddNewActorToScene(IRelocatableActor* new_actor)
+void WorldStatic::OnAddNewActorToScene(IRelocatableActor* new_actor)
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->addRelocatableActor(new_actor);
+		_scene->AddRelocatableActor(new_actor);
 	}
 }
 
-void WorldStatic::onAddNewActorToPlayerCollider(RectangleCore* new_actor)
+void WorldStatic::OnAddNewActorToPlayerCollider(RectangleCore* new_actor)
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->addBlockedActor(new_actor);
+		_playerCollider->AddBlockedActor(new_actor);
 	}
 }
 
-void WorldStatic::onRemoveFrontActorFromScene()
+void WorldStatic::OnRemoveFrontActorFromScene()
 {
-	if (_Scene)
+	if (_scene)
 	{
-		_Scene->removeRelocatableActorAtFront();
+		_scene->RemoveRelocatableActorAtFront();
 	}
 }
 
-void WorldStatic::onRemoveFrontActorFromPlayerCollider()
+void WorldStatic::OnRemoveFrontActorFromPlayerCollider()
 {
-	if (_PlayerCollider)
+	if (_playerCollider)
 	{
-		_PlayerCollider->removeBlockedActorAtFront();
+		_playerCollider->RemoveBlockedActorAtFront();
 	}
 }

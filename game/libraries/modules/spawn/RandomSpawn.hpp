@@ -33,8 +33,8 @@ public:
 
 	//* Setters
 
-	void setOffsetsX(int new_min_offset, int offset_from_min);
-	void setOffsetsY(int new_min_offset, int offset_from_min);
+	void SetOffsetsX(int new_min_offset, int offset_from_min);
+	void SetOffsetsY(int new_min_offset, int offset_from_min);
 
 	// TODO: maybe rescale API
 
@@ -42,15 +42,15 @@ public:
 
 	//? Set max offset by Y to much greater number then min (only positive numbers)
 	//? to get greater probability of 'false' in result, so no spawn will be done
-	bool doWeSpawnByHeight() const;
+	bool DoWeSpawnByHeight() const;
 
 	//? Choose one number from [_MinOffsetX, _MaxOffsetX]
-	int orderVariantByWidth() const;
+	int OrderVariantByWidth() const;
 
-	size_t orderNewActors(const Rectangle& new_place_boundary, const unsigned int& variant_qty,
+	size_t OrderNewActors(const Rectangle& new_place_boundary, const unsigned int& variant_qty,
 						  UniverseCoorCallBackType callback) const;
 
-	void orderSingleActor(const int bottom_coordinate_to_spawn, const int screen_width, const unsigned int& variant_qty,
+	void OrderSingleActor(const int bottom_coordinate_to_spawn, const int screen_width, const unsigned int& variant_qty,
 						  UniverseCoorCallBackType callback) const;
 
 private:
@@ -62,15 +62,15 @@ private:
 
 	//@ Members
 
+	IUniverse* _parent{ nullptr };
+
 	//* Host geometry
-	int _SpriteWidth{};
-	int _SpriteHeight{};
+	int _spriteWidth{};
+	int _spriteHeight{};
 
 	//* Utilities
-	int _MinOffsetX{};
-	int _MaxOffsetX{};
-	int _MinOffsetY{};
-	int _MaxOffsetY{};
-
-	IUniverse* _Parent{ nullptr };
+	int _minOffsetX{};
+	int _maxOffsetX{};
+	int _minOffsetY{};
+	int _maxOffsetY{};
 };

@@ -29,114 +29,114 @@ Collider::~Collider()
 	// std::cout << "Deleted Collider...\n";
 }
 
-void Collider::setParentEngine(IMechanics* parent) { _parentEngine = parent; }
+void Collider::SetParentEngine(IMechanics* parent) { _parentEngine = parent; }
 
-void Collider::setIsIgnoringBottomFrame(bool new_state) { _bIsIgnoringBottomFrame = new_state; }
+void Collider::SetIsIgnoringBottomFrame(bool new_state) { _bIsIgnoringBottomFrame = new_state; }
 
-void Collider::setIsIgnoringBottomActor(bool new_state) { _bIsIgnoringBottomActor = new_state; }
+void Collider::SetIsIgnoringBottomActor(bool new_state) { _bIsIgnoringBottomActor = new_state; }
 
-void Collider::setIsIgnoringSidesFrame(bool new_state) { _bIsIgnoringSidesFrame = new_state; }
+void Collider::SetIsIgnoringSidesFrame(bool new_state) { _bIsIgnoringSidesFrame = new_state; }
 
-void Collider::setParentLevel(IStoppable* level_instance) { _LevelInstance = level_instance; }
+void Collider::SetParentLevel(IStoppable* level_instance) { _levelInstance = level_instance; }
 
-void Collider::setStaticWorldConnection(IAccounting* new_world) { _CallbackWorld = new_world; }
+void Collider::SetStaticWorldConnection(IAccounting* new_world) { _callbackWorld = new_world; }
 
-void Collider::addBlockedFrame(RectangleCore* frame) { _BlockingFrame = frame; }
+void Collider::AddBlockedFrame(RectangleCore* frame) { _blockingFrame = frame; }
 
-void Collider::addBlockedActor(RectangleCore* actor) { _BlockingActors.push_back(std::make_pair(actor, false)); }
+void Collider::AddBlockedActor(RectangleCore* actor) { _blockingActors.push_back(std::make_pair(actor, false)); }
 
-void Collider::addBlockedEnemy(RectangleCore* actor) { _Enemies.push_back(actor); }
+void Collider::AddBlockedEnemy(RectangleCore* actor) { _enemies.push_back(actor); }
 
-void Collider::addBlockedWormhole(RectangleCore* actor) { _Wormholes.push_back(actor); }
+void Collider::AddBlockedWormhole(RectangleCore* actor) { _wormholes.push_back(actor); }
 
-void Collider::addShooterAmmo(RectangleCore* actor, IMechanics* engine)
+void Collider::AddShooterAmmo(RectangleCore* actor, IMechanics* engine)
 {
-	_AmmoTiles.push_back(std::make_pair(actor, engine));
+	_ammoTiles.push_back(std::make_pair(actor, engine));
 }
 
-void Collider::removeBlockedActorAtFront()
+void Collider::RemoveBlockedActorAtFront()
 {
-	if (!_BlockingActors.empty())
+	if (!_blockingActors.empty())
 	{
-		_BlockingActors.erase(_BlockingActors.begin());
+		_blockingActors.erase(_blockingActors.begin());
 	}
 }
 
-void Collider::removeEnemyAtFront()
+void Collider::RemoveEnemyAtFront()
 {
-	if (!_Enemies.empty())
+	if (!_enemies.empty())
 	{
-		_Enemies.erase(_Enemies.begin());
+		_enemies.erase(_enemies.begin());
 	}
 }
 
-void Collider::removeWormholeAtFront()
+void Collider::RemoveWormholeAtFront()
 {
-	if (!_Wormholes.empty())
+	if (!_wormholes.empty())
 	{
-		_Wormholes.erase(_Wormholes.begin());
+		_wormholes.erase(_wormholes.begin());
 	}
 }
 
-void Collider::removeAmmoAtFront()
+void Collider::RemoveAmmoAtFront()
 {
-	if (!_AmmoTiles.empty())
+	if (!_ammoTiles.empty())
 	{
-		_AmmoTiles.erase(_AmmoTiles.begin());
+		_ammoTiles.erase(_ammoTiles.begin());
 	}
 }
 
-void Collider::updateCollisions()
+void Collider::UpdateCollisions()
 {
 	//? Maybe player goes to side of the frame, fall off from screen
-	if (_BlockingFrame)
+	if (_blockingFrame)
 	{
-		checkInside(_info.get());
+		CheckInside(_info.get());
 	}
 
 	//? Do we collide any platfrom
-	if (!_parentEngine->getIsJumping())	   //? Got thru platforms when jumping
+	if (!_parentEngine->GetIsJumping())	   //? Got thru platforms when jumping
 	{
-		checkOutsideAllBlocked();
+		CheckOutsideAllBlocked();
 	}	 //? But not: when flying
 
-	if ((_parentEngine->getIsJumping() || _parentEngine->getIsFalling()) && _CallbackWorld)
+	if ((_parentEngine->GetIsJumping() || _parentEngine->GetIsFalling()) && _callbackWorld)
 	{
-		_CallbackWorld->onFlyingMessaging();
+		_callbackWorld->OnFlyingMessaging();
 	}
 
 	//? Tell that player is on the platform
-	checkOnTopOfAnyPlatform();
+	CheckOnTopOfAnyPlatform();
 
 	//? Maybe game will be restarted here
-	checkFightWithEnemies();
+	CheckFightWithEnemies();
 
 	//? Maybe game will be restarted here
-	checkFallingToWormhole();
+	CheckFallingToWormhole();
 
 	//? Check that all ammo inside frame
-	if (_BlockingFrame)
+	if (_blockingFrame)
 	{
-		for (auto& Ammo : _AmmoTiles)
+		for (auto& Ammo : _ammoTiles)
 		{
 			std::unique_ptr<IntersectionInfo> info = std::make_unique<IntersectionInfo>();
-			checkInsideAmmo(info.get(), Ammo.first);
+			CheckInsideAmmo(info.get(), Ammo.first);
 			if (Ammo.second)
 			{
-				Ammo.second->move(resolveCollision(info.get()));
+				Ammo.second->Move(ResolveCollision(info.get()));
 			}
 		}
 	}
 
 	//? Check maybe ammo killed enemy
-	auto iterator = std::begin(_AmmoTiles);
-	while (iterator != std::end(_AmmoTiles))
+	auto iterator = std::begin(_ammoTiles);
+	while (iterator != std::end(_ammoTiles))
 	{
-		if (checkAmmoAimEnemy(iterator->first, iterator->second))
+		if (CheckAmmoAimEnemy(iterator->first, iterator->second))
 		{
 			//? Ammo destroyed enemy, now destroy ammo
-			onAmmoDestroyed(iterator - std::begin(_AmmoTiles));
-			iterator = _AmmoTiles.erase(iterator);	  // erase returns iterator to the next valid element
+			OnAmmoDestroyed(iterator - std::begin(_ammoTiles));
+			iterator = _ammoTiles.erase(iterator);	  // erase returns iterator to the next valid element
 		}
 		else
 		{
@@ -145,86 +145,86 @@ void Collider::updateCollisions()
 	}
 }
 
-void Collider::checkInside(IntersectionInfo* info)
+void Collider::CheckInside(IntersectionInfo* info)
 {
 	info->direction = IntersectionDirection::NONE;
 	info->size = { 0, 0 };
 
-	if (_hostCore->bottom() < _BlockingFrame->bottom())
+	if (_hostCore->Bottom() < _blockingFrame->Bottom())
 	{
-		onMessagingOnFrame(false);
+		OnMessagingOnFrame(false);
 	}
 
-	if (_hostCore->left() < _BlockingFrame->left())
+	if (_hostCore->Left() < _blockingFrame->Left())
 	{
 		info->direction = IntersectionDirection::LEFT;
 		if (_bIsIgnoringSidesFrame)
 		{
 			info->size.width =
-				_BlockingFrame->left() - _hostCore->left() + _BlockingFrame->width() - _hostCore->width();
+				_blockingFrame->Left() - _hostCore->Left() + _blockingFrame->Width() - _hostCore->Width();
 		}
 		else
 		{
-			info->size.width = _BlockingFrame->left() - _hostCore->left();
+			info->size.width = _blockingFrame->Left() - _hostCore->Left();
 		}
 
-		onMoveCallBack();
+		OnMoveCallBack();
 	}
-	else if (_hostCore->right() > _BlockingFrame->right())
+	else if (_hostCore->Right() > _blockingFrame->Right())
 	{
 		info->direction = IntersectionDirection::RIGHT;
 		if (_bIsIgnoringSidesFrame)
 		{
 			info->size.width =
-				_hostCore->right() - _BlockingFrame->right() + _BlockingFrame->width() - _hostCore->width();
+				_hostCore->Right() - _blockingFrame->Right() + _blockingFrame->Width() - _hostCore->Width();
 		}
 		else
 		{
-			info->size.width = _hostCore->right() - _BlockingFrame->right();
+			info->size.width = _hostCore->Right() - _blockingFrame->Right();
 		}
 
-		onMoveCallBack();
+		OnMoveCallBack();
 	}
-	else if (_hostCore->top() < _BlockingFrame->top())
+	else if (_hostCore->Top() < _blockingFrame->Top())
 	{
 		info->direction = IntersectionDirection::TOP;
-		info->size.height = _BlockingFrame->top() - _hostCore->top();
+		info->size.height = _blockingFrame->Top() - _hostCore->Top();
 
-		onMoveCallBack();
+		OnMoveCallBack();
 	}
-	else if ((_hostCore->bottom() >= _BlockingFrame->bottom()) && !_bIsIgnoringBottomFrame)
+	else if ((_hostCore->Bottom() >= _blockingFrame->Bottom()) && !_bIsIgnoringBottomFrame)
 	{
 		info->direction = IntersectionDirection::BOTTOM;
-		info->size.height = _hostCore->bottom() - _BlockingFrame->bottom();
+		info->size.height = _hostCore->Bottom() - _blockingFrame->Bottom();
 
-		onMessagingOnFrame(true);
+		OnMessagingOnFrame(true);
 
-		onMoveCallBack();
+		OnMoveCallBack();
 	}
-	else if (_hostCore->top() >= _BlockingFrame->bottom())
+	else if (_hostCore->Top() >= _blockingFrame->Bottom())
 	{
 		OnLevelStop();
 	}
 }
 
-void Collider::checkInsideAmmo(IntersectionInfo* info, RectangleCore* body)
+void Collider::CheckInsideAmmo(IntersectionInfo* info, RectangleCore* body)
 {
 	info->direction = IntersectionDirection::NONE;
 	info->size = { 0, 0 };
 
-	if (body->left() < _BlockingFrame->left())
+	if (body->Left() < _blockingFrame->Left())
 	{
 		info->direction = IntersectionDirection::LEFT;
-		info->size.width = _BlockingFrame->left() - body->left() + _BlockingFrame->width() - body->width();
+		info->size.width = _blockingFrame->Left() - body->Left() + _blockingFrame->Width() - body->Width();
 	}
-	else if (body->right() > _BlockingFrame->right())
+	else if (body->Right() > _blockingFrame->Right())
 	{
 		info->direction = IntersectionDirection::RIGHT;
-		info->size.width = body->right() - _BlockingFrame->right() + _BlockingFrame->width() - body->width();
+		info->size.width = body->Right() - _blockingFrame->Right() + _blockingFrame->Width() - body->Width();
 	}
 }
 
-Point Collider::resolveCollision(IntersectionInfo* info)
+Point Collider::ResolveCollision(IntersectionInfo* info)
 {
 	Point result{ 0, 0 };
 	switch (info->direction)
@@ -252,85 +252,85 @@ Point Collider::resolveCollision(IntersectionInfo* info)
 	return result;
 }
 
-bool Collider::checkOutside(RectangleCore* frame, bool& bIsOnTopOfPlatform)
+bool Collider::CheckOutside(RectangleCore* frame, bool& bIsOnTopOfPlatform)
 {
-	if ((_hostCore->bottom() < frame->top()) ||	   //
-		(_hostCore->top() > frame->bottom()) ||	   //
-		(_hostCore->right() < frame->left()) ||	   //
-		(_hostCore->left() > frame->right()))
+	if ((_hostCore->Bottom() < frame->Top()) ||	   //
+		(_hostCore->Top() > frame->Bottom()) ||	   //
+		(_hostCore->Right() < frame->Left()) ||	   //
+		(_hostCore->Left() > frame->Right()))
 	{
 		bIsOnTopOfPlatform = false;
 	}
 
 	//? small owner intersect big size of platfrom at top
 	if (																					 //
-		(((frame->left() < _hostCore->left()) && (_hostCore->left() < frame->right()))		 //
+		(((frame->Left() < _hostCore->Left()) && (_hostCore->Left() < frame->Right()))		 //
 		 ||																					 //
-		 ((frame->left() < _hostCore->right()) && (_hostCore->right() < frame->right())))	 //
+		 ((frame->Left() < _hostCore->Right()) && (_hostCore->Right() < frame->Right())))	 //
 		&&																					 //
-		(_hostCore->bottom() > frame->top()) && (_hostCore->top() < frame->top())			 //
+		(_hostCore->Bottom() > frame->Top()) && (_hostCore->Top() < frame->Top())			 //
 		// &&																					 //
 		// (_parentEngine->getLinearSpeed()._Vy <= 0)	  //* if we floating up don't pull host from bottom to top,
 		// 											  //* allow host to float with it is own speed
 	)
 	{
 		_info->direction = IntersectionDirection::TOP;
-		_info->size.height = -(_hostCore->bottom() - frame->top());
+		_info->size.height = -(_hostCore->Bottom() - frame->Top());
 
 		bIsOnTopOfPlatform = true;
 		return true;
 	}
 	//? small owner intersect big size of platfrom at bottom
 	else if (																				 //
-		(((frame->left() < _hostCore->left()) && (_hostCore->left() < frame->right()))		 //
+		(((frame->Left() < _hostCore->Left()) && (_hostCore->Left() < frame->Right()))		 //
 		 ||																					 //
-		 ((frame->left() < _hostCore->right()) && (_hostCore->right() < frame->right())))	 //
+		 ((frame->Left() < _hostCore->Right()) && (_hostCore->Right() < frame->Right())))	 //
 		&&																					 //
-		((_hostCore->top() < frame->bottom()) && (_hostCore->bottom() > frame->bottom()))	 //
+		((_hostCore->Top() < frame->Bottom()) && (_hostCore->Bottom() > frame->Bottom()))	 //
 		&&																					 //
 		!_bIsIgnoringBottomActor	//* don't allow to collide when moving from bottom to top
 	)
 	{
 		_info->direction = IntersectionDirection::BOTTOM;
-		_info->size.height = -(frame->bottom() - _hostCore->top());
+		_info->size.height = -(frame->Bottom() - _hostCore->Top());
 
 		return true;
 	}
 	//? small owner intersect small size of platfrom at left
 	else if (																				   //
-		(((_hostCore->top() < frame->top()) && (frame->top() < _hostCore->bottom()))		   //
+		(((_hostCore->Top() < frame->Top()) && (frame->Top() < _hostCore->Bottom()))		   //
 		 ||																					   //
-		 ((_hostCore->top() < frame->bottom()) && (frame->bottom() < _hostCore->bottom())))	   //
+		 ((_hostCore->Top() < frame->Bottom()) && (frame->Bottom() < _hostCore->Bottom())))	   //
 		&&																					   //
-		((_hostCore->left() < frame->right()) && (_hostCore->right() > frame->right()))		   //
+		((_hostCore->Left() < frame->Right()) && (_hostCore->Right() > frame->Right()))		   //
 		&&																					   //
-		(_parentEngine->getLinearSpeed()._Vy > 0)	 //* if we floating up don't pull host from bottom to top,
+		(_parentEngine->GetLinearSpeed()._Vy > 0)	 //* if we floating up don't pull host from bottom to top,
 													 //* allow host to float with it is own speed
 													 // &&											 //
 													 // !(_parentEngine->getIsJumping())			 //
 	)
 	{
 		_info->direction = IntersectionDirection::LEFT;
-		_info->size.width = (frame->right() - _hostCore->left());
+		_info->size.width = (frame->Right() - _hostCore->Left());
 
 		return true;
 	}
 	//? small owner intersect small size of platfrom at right
 	else if (																				   //
-		(((_hostCore->top() < frame->top()) && (frame->top() < _hostCore->bottom()))		   //
+		(((_hostCore->Top() < frame->Top()) && (frame->Top() < _hostCore->Bottom()))		   //
 		 ||																					   //
-		 ((_hostCore->top() < frame->bottom()) && (frame->bottom() < _hostCore->bottom())))	   //
+		 ((_hostCore->Top() < frame->Bottom()) && (frame->Bottom() < _hostCore->Bottom())))	   //
 		&&																					   //
-		(_hostCore->right() > frame->left()) && (_hostCore->left() < frame->left())			   //
+		(_hostCore->Right() > frame->Left()) && (_hostCore->Left() < frame->Left())			   //
 		&&																					   //
-		(_parentEngine->getLinearSpeed()._Vy > 0)	 //* if we floating up don't pull host from bottom to top,
+		(_parentEngine->GetLinearSpeed()._Vy > 0)	 //* if we floating up don't pull host from bottom to top,
 													 //* allow host to float with it is own speed
 													 // &&											 //
 													 // !(_parentEngine->getIsJumping())			 //
 	)
 	{
 		_info->direction = IntersectionDirection::RIGHT;
-		_info->size.width = (_hostCore->right() - frame->left());
+		_info->size.width = (_hostCore->Right() - frame->Left());
 
 		return true;
 	}
@@ -340,22 +340,22 @@ bool Collider::checkOutside(RectangleCore* frame, bool& bIsOnTopOfPlatform)
 	}
 }
 
-bool Collider::checkOutsideBlockedActor(RectangleCore* killer, RectangleCore* frame, IntersectionInfo& info,
+bool Collider::CheckOutsideBlockedActor(RectangleCore* killer, RectangleCore* frame, IntersectionInfo& info,
 										IMechanics* engine)
 {
-	if ((killer->bottom() < frame->top()) ||	//
-		(killer->top() > frame->bottom()) ||	//
-		(killer->right() < frame->left()) ||	//
-		(killer->left() > frame->right()))
+	if ((killer->Bottom() < frame->Top()) ||	//
+		(killer->Top() > frame->Bottom()) ||	//
+		(killer->Right() < frame->Left()) ||	//
+		(killer->Left() > frame->Right()))
 	{
 		return false;	 //? No fight
 	}
 
 	//? small owner intersect big size of platfrom at top
 	if (																				 //
-		((frame->top() < killer->bottom()) && (killer->bottom() < frame->center().y))	 //
+		((frame->Top() < killer->Bottom()) && (killer->Bottom() < frame->Center().y))	 //
 		&&																				 //
-		(engine->getLinearSpeed()._Vy > 0)	  //* help recognize bottom from top
+		(engine->GetLinearSpeed()._Vy > 0)	  //* help recognize bottom from top
 	)
 	{
 		info.direction = IntersectionDirection::TOP;	//? Player wins
@@ -363,9 +363,9 @@ bool Collider::checkOutsideBlockedActor(RectangleCore* killer, RectangleCore* fr
 	}
 	//? small owner intersect big size of platfrom at bottom
 	else if (																				//
-		(((frame->left() < killer->center().x) && (killer->center().x < frame->right()))	//
+		(((frame->Left() < killer->Center().x) && (killer->Center().x < frame->Right()))	//
 		 &&																					//
-		 ((frame->center().y < killer->top()) && (killer->top() < frame->bottom())))		//
+		 ((frame->Center().y < killer->Top()) && (killer->Top() < frame->Bottom())))		//
 
 	)
 	{
@@ -374,11 +374,11 @@ bool Collider::checkOutsideBlockedActor(RectangleCore* killer, RectangleCore* fr
 	}
 	//? small owner intersect small size of platfrom at left
 	else if (																			 //
-		(((killer->top() < frame->top()) && (frame->top() < killer->bottom()))			 //
+		(((killer->Top() < frame->Top()) && (frame->Top() < killer->Bottom()))			 //
 		 ||																				 //
-		 ((killer->top() < frame->bottom()) && (frame->bottom() < killer->bottom())))	 //
+		 ((killer->Top() < frame->Bottom()) && (frame->Bottom() < killer->Bottom())))	 //
 		&&																				 //
-		((killer->left() < frame->right()) && (killer->right() > frame->right()))		 //
+		((killer->Left() < frame->Right()) && (killer->Right() > frame->Right()))		 //
 	)
 	{
 		info.direction = IntersectionDirection::LEFT;	 //? Player loose
@@ -386,11 +386,11 @@ bool Collider::checkOutsideBlockedActor(RectangleCore* killer, RectangleCore* fr
 	}
 	//? small owner intersect small size of platfrom at right
 	else if (																			 //
-		(((killer->top() < frame->top()) && (frame->top() < killer->bottom()))			 //
+		(((killer->Top() < frame->Top()) && (frame->Top() < killer->Bottom()))			 //
 		 ||																				 //
-		 ((killer->top() < frame->bottom()) && (frame->bottom() < killer->bottom())))	 //
+		 ((killer->Top() < frame->Bottom()) && (frame->Bottom() < killer->Bottom())))	 //
 		&&																				 //
-		(killer->right() > frame->left()) && (killer->left() < frame->left())			 //
+		(killer->Right() > frame->Left()) && (killer->Left() < frame->Left())			 //
 	)
 	{
 		info.direction = IntersectionDirection::RIGHT;	  //? Player loose
@@ -403,28 +403,28 @@ bool Collider::checkOutsideBlockedActor(RectangleCore* killer, RectangleCore* fr
 	}
 }
 
-void Collider::checkOutsideAllBlocked()
+void Collider::CheckOutsideAllBlocked()
 {
-	for (auto& Actor : _BlockingActors)
+	for (auto& Actor : _blockingActors)
 	{
-		if (checkOutside(Actor.first, Actor.second))
+		if (CheckOutside(Actor.first, Actor.second))
 		{
-			onMoveCallBack();
+			OnMoveCallBack();
 		}
 	}
 	//? Not a single collision
 }
 
-bool Collider::doWeJump(RectangleCore* frame, IMechanics* player_engine)
+bool Collider::DoWeJump(RectangleCore* frame, IMechanics* player_engine)
 {
 	if (																					//
-		(_hostCore->left() < frame->left()) && (player_engine->getLinearSpeed()._Vx < 0)	//
+		(_hostCore->Left() < frame->Left()) && (player_engine->GetLinearSpeed()._Vx < 0)	//
 	)
 	{
 		return true;
 	}
 	else if (																				  //
-		(_hostCore->right() > frame->right()) && (player_engine->getLinearSpeed()._Vx > 0)	  //
+		(_hostCore->Right() > frame->Right()) && (player_engine->GetLinearSpeed()._Vx > 0)	  //
 
 	)
 	{
@@ -434,49 +434,49 @@ bool Collider::doWeJump(RectangleCore* frame, IMechanics* player_engine)
 	return false;
 }
 
-void Collider::checkOnTopOfAnyPlatform()
+void Collider::CheckOnTopOfAnyPlatform()
 {
 	size_t Counter{};
 
-	for (auto& Actor : _BlockingActors)
+	for (auto& Actor : _blockingActors)
 	{
 		if (Actor.second)
 		{
-			onMessagingOnPlatform(true);
+			OnMessagingOnPlatform(true);
 
-			if (!_parentEngine->getIsJumping() && !_parentEngine->getIsFalling() && _CallbackWorld)
+			if (!_parentEngine->GetIsJumping() && !_parentEngine->GetIsFalling() && _callbackWorld)
 			{
-				_CallbackWorld->onTopOfPlatformMessaging(Counter);
+				_callbackWorld->OnTopOfPlatformMessaging(Counter);
 			}
 			// else if ((_parentEngine->getIsJumping() || _parentEngine->getIsFalling()) && _CallbackWorld)
 			// {
 			// 	_CallbackWorld->onFlyingMessaging();
 			// }
 
-			if (!_parentEngine->getIsJumping() && (doWeJump(Actor.first, _parentEngine)))
+			if (!_parentEngine->GetIsJumping() && (DoWeJump(Actor.first, _parentEngine)))
 			{
-				_parentEngine->setIsJumping(true);
+				_parentEngine->SetIsJumping(true);
 			}
 			return;	   //? Don't forget to exit cycle, cause value will be erased after it
 		}
 		Counter++;
 	}
-	onMessagingOnPlatform(false);
+	OnMessagingOnPlatform(false);
 }
 
-void Collider::checkFightWithEnemies()
+void Collider::CheckFightWithEnemies()
 {
-	for (auto iterator{ _Enemies.begin() }; iterator < _Enemies.end(); iterator++)
+	for (auto iterator{ _enemies.begin() }; iterator < _enemies.end(); iterator++)
 	{
 		IntersectionInfo info;
-		if (checkOutsideBlockedActor(_hostCore, *iterator, info, _parentEngine))
+		if (CheckOutsideBlockedActor(_hostCore, *iterator, info, _parentEngine))
 		{
 			switch (info.direction)
 			{
 				case IntersectionDirection::TOP: {
 					//? Kill enemy
-					onEnemyKilled(iterator - _Enemies.begin());	   //? Sending signal to WorldDynamic
-					_Enemies.erase(iterator);
+					OnEnemyKilled(iterator - _enemies.begin());	   //? Sending signal to WorldDynamic
+					_enemies.erase(iterator);
 					return;	   //? No need to look for another enemies`
 					break;
 				}
@@ -497,12 +497,12 @@ void Collider::checkFightWithEnemies()
 	//? Not a single fight
 }
 
-void Collider::checkFallingToWormhole()
+void Collider::CheckFallingToWormhole()
 {
-	for (auto iterator{ _Wormholes.begin() }; iterator < _Wormholes.end(); iterator++)
+	for (auto iterator{ _wormholes.begin() }; iterator < _wormholes.end(); iterator++)
 	{
 		IntersectionInfo info;
-		if (checkOutsideBlockedActor(_hostCore, *iterator, info, _parentEngine))
+		if (CheckOutsideBlockedActor(_hostCore, *iterator, info, _parentEngine))
 		{
 			switch (info.direction)
 			{
@@ -525,12 +525,12 @@ void Collider::checkFallingToWormhole()
 	//? Not a single fall
 }
 
-bool Collider::checkAmmoAimEnemy(RectangleCore* killer, IMechanics* engine)
+bool Collider::CheckAmmoAimEnemy(RectangleCore* killer, IMechanics* engine)
 {
-	for (auto iterator{ _Enemies.begin() }; iterator < _Enemies.end(); iterator++)
+	for (auto iterator{ _enemies.begin() }; iterator < _enemies.end(); iterator++)
 	{
 		IntersectionInfo info;
-		if (checkOutsideBlockedActor(killer, *iterator, info, engine))
+		if (CheckOutsideBlockedActor(killer, *iterator, info, engine))
 		{
 			switch (info.direction)
 			{
@@ -539,9 +539,9 @@ bool Collider::checkAmmoAimEnemy(RectangleCore* killer, IMechanics* engine)
 				case IntersectionDirection::LEFT:
 				case IntersectionDirection::RIGHT: {
 					//? Sending signal to WorldDynamic
-					onEnemyKilled(iterator - _Enemies.begin());
+					OnEnemyKilled(iterator - _enemies.begin());
 					//? Kill enemy
-					_Enemies.erase(iterator);
+					_enemies.erase(iterator);
 					return true;	//? No need to look for another enemies
 					break;
 				}
@@ -556,50 +556,50 @@ bool Collider::checkAmmoAimEnemy(RectangleCore* killer, IMechanics* engine)
 	return false;	 //? Not a single fight
 }
 
-void Collider::onMoveCallBack()
+void Collider::OnMoveCallBack()
 {
 	if (_parentEngine)
 	{
-		_parentEngine->move(resolveCollision(_info.get()));
+		_parentEngine->Move(ResolveCollision(_info.get()));
 	}
 }
 
-void Collider::onMessagingOnFrame(bool new_state)
+void Collider::OnMessagingOnFrame(bool new_state)
 {
 	if (_parentEngine)
 	{
-		_parentEngine->setOnTopOfFrame(new_state);
+		_parentEngine->SetOnTopOfFrame(new_state);
 	}
 }
 
-void Collider::onMessagingOnPlatform(bool new_state)
+void Collider::OnMessagingOnPlatform(bool new_state)
 {
 	if (_parentEngine)
 	{
-		_parentEngine->setOnTopOfAnyPlatform(new_state);
+		_parentEngine->SetOnTopOfAnyPlatform(new_state);
 	}
 }
 
 void Collider::OnLevelStop()
 {
-	if (_LevelInstance)
+	if (_levelInstance)
 	{
-		_LevelInstance->onLevelStop();
+		_levelInstance->OnLevelStop();
 	}
 }
 
-void Collider::onEnemyKilled(size_t index)
+void Collider::OnEnemyKilled(size_t index)
 {
-	if (_LevelInstance)
+	if (_levelInstance)
 	{
-		_LevelInstance->onEnemyKilled(index);
+		_levelInstance->OnEnemyKilled(index);
 	}
 }
 
-void Collider::onAmmoDestroyed(size_t index)
+void Collider::OnAmmoDestroyed(size_t index)
 {
-	if (_LevelInstance)
+	if (_levelInstance)
 	{
-		_LevelInstance->onAmmoDestroyed(index);
+		_levelInstance->OnAmmoDestroyed(index);
 	}
 }

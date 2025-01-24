@@ -20,25 +20,25 @@ public:
 
 	//* Setters
 
-	void addPlayer(IRelocatableActor* actor);
-	void addScoreBoardOrigin(IRelocatableActor* actor);
-	virtual void addRelocatableActor(IRelocatableActor* actor) override;
-	virtual void addRelocatableEnemy(IRelocatableActor* actor) override;
-	virtual void addRelocatableWormhole(IRelocatableActor* actor) override;
-	virtual void addRelocatableAmmo(IRelocatableActor* actor) override;
-	virtual void removeRelocatableActorAtFront() override;
-	virtual void removeRelocatableEnemyAtFront() override;
-	virtual void removeRelocatableWormholeAtFront() override;
-	virtual void removeRelocatableAmmoAtFront() override;
-	virtual void onAmmoMissed(size_t index) override;
-	virtual void onEnemyKilled(size_t index) override;
-	virtual void onAmmoDestroyed(size_t index) override;
+	void AddPlayer(IRelocatableActor* actor);
+	void AddScoreBoardOrigin(IRelocatableActor* actor);
+	virtual void AddRelocatableActor(IRelocatableActor* actor) override;
+	virtual void AddRelocatableEnemy(IRelocatableActor* actor) override;
+	virtual void AddRelocatableWormhole(IRelocatableActor* actor) override;
+	virtual void AddRelocatableAmmo(IRelocatableActor* actor) override;
+	virtual void RemoveRelocatableActorAtFront() override;
+	virtual void RemoveRelocatableEnemyAtFront() override;
+	virtual void RemoveRelocatableWormholeAtFront() override;
+	virtual void RemoveRelocatableAmmoAtFront() override;
+	virtual void OnAmmoMissed(size_t index) override;
+	virtual void OnEnemyKilled(size_t index) override;
+	virtual void OnAmmoDestroyed(size_t index) override;
 
-	void addBackground(IRelocatableActor* back);
+	void AddBackground(IRelocatableActor* back);
 
 	//* Manipulators
 	//? Tell that camera moved
-	virtual void relocateAll(int delta_x, int delta_y) override;
+	virtual void RelocateAll(int delta_x, int delta_y) override;
 
 private:
 	//@ Methods
@@ -49,18 +49,21 @@ private:
 
 	//@ Members
 
-	//* Actors: moved when camera moving
-	IRelocatableActor* _Player;
 	// TODO: organize std::shared_ptr from one side and std::shared_ptr/std::weak_ptr from another side
-	std::vector<IRelocatableActor*> _StaticActors;
-	//* Enemies: moved when camera moving
-	std::vector<IRelocatableActor*> _Enemies;
-	//* Ammo tiles
-	std::vector<IRelocatableActor*> _Ammos;
-	//* How score board will found out about scene movement
-	IRelocatableActor* _ScoreBoardOrigin{ nullptr };
-	//* background is parallax, so relocate it
-	IRelocatableActor* _Background{ nullptr };
-	//* Wormholes
-	std::vector<IRelocatableActor*> _Wormholes;
+	std::vector<IRelocatableActor*> _staticActors;
+	//? Enemies: moved when camera moving
+	std::vector<IRelocatableActor*> _enemies;
+	//? Ammo tiles
+	std::vector<IRelocatableActor*> _ammos;
+	//? Wormholes
+	std::vector<IRelocatableActor*> _wormholes;
+
+	//? Actors: moved when camera moving
+	IRelocatableActor* _player;
+
+	//? How score board will found out about scene movement
+	IRelocatableActor* _scoreBoardOrigin{ nullptr };
+
+	//? background is parallax, so relocate it
+	IRelocatableActor* _background{ nullptr };
 };

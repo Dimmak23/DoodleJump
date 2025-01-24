@@ -1,9 +1,7 @@
 #pragma once
 
 //* Game
-//? Interfaces
 #include "graphics/interface/IGraphicle.hpp"
-//? Inheritance
 #include "rectangle/RectangleShape.hpp"
 
 //* C++ std
@@ -29,13 +27,13 @@ public:
 	//@ API
 
 	//* Setters
-	void rescaleSprite(float scale_width, float scale_height);
-	virtual void setIsHidden(bool new_state) override;
+	void RescaleSprite(float scale_width, float scale_height);
+	virtual void SetIsHidden(bool new_state) override;
 
 	//* Manipulators
-	virtual void render() override;
-	void moveSprite(int x, int y);
-	void placeSprite(int x, int y);
+	virtual void Render() override;
+	void MoveSprite(int x, int y);
+	void PlaceSprite(int x, int y);
 
 private:
 	//@ Methods
@@ -47,6 +45,6 @@ private:
 protected:
 	//@ Members
 
-	Sprite* _Sprite{ nullptr };
+	Sprite* _sprite{ nullptr };
 	bool _bIsHidden{ false };
 };

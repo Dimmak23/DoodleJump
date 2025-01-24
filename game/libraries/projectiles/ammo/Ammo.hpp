@@ -1,11 +1,6 @@
 #pragma once
 
-//* DL_Framework
-
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
+//* Game
 #include "modules/locator/I_RelocatableActor.hpp"
 
 //* C++ std
@@ -31,19 +26,19 @@ public:
 	//@ API
 
 	//* Getters
-	IRelocatableActor* getLocator();
-	RectangleCore* getBoundary();
-	IMechanics* getEngine();
+	IRelocatableActor* GetLocator();
+	RectangleCore* GetBoundary();
+	IMechanics* GetEngine();
 
 	//* Setters
 	bool IsOnPlace() const;
 
 	//* Manipulators
-	void tick(float delta_t);
-	virtual void relocate(int deltaX, int deltaY) override;
+	void Tick(float delta_t);
+	virtual void Relocate(int deltaX, int deltaY) override;
 
 	//* Graphics
-	void render();
+	void Render();
 
 private:
 	//@ Methods
@@ -55,26 +50,26 @@ private:
 	//@ Members
 
 	//* Modules
-	std::unique_ptr<Image> _Image{ nullptr };
-	std::unique_ptr<Locator> _Locator{ nullptr };
-	std::unique_ptr<PhysicsEngine> _Mover{ nullptr };
-
-	//* Screen data
-	const ScreenItem* _Screen{ nullptr };
+	std::unique_ptr<Image> _image{ nullptr };
+	std::unique_ptr<Locator> _locator{ nullptr };
+	std::unique_ptr<PhysicsEngine> _mover{ nullptr };
 
 	//* Destination
-	std::unique_ptr<Point> _Destination{ nullptr };
+	std::unique_ptr<Point> _destination{ nullptr };
+
+	//* Screen data
+	const ScreenItem* _screen{ nullptr };
+
+	//* Image path
+	const char* _imagePath{ nullptr };
+
+	//* Default parameters
+	const double _constantVelocityX{ 0.89 };
+	const double _constantVelocityY{ 0.89 };
+	const double _precision{ 0.01 };
+	float _initialImpulse{ 1.f };	 // TODO: implement impulse
+	float _mass{ 10.f };			 // TODO: implement mass and gravity
 
 	//* States
 	bool _bIsOnPlace{ false };
-
-	//* Default parameters
-	float _InitialImpulse{ 1.f };	 // TODO: implement impulse
-	float _Mass{ 10.f };			 // TODO: implement mass and gravity
-	const double _ConstantVelocityX{ 0.89 };
-	const double _ConstantVelocityY{ 0.89 };
-	const double _Precision{ 0.01 };
-
-	//* Image path
-	const char* _ImagePath{ nullptr };
 };

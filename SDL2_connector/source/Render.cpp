@@ -10,29 +10,29 @@
 #include <SDL2/SDL_image.h>
 #endif
 
-//* Vendor connection
+//* SDL2: connector
 #include "Loger.hpp"
 #include "Sprite.hpp"
 
 //* C++ std
 #include <string_view>
 
-Sprite* Render::createSprite(const char* path)
+Sprite* Render::CreateSprite(const char* path)
 {
 	Sprite* sprite = new Sprite();
-	sprite->initiaze(path, nullptr);
+	sprite->Initiaze(path, nullptr);
 	return sprite;
 }
 
-SDL_Window* Render::getWindow() { return _window; }
+SDL_Window* Render::GetWindow() { return _window; }
 
-SDL_Renderer* Render::getRenderer() { return _renderer; }
+SDL_Renderer* Render::GetRenderer() { return _renderer; }
 
-void Render::setWindow(SDL_Window* new_window) { _window = new_window; }
+void Render::SetWindow(SDL_Window* new_window) { _window = new_window; }
 
-void Render::setRenderer(SDL_Renderer* new_renderer) { _renderer = new_renderer; }
+void Render::SetRenderer(SDL_Renderer* new_renderer) { _renderer = new_renderer; }
 
-SDL_Surface* Render::loadSurface(const char* path)
+SDL_Surface* Render::LoadSurface(const char* path)
 {
 	std::string_view temporary{ path };
 
@@ -61,13 +61,13 @@ SDL_Surface* Render::loadSurface(const char* path)
 	}
 }
 
-void Render::releaseRenderer() { SDL_DestroyRenderer(_renderer); }
+void Render::ReleaseRenderer() { SDL_DestroyRenderer(_renderer); }
 
 //?Such approach more generous, we can apply rotation and flipping if we want to
 //* Render with rotation angle and flipping
-int Render::drawSprite(Sprite* sprite, int x, int y)
+int Render::DrawSprite(Sprite* sprite, int x, int y)
 {
-	if ((_renderer == nullptr) || (sprite->getTexture() == nullptr))
+	if ((_renderer == nullptr) || (sprite->GetTexture() == nullptr))
 	{
 		LogLine("*_parent and/or *_texture pointers assigned to 'nullptr'... ");
 		LogLine("Issue in the Texture::copy() method");
@@ -77,17 +77,17 @@ int Render::drawSprite(Sprite* sprite, int x, int y)
 	// SDL_SetTextureAlphaMod(*_texture, _opacity); //! Need Transparent class
 	// SDL_SetTextureAlphaMod(sprite->getTexture(), 255);
 
-	sprite->setOrigin(x, y);
+	sprite->SetOrigin(x, y);
 
 	//^ Returns 0 on success or a negative error code on failure; call SDL_GetError() for more information.
 	int __render_result =
 		SDL_RenderCopyEx(_renderer,					//
-						 (sprite->getTexture()),	//
+						 (sprite->GetTexture()),	//
 						 nullptr,					//    the source SDL_Rect structure
 						 //				    or nullptr for the entire texture
 						 //? if destination rectangle have been parsed: copy to it
 						 //? if not: copy to it's self position
-						 sprite->getDestination(),	  //  the destination SDL_Rect structure
+						 sprite->GetDestination(),	  //  the destination SDL_Rect structure
 						 //			    	or NULL for the entire rendering target
 						 0,	   //		an angle in degrees that indicates the rotation that will be applied to
 							   // dstrect,
@@ -101,26 +101,25 @@ int Render::drawSprite(Sprite* sprite, int x, int y)
 
 	if (__render_result)
 	{
-		LogLine("Failed to render texture: ", sprite->getTexture(), ", ", SDL_GetError());
+		LogLine("Failed to render texture: ", sprite->GetTexture(), ", ", SDL_GetError());
 	}
 
 	return __render_result;
 }
 
-void Render::destroySprite(Sprite** sprite)
+void Render::DestroySprite(Sprite** sprite)
 {
-	// TODO: test here, do right sprite texture pointers will be destroyed
 	if (*sprite)
 	{
-		delete *sprite;		  //? calling destructor Image::~Sprite() for Sprite created on heap
-		*sprite = nullptr;	  //? make nullptr Image::Sprite* - copy pointer to Sprite created on heap
+		delete *sprite;
+		*sprite = nullptr;
 	}
 }
 
-void Render::getSpriteSize(Sprite* sprite, int& width, int& height)
+void Render::GetSpriteSize(Sprite* sprite, int& width, int& height)
 {
-	width = sprite->getDestination()->w;
-	height = sprite->getDestination()->h;
+	width = sprite->GetDestination()->w;
+	height = sprite->GetDestination()->h;
 }
 
-void Render::setSpriteSize(Sprite* sprite, int width, int height) { sprite->setSize(width, height); }
+void Render::SetSpriteSize(Sprite* sprite, int width, int height) { sprite->SetSize(width, height); }

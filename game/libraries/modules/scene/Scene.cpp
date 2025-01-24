@@ -8,110 +8,110 @@
 #include <format>
 #include <iostream>
 
-void Scene::addPlayer(IRelocatableActor* actor) { _Player = actor; }
+void Scene::AddPlayer(IRelocatableActor* actor) { _player = actor; }
 
-void Scene::addScoreBoardOrigin(IRelocatableActor* actor) { _ScoreBoardOrigin = actor; }
+void Scene::AddScoreBoardOrigin(IRelocatableActor* actor) { _scoreBoardOrigin = actor; }
 
-void Scene::addRelocatableActor(IRelocatableActor* actor) { _StaticActors.push_back(actor); }
+void Scene::AddRelocatableActor(IRelocatableActor* actor) { _staticActors.push_back(actor); }
 
-void Scene::addRelocatableEnemy(IRelocatableActor* actor) { _Enemies.push_back(actor); }
+void Scene::AddRelocatableEnemy(IRelocatableActor* actor) { _enemies.push_back(actor); }
 
-void Scene::addRelocatableWormhole(IRelocatableActor* actor) { _Wormholes.push_back(actor); }
+void Scene::AddRelocatableWormhole(IRelocatableActor* actor) { _wormholes.push_back(actor); }
 
-void Scene::addRelocatableAmmo(IRelocatableActor* actor) { _Ammos.push_back(actor); }
+void Scene::AddRelocatableAmmo(IRelocatableActor* actor) { _ammos.push_back(actor); }
 
-void Scene::removeRelocatableActorAtFront()
+void Scene::RemoveRelocatableActorAtFront()
 {
-	if (!_StaticActors.empty())
+	if (!_staticActors.empty())
 	{
-		_StaticActors.erase(_StaticActors.begin());
+		_staticActors.erase(_staticActors.begin());
 	}
 }
 
-void Scene::removeRelocatableEnemyAtFront()
+void Scene::RemoveRelocatableEnemyAtFront()
 {
-	if (!_Enemies.empty())
+	if (!_enemies.empty())
 	{
-		_Enemies.erase(_Enemies.begin());
+		_enemies.erase(_enemies.begin());
 	}
 }
 
-void Scene::removeRelocatableWormholeAtFront()
+void Scene::RemoveRelocatableWormholeAtFront()
 {
-	if (!_Wormholes.empty())
+	if (!_wormholes.empty())
 	{
-		_Wormholes.erase(_Wormholes.begin());
+		_wormholes.erase(_wormholes.begin());
 	}
 }
 
-void Scene::removeRelocatableAmmoAtFront()
+void Scene::RemoveRelocatableAmmoAtFront()
 {
-	if (!_Ammos.empty())
+	if (!_ammos.empty())
 	{
-		_Ammos.erase(_Ammos.begin());
+		_ammos.erase(_ammos.begin());
 	}
 }
 
-void Scene::onAmmoMissed(size_t index)
+void Scene::OnAmmoMissed(size_t index)
 {
-	if (!_Ammos.empty())
+	if (!_ammos.empty())
 	{
-		_Ammos.erase(_Ammos.begin() + index);
+		_ammos.erase(_ammos.begin() + index);
 	}
 }
 
-void Scene::onEnemyKilled(size_t index)
+void Scene::OnEnemyKilled(size_t index)
 {
-	if (!_Enemies.empty())
+	if (!_enemies.empty())
 	{
-		_Enemies.erase(_Enemies.begin() + index);
+		_enemies.erase(_enemies.begin() + index);
 	}
 }
 
-void Scene::onAmmoDestroyed(size_t index)
+void Scene::OnAmmoDestroyed(size_t index)
 {
-	if (!_Ammos.empty())
+	if (!_ammos.empty())
 	{
-		_Ammos.erase(_Ammos.begin() + index);
+		_ammos.erase(_ammos.begin() + index);
 	}
 }
 
-void Scene::addBackground(IRelocatableActor* back) { _Background = back; }
+void Scene::AddBackground(IRelocatableActor* back) { _background = back; }
 
-void Scene::relocateAll(int delta_x, int delta_y)
+void Scene::RelocateAll(int delta_x, int delta_y)
 {
-	if (_Player)
+	if (_player)
 	{
-		_Player->relocate(delta_x, delta_y);
+		_player->Relocate(delta_x, delta_y);
 	}
 
-	for (auto& Actor : _StaticActors)
+	for (auto& Actor : _staticActors)
 	{
-		Actor->relocate(delta_x, delta_y);
+		Actor->Relocate(delta_x, delta_y);
 	}
 
-	for (auto& Enemy : _Enemies)
+	for (auto& Enemy : _enemies)
 	{
-		Enemy->relocate(delta_x, delta_y);
+		Enemy->Relocate(delta_x, delta_y);
 	}
 
-	for (auto& Wormhole : _Wormholes)
+	for (auto& Wormhole : _wormholes)
 	{
-		Wormhole->relocate(delta_x, delta_y);
+		Wormhole->Relocate(delta_x, delta_y);
 	}
 
-	if (_Background)
+	if (_background)
 	{
-		_Background->relocate(delta_x, delta_y);
+		_background->Relocate(delta_x, delta_y);
 	}
 
-	for (auto& Ammo : _Ammos)
+	for (auto& Ammo : _ammos)
 	{
-		Ammo->relocate(delta_x, delta_y);
+		Ammo->Relocate(delta_x, delta_y);
 	}
 
-	if (_ScoreBoardOrigin)
+	if (_scoreBoardOrigin)
 	{
-		_ScoreBoardOrigin->relocate(delta_x, delta_y);
+		_scoreBoardOrigin->Relocate(delta_x, delta_y);
 	}
 }

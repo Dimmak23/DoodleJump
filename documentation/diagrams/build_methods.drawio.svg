@@ -1,0 +1,189 @@
+<mxfile host="Electron" modified="2025-01-14T11:40:23.649Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.6.8 Chrome/114.0.5735.289 Electron/25.5.0 Safari/537.36" etag="bSaFkL_SmoYzNX466FOV" version="21.6.8" type="device">
+  <diagram name="Page-1" id="aEXz9GbgNk-Wav2oB7Ce">
+    <mxGraphModel dx="2044" dy="1174" grid="1" gridSize="9.8425" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ldwvQuifN-9-D__bzeTj-1" value="Ninja" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="570.86" y="600" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-2" value="MinGW Makefiles" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="740" y="600" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-3" value="Microsoft Visual Studio" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="910.01" y="600" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-4" value=".\scripts\powershell\build.ps1 -config CONFIG -generator &lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt;XXX&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480" y="490" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ldwvQuifN-9-D__bzeTj-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="510" as="sourcePoint" />
+            <mxPoint x="910" y="440" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="800" y="540" />
+              <mxPoint x="631" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-6" value="&lt;b&gt;Ninja&lt;/b&gt;" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="569.92" y="550" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-7" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ldwvQuifN-9-D__bzeTj-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="540" as="sourcePoint" />
+            <mxPoint x="870" y="550" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-8" value="&lt;b&gt;MinGW&lt;/b&gt;" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="740" y="550" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ldwvQuifN-9-D__bzeTj-3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="540" as="sourcePoint" />
+            <mxPoint x="960" y="510" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="970" y="540" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-10" value="&lt;b&gt;VS&lt;/b&gt;" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="910" y="550" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-11" value="game" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="800" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-12" value="connector" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="635" y="800" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-14" value=".\scripts\powershell\build.ps1 -rebuild &lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt;XXX&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480" y="690" width="240" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-15" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="695" y="740" as="sourcePoint" />
+            <mxPoint x="540" y="800" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="539.9999999999999" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-17" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="694.87" y="711" as="sourcePoint" />
+            <mxPoint x="694.87" y="800.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-21" value="Debug" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="480" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-22" value="Release" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="629.92" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-23" value=".\scripts\powershell\build.ps1 -config&amp;nbsp;&lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt;XXX&amp;nbsp;&lt;/font&gt;&lt;/b&gt;-generator&amp;nbsp;&lt;font color=&quot;#ffffff&quot;&gt;GENERATOR&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480" y="290" width="370" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-24" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="689" y="340" as="sourcePoint" />
+            <mxPoint x="540" y="400" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="540" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-25" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="689" y="315" as="sourcePoint" />
+            <mxPoint x="688.98" y="400.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-29" value="Debug" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="974.4124999999999" y="400.0025" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-30" value="Release" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1124.3325" y="400.0025" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-31" value=".\scripts\powershell\build.ps1 -config&amp;nbsp;&lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt;XXX&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="974.4124999999999" y="290.0025" width="370" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-32" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1183.4125" y="340.0025" as="sourcePoint" />
+            <mxPoint x="1034.4125" y="400.0025" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1034.4125" y="340.0025" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-33" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1183.4125" y="315.0025" as="sourcePoint" />
+            <mxPoint x="1183.3925" y="400.0025000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-37" value=".\scripts\powershell\build.ps1 -generator &lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt;XXX&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1141.7325" y="490.0025" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-44" value=".\scripts\powershell\build.ps1 -config CONFIG -generator &lt;font color=&quot;#ffffff&quot;&gt;GENERATOR&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480.0025" y="108.27249999999997" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-45" value=".\scripts\powershell\build.ps1 -generator &lt;font color=&quot;#ffffff&quot;&gt;GENERATOR&amp;nbsp;&lt;/font&gt;-config CONFIG&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480.005" y="138.27499999999998" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-46" value=".\scripts\powershell\build.ps1 -generator &lt;font color=&quot;#ffffff&quot;&gt;GENERATOR&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="479.99749999999995" y="168.27749999999997" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-47" value=".\scripts\powershell\build.ps1 -config CONFIG" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480.005" y="198.27499999999998" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-48" value=".\scripts\powershell\build.ps1 -rebuild AIM" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="480.0075" y="228.27749999999997" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-49" value="Ninja" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1142.6725000000001" y="600.0024999999999" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-50" value="MinGW Makefiles" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1311.8125" y="600.0024999999999" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-51" value="Microsoft Visual Studio" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1481.8225" y="600.0024999999999" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-52" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ldwvQuifN-9-D__bzeTj-49" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1371.8125" y="510.0025" as="sourcePoint" />
+            <mxPoint x="1481.8125" y="440.0025" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1371.8125" y="540.0024999999999" />
+              <mxPoint x="1202.8125" y="540.0024999999999" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-53" value="&lt;b&gt;Ninja&lt;/b&gt;" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="1141.7325" y="550.0024999999999" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-54" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ldwvQuifN-9-D__bzeTj-50" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1371.8125" y="540.0024999999999" as="sourcePoint" />
+            <mxPoint x="1441.8125" y="550.0024999999999" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-55" value="&lt;b&gt;MinGW&lt;/b&gt;" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="1311.8125" y="550.0024999999999" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-56" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="ldwvQuifN-9-D__bzeTj-51" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1371.8125" y="540.0024999999999" as="sourcePoint" />
+            <mxPoint x="1531.8125" y="510.0025" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1541.8125" y="540.0024999999999" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ldwvQuifN-9-D__bzeTj-57" value="&lt;b&gt;VS&lt;/b&gt;" style="text;html=1;strokeColor=#2D7600;fillColor=#60a917;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="1481.8125" y="550.0024999999999" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

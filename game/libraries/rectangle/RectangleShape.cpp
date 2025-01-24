@@ -4,7 +4,7 @@
 //* Game
 #include "screen/ScreenItem.hpp"
 
-RectangleShape::RectangleShape() : _InitialScaleWidth(1.f), _InitialScaleHeight(1.f)
+RectangleShape::RectangleShape() : _initialScaleWidth(1.f), _initialScaleHeight(1.f)
 {
 	//? Value need to change when we will got width and height
 	_centerRotation = new Point(0, 0);
@@ -13,7 +13,7 @@ RectangleShape::RectangleShape() : _InitialScaleWidth(1.f), _InitialScaleHeight(
 }
 
 RectangleShape::RectangleShape(const ScreenItem* parent_screen)
-	: _InitialScaleWidth(parent_screen->ScaleWidth), _InitialScaleHeight(parent_screen->ScaleHeight)
+	: _initialScaleWidth(parent_screen->_scaleWidth), _initialScaleHeight(parent_screen->_scaleHeight)
 {
 	_centerRotation = new Point(0, 0);
 	// std::cout << std::format("Constructed RectangleShape size of: {}\n", sizeof(*this));
@@ -25,7 +25,7 @@ RectangleShape::~RectangleShape()
 	_centerRotation = nullptr;
 }
 
-void RectangleShape::scale(float symmetrical_scale)
+void RectangleShape::Scale(float symmetrical_scale)
 {
 	auto oldWidth{ _rectangle.w };
 	_rectangle.w = static_cast<int>(static_cast<float>(_rectangle.w) * symmetrical_scale);
@@ -39,7 +39,7 @@ void RectangleShape::scale(float symmetrical_scale)
 	// std::cout << "Rx: " << _rectangle.x + _rectangle.w << ", Ry: " << _rectangle.y + _rectangle.h << '\n';
 }
 
-void RectangleShape::scale(float scale_width, float scale_height)
+void RectangleShape::Scale(float scale_width, float scale_height)
 {
 	auto oldWidth{ _rectangle.w };
 	_rectangle.w = static_cast<int>(static_cast<float>(_rectangle.w) * scale_width);
@@ -50,10 +50,10 @@ void RectangleShape::scale(float scale_width, float scale_height)
 	_rectangle.y += (oldHeight - _rectangle.h) / 2;
 }
 
-void RectangleShape::resetCenterPoint()
+void RectangleShape::ResetCenterPoint()
 {
 	_centerRotation->x = _rectangle.x + _rectangle.w / 2;
 	_centerRotation->y = _rectangle.y + _rectangle.h / 2;
 }
 
-double* RectangleShape::getAngle() { return &_angle; }
+double* RectangleShape::GetAngle() { return &_angle; }

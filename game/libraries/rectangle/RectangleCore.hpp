@@ -47,16 +47,16 @@ public:
 
 	//@ API: can use outside childrens
 	//? Getters
-	Rectangle* getBody();	 //! Called from the Locator, PhysicsEngine, Collider
-	int top() const;
-	int bottom() const;
-	int left() const;
-	int right() const;
-	Point center() const;
-	unsigned int width() const;
-	unsigned int height() const;
+	Rectangle* GetBody();	 //! Called from the Locator, PhysicsEngine, Collider
+	int Top() const;
+	int Bottom() const;
+	int Left() const;
+	int Right() const;
+	Point Center() const;
+	unsigned int Width() const;
+	unsigned int Height() const;
 	//? Setters
-	void setBody(const Rectangle& new_body);
+	void SetBody(const Rectangle& new_body);
 
 protected:
 	//^ Members

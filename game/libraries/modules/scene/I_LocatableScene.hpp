@@ -13,17 +13,17 @@ using size_t = unsigned long long int;
 class ILocatableScene
 {
 public:
-	virtual void addRelocatableActor(IRelocatableActor*) = 0;
-	virtual void addRelocatableEnemy(IRelocatableActor*) = 0;
-	virtual void addRelocatableWormhole(IRelocatableActor*) = 0;
-	virtual void addRelocatableAmmo(IRelocatableActor*) = 0;
-	virtual void removeRelocatableActorAtFront() = 0;
-	virtual void removeRelocatableEnemyAtFront() = 0;
-	virtual void removeRelocatableWormholeAtFront() = 0;
-	virtual void removeRelocatableAmmoAtFront() = 0;
-	virtual void onAmmoMissed(size_t) = 0;
-	virtual void onEnemyKilled(size_t) = 0;
-	virtual void onAmmoDestroyed(size_t) = 0;
+	virtual void AddRelocatableActor(IRelocatableActor*) = 0;
+	virtual void AddRelocatableEnemy(IRelocatableActor*) = 0;
+	virtual void AddRelocatableWormhole(IRelocatableActor*) = 0;
+	virtual void AddRelocatableAmmo(IRelocatableActor*) = 0;
+	virtual void RemoveRelocatableActorAtFront() = 0;
+	virtual void RemoveRelocatableEnemyAtFront() = 0;
+	virtual void RemoveRelocatableWormholeAtFront() = 0;
+	virtual void RemoveRelocatableAmmoAtFront() = 0;
+	virtual void OnAmmoMissed(size_t) = 0;
+	virtual void OnEnemyKilled(size_t) = 0;
+	virtual void OnAmmoDestroyed(size_t) = 0;
 
-	virtual void relocateAll(int, int) = 0;
+	virtual void RelocateAll(int, int) = 0;
 };

@@ -13,6 +13,6 @@ class IConnectable
 {
 public:
 	//* Setters
-	virtual void setPreciseCoordinate(int, int) = 0;
-	virtual void moveByCamera(Point) = 0;
+	virtual void SetPreciseCoordinate(int, int) = 0;
+	virtual void MoveByCamera(Point) = 0;
 };

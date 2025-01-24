@@ -35,13 +35,13 @@ public:
 
 	//? param: xrel, yrel: The relative motion in the X/Y direction
 	//? param: x, y : coordinate, relative to window
-	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) override;
+	virtual void OnMouseMove(int x, int y, int xrelative, int yrelative) override;
 
-	virtual void onMouseButtonClick(IAMouseButton button, bool isReleased) override;
+	virtual void OnMouseButtonClick(IAMouseButton button, bool isReleased) override;
 
-	virtual void onKeyPressed(IAKey k) override;
+	virtual void OnKeyPressed(IAKey k) override;
 
-	virtual void onKeyReleased(IAKey k) override;
+	virtual void OnKeyReleased(IAKey k) override;
 
 	virtual const char* GetTitle() override;
 
@@ -61,10 +61,15 @@ private:
 	//@ Members
 
 	//* Levels
-	std::unique_ptr<Level> _Level{ nullptr };
+	std::unique_ptr<Level> _level{ nullptr };
 
 	//* Mouse
-	std::unique_ptr<Point> _MousePosition;
+	std::unique_ptr<Point> _mousePosition;
+
+	//* Commands, delimeter
+	const char* _windowedModeCommand{ "-window" };
+	const char* _fullscreenModeCommand{ "-fullscreen" };
+	const char* _screenSizeDelimeter{ "x" };
 
 	//* Utilities
 	int _minAppWidth{ 400 };
@@ -73,21 +78,15 @@ private:
 	int _appHeight{};
 	float _applicationScaleX{};
 	float _applicationScaleY{};
-
-	//* Commands, delimeter
-	const char* _windowedModeCommand{ "-window" };
-	const char* _fullscreenModeCommand{ "-fullscreen" };
-	const char* _screenSizeDelimeter{ "x" };
-
 	float _previousTimePoint{};
 	float _deltaT{};
 
 	//* States
 	bool _bIsConstructedWithError{ false };
-	bool _pressedLeft{ false };
-	bool _pressedRight{ false };
-	bool _pressedUp{ false };
-	bool _pressedDown{ false };
+	bool _bPressedLeft{ false };
+	bool _bPressedRight{ false };
+	bool _bPressedUp{ false };
+	bool _bPressedDown{ false };
 	bool _bIsFullScreen{ false };
 	bool _bIsRunning{ false };
 	bool _bLeftMouseButtonClicked{ false };

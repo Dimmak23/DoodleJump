@@ -14,48 +14,48 @@
 #include <iostream>
 
 Player::Player(const ScreenItem* parent_screen, const char* path)
-	: _Screen(parent_screen)
-	, _SpawnPointHeight((const unsigned int)(Sizes::Player::DefaultSpawnPointHeight * _Screen->ScaleHeight))
-	, _FlightDestination(_Screen->ApplicationHeight / 4)
-	, _ImagePath(path)
+	: _screen(parent_screen)
+	, _spawnPointHeight((const unsigned int)(Sizes::Player::DefaultSpawnPointHeight * _screen->_scaleHeight))
+	, _flightDestination(_screen->_applicationHeight / 4)
+	, _imagePath(path)
 {
-	initialize();
+	Initialize();
 	// std::cout << "_FlightDestination: " << _FlightDestination << '\n';
 }
 
 Player::~Player() {}
 
-RectangleCore* Player::getPlayerBoundary() { return dynamic_cast<RectangleCore*>(_DoodieAnimation.get()); }
+RectangleCore* Player::GetPlayerBoundary() { return dynamic_cast<RectangleCore*>(_doodieAnimation.get()); }
 
-RectangleShape* Player::getPlayerShape() { return dynamic_cast<RectangleShape*>(_DoodieAnimation.get()); }
+RectangleShape* Player::GetPlayerShape() { return dynamic_cast<RectangleShape*>(_doodieAnimation.get()); }
 
-IRelocatableActor* Player::getPlayerLocator() { return dynamic_cast<IRelocatableActor*>(_DoodieLocator.get()); }
+IRelocatableActor* Player::GetPlayerLocator() { return dynamic_cast<IRelocatableActor*>(_doodieLocator.get()); }
 
-// PhysicsEngine* Player::getPlayerFullEngine() { return _DoodieMover.get(); }
+// PhysicsEngine* Player::GetPlayerFullEngine() { return _DoodieMover.get(); }
 
-IMechanics* Player::getPlayerEngine() { return dynamic_cast<IMechanics*>(_DoodieMover.get()); }
+IMechanics* Player::GetPlayerEngine() { return dynamic_cast<IMechanics*>(_doodieMover.get()); }
 
-const Point* Player::getSpawnPoint() { return updateSpawnPoint(); }
+const Point* Player::GetSpawnPoint() { return UpdateSpawnPoint(); }
 
-void Player::initialize()
+void Player::Initialize()
 {
-	_DoodieAnimation = std::make_unique<AnimatedImage>(_Screen,						   //
-													   _ImagePath, 2,				   //
+	_doodieAnimation = std::make_unique<AnimatedImage>(_screen,						   //
+													   _imagePath, 2,				   //
 													   Sizes::Player::DefaultWidth,	   //
 													   Sizes::Player::DefaultHeight	   //
 	);
 
-	_DoodieSpawnPoint = std::make_unique<Point>(0, _SpawnPointHeight);
-	_CurrentLookSide = WalkingSide::LEFT;
+	_doodieSpawnPoint = std::make_unique<Point>(0, _spawnPointHeight);
+	_currentLookSide = WalkingSide::LEFT;
 
-	_DoodieLocator = std::make_unique<Locator>(_DoodieAnimation.get());
+	_doodieLocator = std::make_unique<Locator>(_doodieAnimation.get());
 
-	_DoodieMover = std::make_unique<PhysicsEngine>(_DoodieAnimation.get());
-	_DoodieMover->setSurfaceFriction(0.4);
-	_DoodieMover->setAirFrictionY(0.015);
+	_doodieMover = std::make_unique<PhysicsEngine>(_doodieAnimation.get());
+	_doodieMover->SetSurfaceFriction(0.4);
+	_doodieMover->SetAirFrictionY(0.015);
 
-	_DoodieMover->setMass(_Mass);
-	_DoodieMover->setIsJumping(false);
+	_doodieMover->SetMass(_mass);
+	_doodieMover->SetIsJumping(false);
 
 	// TODO: fix this
 	//! Combination Locator and PE not working correctly
@@ -65,190 +65,190 @@ void Player::initialize()
 	_bIsShooting = false;
 }
 
-void Player::setInitialPlace(Point coordinate)
+void Player::SetInitialPlace(Point coordinate)
 {
-	_DoodieLocator->setBottomCLocation(coordinate.x, coordinate.y);
+	_doodieLocator->SetBottomCLocation(coordinate.x, coordinate.y);
 	// TODO: connection to physics engine works badly, but this call also not desire
 	// TODO: need to set by locator and telling to PE at the same time
-	_DoodieMover->setPreciseCoordinate(_DoodieLocator->getX(), _DoodieLocator->getY());
+	_doodieMover->SetPreciseCoordinate(_doodieLocator->GetX(), _doodieLocator->GetY());
 }
 
-void Player::enableGravity(bool enable) { _DoodieMover->enableGravity(enable); }
+void Player::EnableGravity(bool enable) { _doodieMover->EnableGravity(enable); }
 
-void Player::clear()
+void Player::Clear()
 {
-	_DoodieSpawnPoint.reset();
-	_DoodieMover.reset();
-	_DoodieLocator.reset();
-	_DoodieAnimation.reset();
+	_doodieSpawnPoint.reset();
+	_doodieMover.reset();
+	_doodieLocator.reset();
+	_doodieAnimation.reset();
 
 	_bIsShooting = false;
 }
 
-void Player::tick(float delta_t)
+void Player::Tick(float delta_t)
 {
 	//? Synchonizing with wormhole changes
 	// TODO: can we do this in the wormhole class?
 	// _DoodieMover->setPreciseCoordinate(_DoodieLocator->getX(), _DoodieLocator->getY());
 
-	if (_DoodieMover->getOnPlatform())
+	if (_doodieMover->GetOnPlatform())
 	{
-		_DoodieMover->setAirFrictionY(0.015);
+		_doodieMover->SetAirFrictionY(0.015);
 	}
 
-	if (_DoodieMover->getIsJumping() && !_DoodieMover->getIsFalling())
+	if (_doodieMover->GetIsJumping() && !_doodieMover->GetIsFalling())
 	{
 		if (!_bForceAdded)
 		{
-			_DoodieMover->clearForceX();
-			_DoodieMover->clearForceY();
+			_doodieMover->ClearForceX();
+			_doodieMover->ClearForceY();
 
-			auto Deltas = _DoodieMover->getLinearSpeed();
+			auto Deltas = _doodieMover->GetLinearSpeed();
 
-			_DoodieMover->addForceX(float(Deltas._Vx * _SideTilt));
+			_doodieMover->AddForceX(float(Deltas._Vx * _sideTilt));
 
-			_JumpImpulse -= float(std::abs(Deltas._Vx) * 50);
-			_DoodieMover->addForceY(_JumpImpulse);
+			_jumpImpulse -= float(std::abs(Deltas._Vx) * 50);
+			_doodieMover->AddForceY(_jumpImpulse);
 
-			_DoodieMover->accelerateX(float(Deltas._Vx) * _SideTilt);
-			_DoodieMover->accelerateY(_JumpImpulse / 100);
+			_doodieMover->AccelerateX(float(Deltas._Vx) * _sideTilt);
+			_doodieMover->AccelerateY(_jumpImpulse / 100);
 
 			_bForceAdded = true;
 		}
 
-		_DoodieMover->updateImpulse(delta_t);
-		_DoodieMover->updatePositions(delta_t);
-		_DoodieMover->move();
+		_doodieMover->UpdateImpulse(delta_t);
+		_doodieMover->UpdatePositions(delta_t);
+		_doodieMover->Move();
 
-		auto Deltas = _DoodieMover->getMoveDeltas();
-		_CurrentFlightDistance += (unsigned int)(std::sqrt(std::pow(Deltas.x, 2) + std::pow(Deltas.y, 2)));
+		auto Deltas = _doodieMover->GetMoveDeltas();
+		_currentFlightDistance += (unsigned int)(std::sqrt(std::pow(Deltas.x, 2) + std::pow(Deltas.y, 2)));
 
-		if (_CurrentFlightDistance >= _FlightDestination)
+		if (_currentFlightDistance >= _flightDestination)
 		{
-			_DoodieMover->setIsJumping(false);
-			_DoodieMover->clearVelocity();
-			_DoodieMover->clearAccelerationX();
-			_DoodieMover->clearAccelerationY();
-			_DoodieMover->clearForceX();
-			_DoodieMover->clearForceY();
+			_doodieMover->SetIsJumping(false);
+			_doodieMover->ClearVelocity();
+			_doodieMover->ClearAccelerationX();
+			_doodieMover->ClearAccelerationY();
+			_doodieMover->ClearForceX();
+			_doodieMover->ClearForceY();
 
-			_DoodieMover->setIsFalling(true);
+			_doodieMover->SetIsFalling(true);
 		}
 	}
-	else if (_DoodieMover->getIsFalling())
+	else if (_doodieMover->GetIsFalling())
 	{
-		_DoodieMover->updateGravityOnly(delta_t);
-		_DoodieMover->updateVelocities(delta_t);
-		_DoodieMover->updatePositions(delta_t);
-		_DoodieMover->move();
+		_doodieMover->UpdateGravityOnly(delta_t);
+		_doodieMover->UpdateVelocities(delta_t);
+		_doodieMover->UpdatePositions(delta_t);
+		_doodieMover->Move();
 
-		if (_DoodieMover->getOnPlatform())
+		if (_doodieMover->GetOnPlatform())
 		{
-			_DoodieMover->setIsFalling(false);
-			_DoodieMover->clearAll();
+			_doodieMover->SetIsFalling(false);
+			_doodieMover->ClearAll();
 		}
 
-		_DoodieMover->setIsJumping(false);
+		_doodieMover->SetIsJumping(false);
 	}
 	else
 	{
-		_DoodieMover->updateVelocities(delta_t);
-		_DoodieMover->updatePositions(delta_t);
-		_DoodieMover->updateAccelerations(delta_t);
-		_DoodieMover->move();
+		_doodieMover->UpdateVelocities(delta_t);
+		_doodieMover->UpdatePositions(delta_t);
+		_doodieMover->UpdateAccelerations(delta_t);
+		_doodieMover->Move();
 
 		_bForceAdded = false;
 
-		_CurrentFlightDistance = 0;
+		_currentFlightDistance = 0;
 	}
 }
 
-const Point* Player::updateSpawnPoint()
+const Point* Player::UpdateSpawnPoint()
 {
-	_DoodieSpawnPoint->y = _DoodieAnimation->bottom() - _SpawnPointHeight;
-	if (_CurrentLookSide == WalkingSide::LEFT)
+	_doodieSpawnPoint->y = _doodieAnimation->Bottom() - _spawnPointHeight;
+	if (_currentLookSide == WalkingSide::LEFT)
 	{
-		_DoodieSpawnPoint->x = _DoodieAnimation->left() + 0;
+		_doodieSpawnPoint->x = _doodieAnimation->Left() + 0;
 	}
-	else if (_CurrentLookSide == WalkingSide::RIGHT)
+	else if (_currentLookSide == WalkingSide::RIGHT)
 	{
-		_DoodieSpawnPoint->x = _DoodieAnimation->left() + _DoodieAnimation->width();
+		_doodieSpawnPoint->x = _doodieAnimation->Left() + _doodieAnimation->Width();
 	}
 
-	return _DoodieSpawnPoint.get();
+	return _doodieSpawnPoint.get();
 }
 
-void Player::onWalking(WalkingSide side)
+void Player::OnWalking(WalkingSide side)
 {
 	//? Change frame for animation if not shooting
 	//? Move toward desired side
 	if (side == WalkingSide::LEFT)
 	{
-		_DoodieMover->accelerateX(-0.005f);
-		_DoodieMover->speedUpX(-0.02f);
-		_DoodieMover->addForceX(-1.5f);
+		_doodieMover->AccelerateX(-0.005f);
+		_doodieMover->SpeedUpX(-0.02f);
+		_doodieMover->AddForceX(-1.5f);
 	}
 	else if (side == WalkingSide::RIGHT)
 	{
-		_DoodieMover->accelerateX(0.005f);
-		_DoodieMover->speedUpX(0.02f);
-		_DoodieMover->addForceX(1.5f);
+		_doodieMover->AccelerateX(0.005f);
+		_doodieMover->SpeedUpX(0.02f);
+		_doodieMover->AddForceX(1.5f);
 	}
 
 	//? We can change shooting side only we not shooting right now
 	if (!_bIsShooting)
 	{
-		changeShootingSide(side);
+		ChangeShootingSide(side);
 	}
 }
 
-void Player::onUpArrowClicked()
+void Player::OnUpArrowClicked()
 {
-	_DoodieMover->accelerateY(-0.005f);
-	_DoodieMover->speedUpY(-0.02f);
-	_DoodieMover->addForceY(-0.00005f);
+	_doodieMover->AccelerateY(-0.005f);
+	_doodieMover->SpeedUpY(-0.02f);
+	_doodieMover->AddForceY(-0.00005f);
 }
 
-void Player::onStopWalking()
+void Player::OnStopWalking()
 {
 	//? Stop walking
-	_DoodieMover->clearAccelerationX();
-	_DoodieMover->clearForceX();
+	_doodieMover->ClearAccelerationX();
+	_doodieMover->ClearForceX();
 }
 
-void Player::onVerticalArrowsReleased()
+void Player::OnVerticalArrowsReleased()
 {
 	//? Stop jet
-	_DoodieMover->clearAccelerationY();
-	_DoodieMover->clearForceY();
+	_doodieMover->ClearAccelerationY();
+	_doodieMover->ClearForceY();
 }
 
-void Player::render() { _DoodieAnimation->render(); }
+void Player::Render() { _doodieAnimation->Render(); }
 
-void Player::changeShootingSide(WalkingSide side)
+void Player::ChangeShootingSide(WalkingSide side)
 {
-	_CurrentLookSide = side;
+	_currentLookSide = side;
 
-	if (_CurrentLookSide == WalkingSide::LEFT)
+	if (_currentLookSide == WalkingSide::LEFT)
 	{
-		_DoodieAnimation->setCharacterFrame(0);
+		_doodieAnimation->SetCharacterFrame(0);
 	}
-	else if (_CurrentLookSide == WalkingSide::RIGHT)
+	else if (_currentLookSide == WalkingSide::RIGHT)
 	{
-		_DoodieAnimation->setCharacterFrame(1);
+		_doodieAnimation->SetCharacterFrame(1);
 	}
 }
 
-int Player::getBoundaryTop() { return _DoodieAnimation->top(); }
+int Player::GetBoundaryTop() { return _doodieAnimation->Top(); }
 
-int Player::getCenterY() { return _DoodieLocator->getCenterY(); }
+int Player::GetCenterY() { return _doodieLocator->GetCenterY(); }
 
-void Player::setShootingSide(const Point& aim)
+void Player::SetShootingSide(const Point& aim)
 {
 	_bIsShooting = true;
 	//? Check where is player center.x and where is aim.x and rotate character
 	WalkingSide ShootingSide(WalkingSide::NONE);
-	if (_DoodieLocator->getCenterX() <= aim.x)
+	if (_doodieLocator->GetCenterX() <= aim.x)
 	{
 		ShootingSide = WalkingSide::RIGHT;
 	}
@@ -257,9 +257,9 @@ void Player::setShootingSide(const Point& aim)
 		ShootingSide = WalkingSide::LEFT;
 	}
 
-	changeShootingSide(ShootingSide);
+	ChangeShootingSide(ShootingSide);
 }
 
-void Player::resetShooting() { _bIsShooting = false; }
+void Player::ResetShooting() { _bIsShooting = false; }
 
-void Player::setIsOnTopPlatfrom(bool new_state) { _DoodieMover->setOnTopOfAnyPlatform(new_state); }
+void Player::SetIsOnTopPlatfrom(bool new_state) { _doodieMover->SetOnTopOfAnyPlatform(new_state); }

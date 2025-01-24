@@ -35,13 +35,13 @@ public:
 
 	//? param: xrel, yrel: The relative motion in the X/Y direction
 	//? param: x, y : coordinate, relative to window
-	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) override;
+	virtual void OnMouseMove(int x, int y, int xrelative, int yrelative) override;
 
-	virtual void onMouseButtonClick(IAMouseButton button, bool isReleased) override;
+	virtual void OnMouseButtonClick(IAMouseButton button, bool isReleased) override;
 
-	virtual void onKeyPressed(IAKey k) override;
+	virtual void OnKeyPressed(IAKey k) override;
 
-	virtual void onKeyReleased(IAKey k) override;
+	virtual void OnKeyReleased(IAKey k) override;
 
 	virtual const char* GetTitle() override;
 

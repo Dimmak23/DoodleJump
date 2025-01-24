@@ -28,7 +28,7 @@ public:
 	bool IsStucked() const;
 
 	//* Manipulators
-	void tick(float delta_t);
+	void Tick(float delta_t);
 
 private:
 	//@ Methods
@@ -39,24 +39,28 @@ private:
 
 	//@ Members
 
-	//* Need to know state of the character engine
-	IMechanics* _CharacterEngine{ nullptr };	//!
-	//* Character body: to create physics engine with it
-	RectangleShape* _PossesingBody{ nullptr };
-	//* Wormhole own physics engine for character
-	//? We don't want to erase some fields from character own PE
-	std::unique_ptr<PhysicsEngine> _PossesingMover{ nullptr };
 	//* Destination point will be retreived from wormhole entity
 	//? It's coordinates can be changed because of camera movements
-	RectangleCore* _Aim{ nullptr };
+	RectangleCore* _aim{ nullptr };
+
+	//* Character body: to create physics engine with it
+	RectangleShape* _possesingBody{ nullptr };
+
+	//* Wormhole own physics engine for character
+	//? We don't want to erase some fields from character own PE
+	std::unique_ptr<PhysicsEngine> _possesingMover{ nullptr };
+
 	//* Reusable locator
-	std::unique_ptr<Locator> _SharedLocator{ nullptr };
+	std::unique_ptr<Locator> _sharedLocator{ nullptr };
+
+	//* Need to know state of the character engine
+	IMechanics* _characterEngine{ nullptr };
 
 	//* Design full speed
-	double _MaximumLinearSpeed{ 2.55 };
+	double _maximumLinearSpeed{ 2.55 };
 
 	//* When we activate?
-	const int _ActivationDistance{};
+	const int _activationDistance{};
 
 	//* States
 	bool _bIsStacked{ false };

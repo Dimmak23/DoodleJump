@@ -14,40 +14,39 @@ Stealth::~Stealth() {}
 
 bool Stealth::IsEnabled() const { return _bIsEnabled; }
 
-IGraphicle* Stealth::getPlatformImage() const { return _PlatformImage; }
+IGraphicle* Stealth::GetPlatformImage() const { return _platformImage; }
 
-void Stealth::resetSpriteConnection(IGraphicle* image)
+void Stealth::ResetSpriteConnection(IGraphicle* image)
 {
-	_PlatformImage = image;
+	_platformImage = image;
 	_bIsEnabled = true;
-	_VisibilityTimer = _VisibilityDuration;
+	_visibilityTimer = _visibilityDuration;
 	_bUnloaded = false;
 }
 
-void Stealth::emptySpriteConnection()
+void Stealth::EmptySpriteConnection()
 {
-	_PlatformImage = nullptr;
+	_platformImage = nullptr;
 	_bIsEnabled = false;
 	_bUnloaded = false;
 }
 
-void Stealth::tick(float delta_t)
+void Stealth::Tick(float delta_t)
 {
 	if (!_bIsEnabled) return;
 
 	if (_bUnloaded) return;
 
-	if (_VisibilityTimer > 0.f)
+	if (_visibilityTimer > 0.f)
 	{
 		//? Tick timer
-		_VisibilityTimer -= delta_t;
-		// std::cout << "_VisibilityTimer: " << _VisibilityTimer << '\n';
+		_visibilityTimer -= delta_t;
 	}
 	else
 	{
-		if (_PlatformImage)
+		if (_platformImage)
 		{
-			_PlatformImage->setIsHidden(true);
+			_platformImage->SetIsHidden(true);
 		}
 
 		_bUnloaded = true;

@@ -24,7 +24,7 @@ class Stealth;
 @ How to use?
 @ Construct WorldStatic pointer for application with specific width and height.
 @ Set connection to a scene and player collider:
-@ 		setSceneConnection(new_scene), setPlayerColliderConnection(new_collider).
+@ 		SetSceneConnection(new_scene), setPlayerColliderConnection(new_collider).
 @ Call initialize() create initial world state.
 @ Call checkForSpawnNewPlatforms(player_y) every frame to order new platforms if player close to the end of the world.
 @ Call cleaner(): maybe we can erase some platforms from memory.
@@ -44,46 +44,46 @@ public:
 	//* Getters
 
 	//? get API for deleted Platforms
-	virtual size_t getDeletedPlatformsCount() override;
+	virtual size_t GetDeletedPlatformsCount() override;
 	//? get number of platforms which top() is bigger (or equal) then given coordinate player bottom()
-	virtual size_t getAllBellowPlatformsCount(const int& actor_bottom) override;
+	virtual size_t GetAllBellowPlatformsCount(const int& actor_bottom) override;
 
 	//* Manipulators
 
-	virtual UniverseDot traverseNewPlatforms(size_t index) override;
+	virtual UniverseDot TraverseNewPlatforms(size_t index) override;
 
 	//@ API for level
 
 	//* Setters
 
-	void setDynamicWorldConnection(IUniverse* new_world);
-	void setSceneConnection(ILocatableScene* new_scene);
-	void setPlayerColliderConnection(ICollidable* new_collider);
+	void SetDynamicWorldConnection(IUniverse* new_world);
+	void SetSceneConnection(ILocatableScene* new_scene);
+	void SetPlayerColliderConnection(ICollidable* new_collider);
 
 	//* Getters
 
-	int getPlatformsBottom() const;
-	Point getFirstPlatformTopCLocation() const;
+	int GetPlatformsBottom() const;
+	Point GetFirstPlatformTopCLocation() const;
 
-	size_t* getNewPlatformsQuantity();
+	size_t* GetNewPlatformsQuantity();
 
 	//* Manipulators
 
-	void initialize();
-	virtual void onSpawnNewActor(const int& x, const int& y, const unsigned int& variance) override;
-	void checkForSpawnNewPlatforms(const int& player_y);
+	void Initialize();
+	virtual void OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance) override;
+	void CheckForSpawnNewPlatforms(const int& player_y);
 	//? Call it every frame to check if we can delete some platforms
-	void cleaner();
-	void tick(float delta_t);
+	void Cleaner();
+	void Tick(float delta_t);
 
 	//* Render
 
-	void render();
+	void Render();
 
 	//@ API for collider
 
-	virtual void onTopOfPlatformMessaging(size_t index) override;
-	virtual void onFlyingMessaging() override;
+	virtual void OnTopOfPlatformMessaging(size_t index) override;
+	virtual void OnFlyingMessaging() override;
 
 private:
 	//@ Methods
@@ -93,46 +93,48 @@ private:
 	WorldStatic& operator=(const WorldStatic&) = delete;
 
 	//* Safe funstions to add new actor
-	void onAddNewActorToScene(IRelocatableActor* new_actor);
-	void onAddNewActorToPlayerCollider(RectangleCore* new_actor);
+	void OnAddNewActorToScene(IRelocatableActor* new_actor);
+	void OnAddNewActorToPlayerCollider(RectangleCore* new_actor);
 
 	//* Safe functions to remove front actor
-	void onRemoveFrontActorFromScene();
-	void onRemoveFrontActorFromPlayerCollider();
+	void OnRemoveFrontActorFromScene();
+	void OnRemoveFrontActorFromPlayerCollider();
 
 	//@ Members
 
-	const unsigned int _PlatformWidth{};
-	const unsigned int _PlatformHeight{};
-	std::vector<std::unique_ptr<Image>> _Platforms;
-	std::vector<std::unique_ptr<Locator>> _PlatformsLocators;
+	std::vector<std::unique_ptr<Image>> _platforms;
+	std::vector<std::unique_ptr<Locator>> _platformsLocators;
 
-	std::unique_ptr<RandomSpawn> _PlatformSpawner{ nullptr };
-
-	//* Level connectors
-	ILocatableScene* _Scene{ nullptr };
-	ICollidable* _PlayerCollider{ nullptr };
-
-	//* Connection to the Dynamic World
-	IUniverse* _DynamicWorld;
+	std::unique_ptr<RandomSpawn> _platformSpawner{ nullptr };
 
 	//* Platforms hide module
-	std::unique_ptr<Stealth> _Stealth{ nullptr };
+	std::unique_ptr<Stealth> _stealth{ nullptr };
 
-	//* Checker
-	int _ThresholdY{};
+	//* Level connectors
+	ILocatableScene* _scene{ nullptr };
+	ICollidable* _playerCollider{ nullptr };
 
-	//* Traversing
-	size_t _NewPlatformsQuantity{};
+	//* Connection to the Dynamic World
+	IUniverse* _dynamicWorld;
 
 	//* Utilities: Screen
-	const ScreenItem* _Screen{ nullptr };
-
-	//* Debugging
-	size_t _OverallDeleted{};	 // TODO: serialize this and set after level reload
+	const ScreenItem* _screen{ nullptr };
 
 	//* Images path
-	const char* _PlatformsPathCut{};
-	const char* _PlatformsPathAdder{};
-	const unsigned int _PlatformsQuantity{};
+	const char* _platformsPathCut{};
+	const char* _platformsPathAdder{};
+
+	const unsigned int _platformWidth{};
+	const unsigned int _platformHeight{};
+
+	//* Traversing
+	size_t _newPlatformsQuantity{};
+
+	//* Debugging
+	size_t _overallDeleted{};	 // TODO: serialize this and set after level reload
+
+	const unsigned int _platformsQuantity{};
+
+	//* Checker
+	int _thresholdY{};
 };

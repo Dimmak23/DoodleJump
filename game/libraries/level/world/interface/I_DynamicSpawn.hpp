@@ -6,5 +6,5 @@ struct Point;
 class IDynamicSpawn
 {
 public:
-	virtual void onSpawnNewMoveableActor(const Point&, const Point&) = 0;
+	virtual void OnSpawnNewMoveableActor(const Point&, const Point&) = 0;
 };

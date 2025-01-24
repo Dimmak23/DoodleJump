@@ -8,7 +8,7 @@
 #include <SDL2/SDL.h>
 #endif
 
-//* Vendor connection
+//* SDL2: connector
 #include "IApplication.hpp"
 #include "Loger.hpp"
 #include "Render.hpp"
@@ -19,39 +19,39 @@ Sprite::Sprite() { LogLine("--c--\tSprite object constructed on heap with size: 
 
 Sprite::~Sprite()
 {
-	releaseTextureMemory();
+	ReleaseTextureMemory();
 	LogLine("--d--\tSprite object destroyed...");
 }
 
-SDL_Texture* Sprite::getTexture() { return _texture; }
+SDL_Texture* Sprite::GetTexture() { return _texture; }
 
-SDL_Texture* Sprite::getCTexture() const { return _texture; }
+SDL_Texture* Sprite::GetCTexture() const { return _texture; }
 
-SDL_Rect* Sprite::getDestination() const { return _Destination.get(); }
+SDL_Rect* Sprite::GetDestination() const { return _destination.get(); }
 
-void Sprite::setOrigin(int x, int y)
+void Sprite::SetOrigin(int x, int y)
 {
-	_Destination->x = x;
-	_Destination->y = y;
+	_destination->x = x;
+	_destination->y = y;
 }
 
-void Sprite::setSize(int width, int height)
+void Sprite::SetSize(int width, int height)
 {
-	_Destination->w = width;
-	_Destination->h = height;
+	_destination->w = width;
+	_destination->h = height;
 }
 
-void Sprite::initiaze(const char* path, IARectangle* target_space)
+void Sprite::Initiaze(const char* path, IARectangle* target_space)
 {
-	if ((Render::getRenderer() == nullptr))
+	if ((Render::GetRenderer() == nullptr))
 	{
 		LogLine("No renderer...");
 		return;
 	}
 
-	_Destination = std::make_unique<SDL_Rect>();
+	_destination = std::make_unique<SDL_Rect>();
 	SDL_Rect* target = new SDL_Rect();
-	SDL_Surface* tempSource = Render::loadSurface(path);
+	SDL_Surface* tempSource = Render::LoadSurface(path);
 
 	if (tempSource == nullptr)
 	{
@@ -72,18 +72,18 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 		target->h = tempSource->h;	  // Height of the cropped area}
 									  //! maybe call parent method for this
 
-		_Destination->x = 0;
-		_Destination->y = 0;
-		_Destination->w = tempSource->w;
-		_Destination->h = tempSource->h;
+		_destination->x = 0;
+		_destination->y = 0;
+		_destination->w = tempSource->w;
+		_destination->h = tempSource->h;
 	}
 	else
 	{
 		//? Re-assign inner ractangle by target, if any target exist
-		_Destination->x = target_space->x;
-		_Destination->y = target_space->y;
-		_Destination->w = target_space->w;
-		_Destination->h = target_space->h;
+		_destination->x = target_space->x;
+		_destination->y = target_space->y;
+		_destination->w = target_space->w;
+		_destination->h = target_space->h;
 
 		target->w = target_space->w;
 		target->h = target_space->h;
@@ -108,7 +108,7 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 	SDL_FreeSurface(tempSource);
 
 	//? Create a texture from the surface
-	_texture = SDL_CreateTextureFromSurface(Render::getRenderer(), croppedSurface);
+	_texture = SDL_CreateTextureFromSurface(Render::GetRenderer(), croppedSurface);
 
 	if (_texture == nullptr)
 	{
@@ -126,7 +126,7 @@ void Sprite::initiaze(const char* path, IARectangle* target_space)
 	SDL_FreeSurface(croppedSurface);
 }
 
-void Sprite::releaseTextureMemory()
+void Sprite::ReleaseTextureMemory()
 {
 	SDL_DestroyTexture(_texture);
 	_texture = nullptr;

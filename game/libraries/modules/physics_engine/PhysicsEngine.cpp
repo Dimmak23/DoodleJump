@@ -13,8 +13,8 @@ PhysicsEngine::PhysicsEngine(RectangleShape* rectangle) /* 	   //
 	 : _hostBody(rectangle->getBody()), _hostTheta(rectangle->getAngle()) */
 {
 	// std::cout << "Constructing PhysicsEngine...\n";
-	resetBody(rectangle->getBody());
-	_hostTheta = rectangle->getAngle();
+	ResetBody(rectangle->GetBody());
+	_hostTheta = rectangle->GetAngle();
 
 	// std::cout << "engine... x: " << _hostBody->x << ", y: " << _hostBody->y << '\n';
 	// std::cout << "Constructed PhysicsEngine size of: " << sizeof(*this) << '\n';
@@ -29,77 +29,77 @@ PhysicsEngine::~PhysicsEngine()
 	// std::cout << "Deleted PhysicsEngine...\n";
 }
 
-void PhysicsEngine::setPreciseCoordinate(int x, int y)
+void PhysicsEngine::SetPreciseCoordinate(int x, int y)
 {
-	if (static_cast<int>(_X) != x)
+	if (static_cast<int>(_x) != x)
 	{
-		_X = x;
+		_x = x;
 	}
-	if (static_cast<int>(_Y) != y)
+	if (static_cast<int>(_y) != y)
 	{
-		_Y = y;
+		_y = y;
 	}
 }
 
-void PhysicsEngine::setCoordinate(int x, int y) { setPreciseCoordinate(x, y); }
+void PhysicsEngine::SetCoordinate(int x, int y) { SetPreciseCoordinate(x, y); }
 
-bool PhysicsEngine::speedUpOmega(double wSource, double wDestination, float timeDuration, float deltaTime)
+bool PhysicsEngine::SpeedUpOmega(double wSource, double wDestination, float timeDuration, float deltaTime)
 {
-	if (__SpentTime < timeDuration)
+	if (_spentTime < timeDuration)
 	{
-		_Alpha = (wDestination - wSource) / double(timeDuration);
-		__SpentTime += deltaTime;
+		_alpha = (wDestination - wSource) / double(timeDuration);
+		_spentTime += deltaTime;
 		return false;
 	}
 	else
 	{
-		_Alpha = 0;
-		__SpentTime = 0;
+		_alpha = 0;
+		_spentTime = 0;
 		return true;
 	}
 }
 
-void PhysicsEngine::setDeltaTheta(double deltaTh) { _deltaTheta = deltaTh; }
+void PhysicsEngine::SetDeltaTheta(double deltaTh) { _deltaTheta = deltaTh; }
 
-void PhysicsEngine::clearDeltaTheta() { _deltaTheta *= 0; }
+void PhysicsEngine::ClearDeltaTheta() { _deltaTheta *= 0; }
 
-void PhysicsEngine::setVelocity(double velocity_x, double velocity_y)
+void PhysicsEngine::SetVelocity(double velocity_x, double velocity_y)
 {
-	_VelocityX = velocity_x;
-	_VelocityY = velocity_y;
+	_velocityX = velocity_x;
+	_velocityY = velocity_y;
 }
 
-void PhysicsEngine::setConstantVelocity(double velocity_x, double velocity_y)
+void PhysicsEngine::SetConstantVelocity(double velocity_x, double velocity_y)
 {
-	_ConstVelocityX = velocity_x;
-	_ConstVelocityY = velocity_y;
+	_constVelocityX = velocity_x;
+	_constVelocityY = velocity_y;
 }
 
-void PhysicsEngine::clearVelocity()
+void PhysicsEngine::ClearVelocity()
 {
-	_VelocityX *= 0;
-	_VelocityY *= 0;
+	_velocityX *= 0;
+	_velocityY *= 0;
 }
 
-void PhysicsEngine::resetBody(Rectangle* body)
+void PhysicsEngine::ResetBody(Rectangle* body)
 {
 	// std::cout << "resetBody(Rectangle* body)...\n";
 	_hostBody = body;
-	_X = _hostBody->x;
-	_Y = _hostBody->y;
+	_x = _hostBody->x;
+	_y = _hostBody->y;
 	// std::cout << "_X: " << _X << '\n';
 	// std::cout << "_Y: " << _Y << '\n';
 }
 
-void PhysicsEngine::setMass(float NewMass) { _Mass = NewMass; }
+void PhysicsEngine::SetMass(float NewMass) { _mass = NewMass; }
 
-void PhysicsEngine::setSurfaceFriction(double new_surface_friction) { _SurfaceFriction = new_surface_friction; }
+void PhysicsEngine::SetSurfaceFriction(double new_surface_friction) { _surfaceFriction = new_surface_friction; }
 
-void PhysicsEngine::setAirFrictionY(double new_air_friction) { _AirFrictionY = new_air_friction; }
+void PhysicsEngine::SetAirFrictionY(double new_air_friction) { _airFrictionY = new_air_friction; }
 
-void PhysicsEngine::setOnTopOfFrame(bool NewValue) { _bOnFrame = NewValue; }
+void PhysicsEngine::SetOnTopOfFrame(bool NewValue) { _bOnFrame = NewValue; }
 
-void PhysicsEngine::setOnTopOfAnyPlatform(bool NewValue)
+void PhysicsEngine::SetOnTopOfAnyPlatform(bool NewValue)
 {
 	// if (!NewValue)
 	// {
@@ -112,7 +112,7 @@ void PhysicsEngine::setOnTopOfAnyPlatform(bool NewValue)
 	_bOnPlatform = NewValue;
 }
 
-void PhysicsEngine::setIsJumping(bool new_state)
+void PhysicsEngine::SetIsJumping(bool new_state)
 {
 	// if (!new_state)
 	// {
@@ -125,31 +125,31 @@ void PhysicsEngine::setIsJumping(bool new_state)
 	_bIsJumping = new_state;
 }
 
-void PhysicsEngine::setIsFalling(bool new_state) { _bIsFalling = new_state; }
+void PhysicsEngine::SetIsFalling(bool new_state) { _bIsFalling = new_state; }
 
-void PhysicsEngine::setOmega(double omega) { _Omega = omega; }
+void PhysicsEngine::SetOmega(double omega) { _omega = omega; }
 
-void PhysicsEngine::clearOmega() { _Omega *= 0; }
+void PhysicsEngine::ClearOmega() { _omega *= 0; }
 
-void PhysicsEngine::clearDeltaOmega() { _deltaOmega *= 0; }
+void PhysicsEngine::ClearDeltaOmega() { _deltaOmega *= 0; }
 
-void PhysicsEngine::clearTimer() { __SpentTime = 0; }
+void PhysicsEngine::ClearTimer() { _spentTime = 0; }
 
-void PhysicsEngine::updateOmega(float deltaT)
+void PhysicsEngine::UpdateOmega(float deltaT)
 {
-	_deltaOmega = _Alpha * double(deltaT);
-	_Omega += _deltaOmega;
+	_deltaOmega = _alpha * double(deltaT);
+	_omega += _deltaOmega;
 }
 
-void PhysicsEngine::updateTheta(float deltaT) { _deltaTheta = _Omega * double(deltaT); }
+void PhysicsEngine::UpdateTheta(float deltaT) { _deltaTheta = _omega * double(deltaT); }
 
-void PhysicsEngine::rotate()
+void PhysicsEngine::Rotate()
 {
 	*_hostTheta += _deltaTheta;
 	if (*_hostTheta >= 360) *_hostTheta -= 360;
 }
 
-void PhysicsEngine::accelerateX(float deltaAccelerationX)
+void PhysicsEngine::AccelerateX(float deltaAccelerationX)
 {
 	// _AccelerationX += deltaAccelerationX;
 	_deltaAccelerationX += deltaAccelerationX;
@@ -157,7 +157,7 @@ void PhysicsEngine::accelerateX(float deltaAccelerationX)
 	// _deltaAccelerationX = deltaAccelerationX;
 }
 
-void PhysicsEngine::accelerateY(float deltaAccelerationY)
+void PhysicsEngine::AccelerateY(float deltaAccelerationY)
 {
 	//_AccelerationY += deltaAccelerationY;
 	_deltaAccelerationY += deltaAccelerationY;
@@ -165,38 +165,38 @@ void PhysicsEngine::accelerateY(float deltaAccelerationY)
 	// _deltaAccelerationY = deltaAccelerationY;
 }
 
-void PhysicsEngine::clearAccelerationX() { _deltaAccelerationX *= 0.98f; }
+void PhysicsEngine::ClearAccelerationX() { _deltaAccelerationX *= 0.98f; }
 
-void PhysicsEngine::clearAccelerationY() { _deltaAccelerationY *= 0.98f; }
+void PhysicsEngine::ClearAccelerationY() { _deltaAccelerationY *= 0.98f; }
 
-void PhysicsEngine::clearAll()
+void PhysicsEngine::ClearAll()
 {
 	_forceX = 0;
 	_forceY = 0;
 	_deltaVelocityX = 0;
 	_deltaVelocityY = 0;
-	_VelocityX = 0;
-	_VelocityY = 0;
+	_velocityX = 0;
+	_velocityY = 0;
 	_deltaAccelerationX = 0;
 	_deltaAccelerationY = 0;
-	_AccelerationX = 0;
-	_AccelerationY = 0;
+	_accelerationX = 0;
+	_accelerationY = 0;
 	_deltaX = 0;
 	_deltaY = 0;
 }
 
-void PhysicsEngine::speedUpX(float deltaVelocityX) { _VelocityX += double(deltaVelocityX); }
+void PhysicsEngine::SpeedUpX(float deltaVelocityX) { _velocityX += double(deltaVelocityX); }
 
-void PhysicsEngine::speedUpY(float deltaVelocityY) { _VelocityY += double(deltaVelocityY); }
+void PhysicsEngine::SpeedUpY(float deltaVelocityY) { _velocityY += double(deltaVelocityY); }
 
-Deltas PhysicsEngine::constantSpeedUp(float delta_t, float delta_x, float delta_y)
+Deltas PhysicsEngine::ConstantSpeedUp(float delta_t, float delta_x, float delta_y)
 {
 	//? How much frames would need to move to the specific coordinate at X
 	double _FramesX;
-	_FramesX = (delta_x != 0) ? std::abs(double(delta_x) / (_ConstVelocityX * double(delta_t))) : 0;
+	_FramesX = (delta_x != 0) ? std::abs(double(delta_x) / (_constVelocityX * double(delta_t))) : 0;
 	//? How much frames would need to move to the specific coordinate at Y
 	double _FramesY;
-	_FramesY = (delta_y != 0) ? std::abs(double(delta_y) / (_ConstVelocityY * double(delta_t))) : 0;
+	_FramesY = (delta_y != 0) ? std::abs(double(delta_y) / (_constVelocityY * double(delta_t))) : 0;
 
 	_deltaX = (static_cast<int>(_FramesX) != 0) ? (delta_x / float(_FramesX)) : 0;
 	_deltaY = (static_cast<int>(_FramesY) != 0) ? (delta_y / float(_FramesY)) : 0;
@@ -204,24 +204,24 @@ Deltas PhysicsEngine::constantSpeedUp(float delta_t, float delta_x, float delta_
 	return { _deltaX, _deltaY };
 }
 
-void PhysicsEngine::constantSpeedUpY(float delta_t, float delta_y)
+void PhysicsEngine::ConstantSpeedUpY(float delta_t, float delta_y)
 {
-	auto Unused = constantSpeedUp(delta_t, 0.f, delta_y);
+	auto Unused = ConstantSpeedUp(delta_t, 0.f, delta_y);
 	Unused;	   //!
 }
 
-void PhysicsEngine::updateImpulse(float deltaT)
+void PhysicsEngine::UpdateImpulse(float deltaT)
 {
-	_forceX *= float(_ImpulseLoss);
-	_VelocityX = _forceX * deltaT / _Mass;
-	_VelocityX += _AccelerationX * double(deltaT);
+	_forceX *= float(_impulseLoss);
+	_velocityX = _forceX * deltaT / _mass;
+	_velocityX += _accelerationX * double(deltaT);
 	// _VelocityX *= _FrictionX;
 	// _VelocityX *= double(1 - deltaT);
 
-	_forceY *= float(_ImpulseLoss);
-	_VelocityY = _forceY * deltaT / _Mass;
-	_VelocityY += _AccelerationY * double(deltaT);
-	_VelocityY += _bIsGravityEnabled * (std::abs(_VelocityY) + _GRAVITY) * double(deltaT) * _AirFrictionY;
+	_forceY *= float(_impulseLoss);
+	_velocityY = _forceY * deltaT / _mass;
+	_velocityY += _accelerationY * double(deltaT);
+	_velocityY += _bIsGravityEnabled * (std::abs(_velocityY) + _GRAVITY) * double(deltaT) * _airFrictionY;
 	// std::cout << std::format("gravity: {}.\n",
 	// 						 _bIsEnabled * (std::abs(_VelocityY) + _GRAVITY) * double(deltaT) * _AirFrictionY);
 	// std::cout << std::format("_VelocityX: {}, _VelocityY: {}.\n", _VelocityX, _VelocityY);
@@ -229,62 +229,62 @@ void PhysicsEngine::updateImpulse(float deltaT)
 	// _VelocityY *= double(1 - deltaT);
 }
 
-void PhysicsEngine::updatePositions(float deltaT)
+void PhysicsEngine::UpdatePositions(float deltaT)
 {
-	_deltaX = float(_VelocityX * double(deltaT));
-	_deltaY = float(_VelocityY * double(deltaT));
+	_deltaX = float(_velocityX * double(deltaT));
+	_deltaY = float(_velocityY * double(deltaT));
 	// std::cout << std::format("_deltaX: {}, _deltaY: {}.\n", _deltaX, _deltaY);
 }
 
-void PhysicsEngine::updateVelocities(float deltaT)
+void PhysicsEngine::UpdateVelocities(float deltaT)
 {
 	// _deltaVelocityX = _AccelerationX * double(deltaT);
 	// _VelocityX += _deltaVelocityX;
-	_VelocityX += _AccelerationX * double(deltaT);
+	_velocityX += _accelerationX * double(deltaT);
 
-	_VelocityX += _forceX * deltaT / _Mass;
+	_velocityX += _forceX * deltaT / _mass;
 
-	_VelocityX *= _SurfaceFriction;
+	_velocityX *= _surfaceFriction;
 
-	_VelocityX = std::clamp(_VelocityX, _MinVelocityX, _MaxVelocityX);
+	_velocityX = std::clamp(_velocityX, _minVelocityX, _maxVelocityX);
 
 	// _deltaVelocityY = _AccelerationY * double(deltaT);
 	// _VelocityY += _deltaVelocityY;
-	_VelocityY += _AccelerationY * double(deltaT);
+	_velocityY += _accelerationY * double(deltaT);
 
 	// std::cout << "deltaVelY: "
 	// 		  << !(_onPlatform || _onFrame || !_bIsEnabled) * _VelocityY * double(deltaT) * _AirFrictionY << '\n';
 	// TODO: maybe increase gravity when camera is moving
-	_VelocityY += !(_bOnPlatform || _bOnFrame || !_bIsGravityEnabled) * _GRAVITY * double(deltaT) * _AirFrictionY;
-	_VelocityY += !_bIsGravityEnabled * std::abs(_VelocityY) * double(deltaT) * _AirFrictionY;
+	_velocityY += !(_bOnPlatform || _bOnFrame || !_bIsGravityEnabled) * _GRAVITY * double(deltaT) * _airFrictionY;
+	_velocityY += !_bIsGravityEnabled * std::abs(_velocityY) * double(deltaT) * _airFrictionY;
 	// std::cout << "grVel: " << !_bIsGravityEnabled * std::abs(_VelocityY) * double(deltaT) * _AirFrictionY << '\n';
 	// std::cout << "gravity: "
 	// 		  << !(_bOnPlatform || _bOnFrame || !_bIsGravityEnabled) * _GRAVITY * double(deltaT) * _AirFrictionY
 	// 		  << '\n';
 
-	_VelocityY += _forceY * deltaT / _Mass;
+	_velocityY += _forceY * deltaT / _mass;
 
-	_VelocityY *= _SurfaceFriction;
+	_velocityY *= _surfaceFriction;
 
-	_VelocityY = std::clamp(_VelocityY, _MinVelocityY, _MaxVelocityY);
+	_velocityY = std::clamp(_velocityY, _minVelocityY, _maxVelocityY);
 
 	// std::cout << std::format("_VelocityX: {}, _VelocityY: {}.\n", _VelocityX, _VelocityY);
 }
 
-void PhysicsEngine::updateAmmoAccelerations(float deltaT)
+void PhysicsEngine::UpdateAmmoAccelerations(float deltaT)
 {
 	// TODO: friction*delta, and added to acceleration
 
 	//  _deltaAccelerationX -= _FrictionX * _forceX / _Mass;
-	auto SurfaceDecreaser = _SurfaceFriction * deltaT * 100;
-	auto AccDecreaser = _AccelerationFriction * deltaT * 100;
+	auto SurfaceDecreaser = _surfaceFriction * deltaT * 100;
+	auto AccDecreaser = _accelerationFriction * deltaT * 100;
 
 	//! test this again
 	// _AccelerationX += _deltaAccelerationX;
 	// _AccelerationX *= _FrictionX;
 	_deltaAccelerationX *= float(SurfaceDecreaser);
-	_AccelerationX += _deltaAccelerationX;
-	_AccelerationX *= AccDecreaser;
+	_accelerationX += _deltaAccelerationX;
+	_accelerationX *= AccDecreaser;
 
 	// _deltaAccelerationY -= _FrictionY * _forceY / _Mass;
 
@@ -292,23 +292,23 @@ void PhysicsEngine::updateAmmoAccelerations(float deltaT)
 	// _AccelerationY += _deltaAccelerationY;
 	// _AccelerationY *= _FrictionY;
 	_deltaAccelerationY *= float(SurfaceDecreaser);
-	_AccelerationY += double(_deltaAccelerationY);
-	_AccelerationY *= AccDecreaser;
+	_accelerationY += double(_deltaAccelerationY);
+	_accelerationY *= AccDecreaser;
 
-	_AccelerationX = std::clamp(_AccelerationX, _MinAccelerationX, _MaxAccelerationX);
-	_AccelerationY = std::clamp(_AccelerationY, _MinAccelerationY, _MaxAccelerationY);
+	_accelerationX = std::clamp(_accelerationX, _minAccelerationX, _maxAccelerationX);
+	_accelerationY = std::clamp(_accelerationY, _minAccelerationY, _maxAccelerationY);
 
-	if ((_AccelerationX >= -0.01) && (_AccelerationX <= 0.01))
+	if ((_accelerationX >= -0.01) && (_accelerationX <= 0.01))
 	{
-		_AccelerationX = 0;
+		_accelerationX = 0;
 	}
 	else
 	{
 		// std::cout << std::format("_AccelerationX: {}.\n", _AccelerationX);
 	}
-	if ((_AccelerationY >= -0.01) && (_AccelerationY <= 0.01))
+	if ((_accelerationY >= -0.01) && (_accelerationY <= 0.01))
 	{
-		_AccelerationY = 0;
+		_accelerationY = 0;
 	}
 	else
 	{
@@ -316,30 +316,30 @@ void PhysicsEngine::updateAmmoAccelerations(float deltaT)
 	}
 }
 
-void PhysicsEngine::updateAccelerations(float deltaT)
+void PhysicsEngine::UpdateAccelerations(float deltaT)
 {
 	// TODO: maybe apply force: dA = dF/M
 
-	_AccelerationX += _deltaAccelerationX;
-	_AccelerationX *= _SurfaceFriction;
+	_accelerationX += _deltaAccelerationX;
+	_accelerationX *= _surfaceFriction;
 
-	_AccelerationY += _deltaAccelerationY;
-	_AccelerationY *= _SurfaceFriction;
+	_accelerationY += _deltaAccelerationY;
+	_accelerationY *= _surfaceFriction;
 
-	_AccelerationX = std::clamp(_AccelerationX, _MinAccelerationX, _MaxAccelerationX);
-	_AccelerationY = std::clamp(_AccelerationY, _MinAccelerationY, _MaxAccelerationY);
+	_accelerationX = std::clamp(_accelerationX, _minAccelerationX, _maxAccelerationX);
+	_accelerationY = std::clamp(_accelerationY, _minAccelerationY, _maxAccelerationY);
 
-	if ((_AccelerationX >= -0.01) && (_AccelerationX <= 0.01))
+	if ((_accelerationX >= -0.01) && (_accelerationX <= 0.01))
 	{
-		_AccelerationX = 0;
+		_accelerationX = 0;
 	}
 	// else
 	// {
 	// 	std::cout << std::format("_AccelerationX: {}.\n", _AccelerationX);
 	// }
-	if ((_AccelerationY >= -0.01) && (_AccelerationY <= 0.01))
+	if ((_accelerationY >= -0.01) && (_accelerationY <= 0.01))
 	{
-		_AccelerationY = 0;
+		_accelerationY = 0;
 	}
 	// else
 	// {
@@ -356,7 +356,7 @@ void PhysicsEngine::updateAccelerations(float deltaT)
 // 	_VelocityY += !(_onPlatform || _onFrame || !_bIsEnabled) * _GRAVITY * double(delta_t) * _AirFrictionY;
 // }
 
-void PhysicsEngine::move()
+void PhysicsEngine::Move()
 {
 	// std::cout << "_forceX: " << _forceX << '\n';
 	// std::cout << "_forceY: " << _forceY << '\n';
@@ -370,90 +370,90 @@ void PhysicsEngine::move()
 	// std::cout << "_Y: " << _Y << '\n';
 
 	//? Keep precise values
-	_X += _deltaX;
-	_Y += _deltaY;
+	_x += _deltaX;
+	_y += _deltaY;
 
 	//? Retrieve whole values
-	_hostBody->x = static_cast<int>(_X);
-	_hostBody->y = static_cast<int>(_Y);
+	_hostBody->x = static_cast<int>(_x);
+	_hostBody->y = static_cast<int>(_y);
 }
 
-void PhysicsEngine::move(Point point)
+void PhysicsEngine::Move(Point point)
 {
 	//? Moving object only if parsed any value
 
 	if (point.x != 0)
 	{
 		//? Keep precise values
-		_X += point.x;
+		_x += point.x;
 		_deltaX = 0;
 		//? Retrieve whole values
-		_hostBody->x = static_cast<int>(_X);
+		_hostBody->x = static_cast<int>(_x);
 	}
 
 	if (point.y != 0)
 	{
 		//? Keep precise values
-		_Y += point.y;
+		_y += point.y;
 		_deltaY = 0;
 		//? Retrieve whole values
-		_hostBody->y = static_cast<int>(_Y);
+		_hostBody->y = static_cast<int>(_y);
 	}
 }
 
-void PhysicsEngine::moveByCamera(Point point) { move(point); }
+void PhysicsEngine::MoveByCamera(Point point) { Move(point); }
 
-void PhysicsEngine::addForceX(float deltaForceX) { _forceX += deltaForceX; }
+void PhysicsEngine::AddForceX(float deltaForceX) { _forceX += deltaForceX; }
 
-void PhysicsEngine::addForceY(float deltaForceY) { _forceY += deltaForceY; }
+void PhysicsEngine::AddForceY(float deltaForceY) { _forceY += deltaForceY; }
 
-void PhysicsEngine::clearForceX() { _forceX = 0; }
+void PhysicsEngine::ClearForceX() { _forceX = 0; }
 
-void PhysicsEngine::clearForceY() { _forceY = 0; }
+void PhysicsEngine::ClearForceY() { _forceY = 0; }
 
-void PhysicsEngine::enableGravity(bool enable)
+void PhysicsEngine::EnableGravity(bool enable)
 {
 	// std::cout << "gravity enabled...\n";
 	_bIsGravityEnabled = enable;
 }
 
-void PhysicsEngine::updateGravityOnly(float delta_t)
+void PhysicsEngine::UpdateGravityOnly(float delta_t)
 {
-	_VelocityX *= _SurfaceFriction;
-	_VelocityX = std::clamp(_VelocityX, _MinVelocityX, _MaxVelocityX);
+	_velocityX *= _surfaceFriction;
+	_velocityX = std::clamp(_velocityX, _minVelocityX, _maxVelocityX);
 
-	_VelocityY += !(_bOnPlatform || _bOnFrame || !_bIsGravityEnabled) * _GRAVITY * double(delta_t) * _AirFrictionY;
-	_VelocityY += !_bIsGravityEnabled * std::abs(_VelocityY) * double(delta_t) * _AirFrictionY;
-	_VelocityY *= _SurfaceFriction;
-	_VelocityY = std::clamp(_VelocityY, _MinVelocityY, _MaxVelocityY);
+	_velocityY += !(_bOnPlatform || _bOnFrame || !_bIsGravityEnabled) * _GRAVITY * double(delta_t) * _airFrictionY;
+	_velocityY += !_bIsGravityEnabled * std::abs(_velocityY) * double(delta_t) * _airFrictionY;
+	_velocityY *= _surfaceFriction;
+	_velocityY = std::clamp(_velocityY, _minVelocityY, _maxVelocityY);
 
 	// std::cout << std::format("_VelocityX: {}, _VelocityY: {}.\n", _VelocityX, _VelocityY);
 }
 
-Rectangle* PhysicsEngine::getHost() { return _hostBody; }
+Rectangle* PhysicsEngine::GetHost() { return _hostBody; }
 
-double PhysicsEngine::getDeltaTheta() const { return _deltaTheta; }
+double PhysicsEngine::GetDeltaTheta() const { return _deltaTheta; }
 
-double PhysicsEngine::getTheta() const { return *_hostTheta; }
+double PhysicsEngine::GetTheta() const { return *_hostTheta; }
 
-double PhysicsEngine::getDeltaOmega() const { return _deltaOmega; }
+double PhysicsEngine::GetDeltaOmega() const { return _deltaOmega; }
 
-double PhysicsEngine::getOmega() const { return _Omega; }
+double PhysicsEngine::GetOmega() const { return _omega; }
 
-PhysicsEngine::Speed_2D PhysicsEngine::getSpeed() const { return { _VelocityX, _VelocityY }; }
+PhysicsEngine::Speed_2D PhysicsEngine::GetSpeed() const { return { _velocityX, _velocityY }; }
 
-LinearSpeed PhysicsEngine::getLinearSpeed() { return LinearSpeed(_VelocityX, _VelocityY); }
+LinearSpeed PhysicsEngine::GetLinearSpeed() { return LinearSpeed(_velocityX, _velocityY); }
 
-PhysicsEngine::Acceleration_2D PhysicsEngine::getAcceleration() const { return { _AccelerationX, _AccelerationY }; }
+PhysicsEngine::Acceleration_2D PhysicsEngine::GetAcceleration() const { return { _accelerationX, _accelerationY }; }
 
-Deltas PhysicsEngine::getMoveDeltas() const { return Deltas(_deltaX, _deltaY); }
+Deltas PhysicsEngine::GetMoveDeltas() const { return Deltas(_deltaX, _deltaY); }
 
-Deltas PhysicsEngine::getForces() const { return Deltas(_forceX, _forceY); }
+Deltas PhysicsEngine::GetForces() const { return Deltas(_forceX, _forceY); }
 
-bool PhysicsEngine::getIsJumping() const { return _bIsJumping; }
+bool PhysicsEngine::GetIsJumping() const { return _bIsJumping; }
 
-bool PhysicsEngine::getIsFalling() const { return _bIsFalling; }
+bool PhysicsEngine::GetIsFalling() const { return _bIsFalling; }
 
-bool PhysicsEngine::getOnPlatform() const { return _bOnPlatform; }
+bool PhysicsEngine::GetOnPlatform() const { return _bOnPlatform; }
 
-bool PhysicsEngine::getIsGravityEnabled() const { return _bIsGravityEnabled; }
+bool PhysicsEngine::GetIsGravityEnabled() const { return _bIsGravityEnabled; }

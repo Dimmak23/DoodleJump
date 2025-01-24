@@ -1,9 +1,6 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
+//* Game
 
 //* C++ std
 #include <memory>
@@ -23,9 +20,9 @@ class IMechanics;
 @ How to use?
 @ Construct Camera pointer with RectangleCore* Character that will be tracked,
 @ 	sizes (width, height), and application sizes (width, height).
-@ Camera moves with constant speed, and this speed could be reset, use: setCameraSpeed(float, float).
+@ Camera moves with constant speed, and this speed could be reset, use: SetCameraSpeed(float, float).
 @ After construction you can set to ignore some sides of camera movement:
-@ setIgnoreSidesMoves(bool) - ignore moves to left/right, setIgnoreUpDownMoves(bool).
+@ SetIgnoreSidesMoves(bool) - ignore moves to left/right, SetIgnoreUpDownMoves(bool).
 @! IMPORTANT: use tick(float) to update camera position and track character,
 @			  render(void): to show camera aim on the screen.
 */
@@ -44,30 +41,30 @@ public:
 
 	//* Setters
 
-	// void setCharacterIsInFocus(bool new_character_is_in_focus);
-	void setSceneConnection(ILocatableScene* scene);
+	// void SetCharacterIsInFocus(bool new_character_is_in_focus);
+	void SetSceneConnection(ILocatableScene* scene);
 
-	void setCharacterEngine(IMechanics* engine);
-	void setCameraSpeed(float camera_speed_x, float camera_speed_y);
-	void setIgnoreSidesMoves(bool ignore_x_side);
-	void setIgnoreUpDownMoves(bool ignore_y_side);
+	void SetCharacterEngine(IMechanics* engine);
+	void SetCameraSpeed(float camera_speed_x, float camera_speed_y);
+	void SetIgnoreSidesMoves(bool ignore_x_side);
+	void SetIgnoreUpDownMoves(bool ignore_y_side);
 
 	//* Getters
 
-	int getViewportWidth() const;
-	int getViewportHeight() const;
-	int getViewportBottom() const;
+	int GetViewportWidth() const;
+	int GetViewportHeight() const;
+	int GetViewportBottom() const;
 
 	//* Manipulators
 
-	void tick(float deltaT);
-	void pointCamera(const int& x, const int& y);
-	void setDontGoDown(bool new_state);
-	void clearTrace();
+	void Tick(float deltaT);
+	void PointCamera(const int& x, const int& y);
+	void SetDontGoDown(bool new_state);
+	void ClearTrace();
 
 	//* Render
 
-	void render();
+	void Render();
 
 private:
 	//@ Methods
@@ -77,47 +74,49 @@ private:
 	Camera& operator=(const Camera&) = delete;
 
 	//& Post-condition: sets _bCharacterIsInFocus to fase, if _TracingCharacter goes outside of the _ViewPort
-	void checkIfCharacterIsInFocus();
+	void CheckIfCharacterIsInFocus();
 	//? if _bCharacterIsInFocus == false
 	//? Gets offsets of deltaX and deltaY of _TracingCharacter.center from _ViewPort.center
 	//? and tells _ViewPortMover to move _ViewPort
 	//& Post-condition: calls Scene::relocateAll(deltaX, deltaY)
-	void traceCharacter(float deltaT);
+	void TraceCharacter(float deltaT);
 	//? if _bCharacterIsInFocus == false: check maybe offsets applied close enough and _precisionX, _precisionY met
 	//& Post-condition: sets _bCharacterIsInFocus to true, if _ViewPort.center close enough to _TracingCharacter.center
-	void checkIfPrecisionIsMet();
+	void CheckIfPrecisionIsMet();
 
-	void relocateCamereByIgnore();
+	void RelocateCamereByIgnore();
 
-	void onRelocateScene(int delta_x, int delta_y);
+	void OnRelocateScene(int delta_x, int delta_y);
 
 	//@ Members
 
-	RectangleCore* _TracingCharacter{ nullptr };
-	IMechanics* _CharacterEngine{ nullptr };
-	std::unique_ptr<Image> _ViewPort{ nullptr };
-	std::unique_ptr<Locator> _ViewPortLocator{ nullptr };
-	std::unique_ptr<PhysicsEngine> _ViewPortMover{ nullptr };
-	ILocatableScene* _LevelScene{ nullptr };
+	std::unique_ptr<Image> _viewPort{ nullptr };
+	std::unique_ptr<Locator> _viewPortLocator{ nullptr };
+	std::unique_ptr<PhysicsEngine> _viewPortMover{ nullptr };
 
-	//* State
-	bool _bCharacterIsInFocus{ true };
+	RectangleCore* _tracingCharacter{ nullptr };
+	IMechanics* _characterEngine{ nullptr };
+	ILocatableScene* _levelScene{ nullptr };
 
-	//* Mechanics
-	float _CameraSpeedX{ 1.f };
-	float _CameraSpeedY{ 1.05f };
+	//* Graphics window
+	const ScreenItem* _screen{ nullptr };
+
+	//* Camera viewport image
+	const char* _imagePath{ nullptr };
 
 	//* Utilities
 	IntersectionInfo* _info{ nullptr };
+
+	//* Mechanics
+	float _cameraSpeedX{ 1.f };
+	float _cameraSpeedY{ 1.05f };
+
 	float _precisionX{ 1.f };
 	float _precisionY{ 1.f };
+
+	//* State
 	bool _bIgnoreXOffset{ false };
 	bool _bIgnoreYOffset{ false };
 	bool _bDontGoDown{ false };
-
-	//* Graphics window
-	const ScreenItem* _Screen{ nullptr };
-
-	//* Camera viewport image
-	const char* _ImagePath{ nullptr };
+	bool _bCharacterIsInFocus{ true };
 };

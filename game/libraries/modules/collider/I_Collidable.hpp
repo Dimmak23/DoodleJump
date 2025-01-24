@@ -1,8 +1,6 @@
 #pragma once
 
-//* Custom
-//? Inheritance
-//? Interfaces
+//* Game
 
 //* C++ std
 
@@ -13,12 +11,12 @@ class IMechanics;
 class ICollidable
 {
 public:
-	virtual void addBlockedActor(RectangleCore*) = 0;
-	virtual void addBlockedEnemy(RectangleCore*) = 0;
-	virtual void addBlockedWormhole(RectangleCore*) = 0;
-	virtual void addShooterAmmo(RectangleCore*, IMechanics*) = 0;
-	virtual void removeBlockedActorAtFront() = 0;
-	virtual void removeEnemyAtFront() = 0;
-	virtual void removeWormholeAtFront() = 0;
-	virtual void removeAmmoAtFront() = 0;
+	virtual void AddBlockedActor(RectangleCore*) = 0;
+	virtual void AddBlockedEnemy(RectangleCore*) = 0;
+	virtual void AddBlockedWormhole(RectangleCore*) = 0;
+	virtual void AddShooterAmmo(RectangleCore*, IMechanics*) = 0;
+	virtual void RemoveBlockedActorAtFront() = 0;
+	virtual void RemoveEnemyAtFront() = 0;
+	virtual void RemoveWormholeAtFront() = 0;
+	virtual void RemoveAmmoAtFront() = 0;
 };

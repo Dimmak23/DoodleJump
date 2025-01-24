@@ -46,7 +46,7 @@ public:
 
 	//* Setters
 
-	void enablePlayerGravity(bool enable);
+	void EnablePlayerGravity(bool enable);
 
 	//* Getters
 
@@ -55,20 +55,20 @@ public:
 
 	//* Manipulators
 
-	void onLeftArrowClicked();
-	void onRightArrowClicked();
-	void onUpArrowClicked();
-	void onDownArrowClicked();
-	void onHorizontalArrowsReleased();
-	void onVerticalArrowsReleased();
-	void onMouseLeftButtonClick(const Point& point);
-	void onMouseLeftButtonReleased();
+	void OnLeftArrowClicked();
+	void OnRightArrowClicked();
+	void OnUpArrowClicked();
+	void OnDownArrowClicked();
+	void OnHorizontalArrowsReleased();
+	void OnVerticalArrowsReleased();
+	void OnMouseLeftButtonClick(const Point& point);
+	void OnMouseLeftButtonReleased();
 
 	//@ API: connection to colider
 
-	virtual void onLevelStop() override;
-	virtual void onEnemyKilled(size_t index) override;
-	virtual void onAmmoDestroyed(size_t index) override;
+	virtual void OnLevelStop() override;
+	virtual void OnEnemyKilled(size_t index) override;
+	virtual void OnAmmoDestroyed(size_t index) override;
 
 private:
 	//@ Methods
@@ -80,23 +80,26 @@ private:
 	//@ Members
 
 	//* Sprites
-	std::unique_ptr<ParallaxItem> _Background{ nullptr };
+	std::unique_ptr<ParallaxItem> _background{ nullptr };
 	//* Player
-	std::unique_ptr<Player> _Player{ nullptr };
-	std::unique_ptr<Gun> _Gun{ nullptr };
-	std::unique_ptr<JetPack> _Jet{ nullptr };
+	std::unique_ptr<Player> _player{ nullptr };
+	std::unique_ptr<Gun> _gun{ nullptr };
+	std::unique_ptr<JetPack> _jet{ nullptr };
 	//* Modules
-	std::unique_ptr<Collider> _DoodieCollider{ nullptr };
-	std::unique_ptr<Camera> _DoodieCamera{ nullptr };
+	std::unique_ptr<Collider> _doodieCollider{ nullptr };
+	std::unique_ptr<Camera> _doodieCamera{ nullptr };
 	//* Frames
-	std::unique_ptr<RectangleShape> _GameBoard{ nullptr };
+	std::unique_ptr<RectangleShape> _gameBoard{ nullptr };
 	//* Scene
-	std::unique_ptr<Scene> _Scene{ nullptr };
+	std::unique_ptr<Scene> _scene{ nullptr };
 	//* Worlds
-	std::unique_ptr<WorldStatic> _PlaformsWorld{ nullptr };
-	std::unique_ptr<WorldDynamic> _EnemiesWorld{ nullptr };
+	std::unique_ptr<WorldStatic> _plaformsWorld{ nullptr };
+	std::unique_ptr<WorldDynamic> _enemiesWorld{ nullptr };
 	//* Widgets
-	std::unique_ptr<ScoreBoard> _Score{ nullptr };
+	std::unique_ptr<ScoreBoard> _score{ nullptr };
+
+	//* Points
+	Point* _clickedPosition{ nullptr };
 
 	//* Camera control
 	bool _bCameraEnabled{ false };
@@ -104,7 +107,4 @@ private:
 	//* Level flow
 	bool _bIsRunning{ false };
 	bool _bLeftMouseButtonClicked{ false };
-
-	//* Points
-	Point* _ClickedPosition{ nullptr };
 };

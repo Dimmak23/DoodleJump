@@ -1,9 +1,6 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
+//* Game
 
 //* C++ std
 #include <memory>
@@ -31,23 +28,23 @@ class Sprite
 	//@ API: for render
 
 	//* Getters
-	SDL_Texture* getTexture();
-	SDL_Texture* getCTexture() const;
-	SDL_Rect* getDestination() const;
+	SDL_Texture* GetTexture();
+	SDL_Texture* GetCTexture() const;
+	SDL_Rect* GetDestination() const;
 
 	//* Setters
-	void setOrigin(int x, int y);
-	void setSize(int w, int h);
+	void SetOrigin(int x, int y);
+	void SetSize(int w, int h);
 
 	//* Manipulators
-	void initiaze(const char* path, IARectangle* target_space);
-	void releaseTextureMemory();
+	void Initiaze(const char* path, IARectangle* target_space);
+	void ReleaseTextureMemory();
 
 	//@ Members
 
+	//* Geometry connection
+	std::unique_ptr<SDL_Rect> _destination{ nullptr };
+
 	//* Graphics
 	SDL_Texture* _texture{ nullptr };
-
-	//* Geometry connection
-	std::unique_ptr<SDL_Rect> _Destination{ nullptr };
 };

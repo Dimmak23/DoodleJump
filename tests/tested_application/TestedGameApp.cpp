@@ -125,7 +125,7 @@ void TestedGameApp::Close() {}
 bool TestedGameApp::Tick()
 {
 	//! TESTING
-	_TestedImage->render();
+	_TestedImage->Render();
 	if (timer <= 0)
 	{
 		// _TestedImage->moveSprite(10, 10);
@@ -140,7 +140,7 @@ bool TestedGameApp::Tick()
 	return false;
 }
 
-void TestedGameApp::onMouseMove(int x, int y, int xrelative, int yrelative)
+void TestedGameApp::OnMouseMove(int x, int y, int xrelative, int yrelative)
 {
 	xMousePos = x;
 	yMousePos = y;
@@ -148,12 +148,12 @@ void TestedGameApp::onMouseMove(int x, int y, int xrelative, int yrelative)
 	LogLine("xrel: ", xrelative, ", yrel: ", yrelative);
 }
 
-void TestedGameApp::onMouseButtonClick(IAMouseButton button, bool isReleased)
+void TestedGameApp::OnMouseButtonClick(IAMouseButton button, bool isReleased)
 {
 	if (isReleased)
 	{
 		LogLine("Mouse button released index: ", static_cast<int>(button));
-		_TestedImage->placeSprite(xMousePos, yMousePos);
+		_TestedImage->PlaceSprite(xMousePos, yMousePos);
 	}
 	else
 	{
@@ -161,29 +161,29 @@ void TestedGameApp::onMouseButtonClick(IAMouseButton button, bool isReleased)
 	}
 }
 
-void TestedGameApp::onKeyPressed(IAKey k)
+void TestedGameApp::OnKeyPressed(IAKey k)
 {
 	LogLine("Pressed key: ", static_cast<int>(k));
 	switch (k)
 	{
 		case IAKey::LEFT:
-			_TestedImage->moveSprite(-10, 0);
+			_TestedImage->MoveSprite(-10, 0);
 			break;
 		case IAKey::RIGHT:
-			_TestedImage->moveSprite(10, 0);
+			_TestedImage->MoveSprite(10, 0);
 			break;
 		case IAKey::UP:
-			_TestedImage->moveSprite(0, -10);
+			_TestedImage->MoveSprite(0, -10);
 			break;
 		case IAKey::DOWN:
-			_TestedImage->moveSprite(0, 10);
+			_TestedImage->MoveSprite(0, 10);
 			break;
 		default:
 			break;
 	}
 }
 
-void TestedGameApp::onKeyReleased(IAKey k) { LogLine("Released key: ", static_cast<int>(k)); }
+void TestedGameApp::OnKeyReleased(IAKey k) { LogLine("Released key: ", static_cast<int>(k)); }
 
 const char* TestedGameApp::GetTitle() { return "Testing... FEB, 2024."; }
 

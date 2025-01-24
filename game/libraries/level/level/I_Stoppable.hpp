@@ -6,7 +6,7 @@ using size_t = unsigned long long int;
 class IStoppable
 {
 public:
-	virtual void onLevelStop() = 0;
-	virtual void onEnemyKilled(size_t) = 0;
-	virtual void onAmmoDestroyed(size_t) = 0;
+	virtual void OnLevelStop() = 0;
+	virtual void OnEnemyKilled(size_t) = 0;
+	virtual void OnAmmoDestroyed(size_t) = 0;
 };

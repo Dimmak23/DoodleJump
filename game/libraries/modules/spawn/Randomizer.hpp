@@ -1,9 +1,6 @@
 #pragma once
 
-//* Custom
-//? Modules
-//? Inheritance
-//? Interfaces
+//* Game
 
 //* C++ std
 #include <random>
@@ -14,10 +11,10 @@
 class Randomizer
 {
 public:
-	static inline int getRandomNumber(int left_limit, int right_limit);
+	static inline int GetRandomNumber(int left_limit, int right_limit);
 };
 
-inline int Randomizer::getRandomNumber(int left_limit, int right_limit)
+inline int Randomizer::GetRandomNumber(int left_limit, int right_limit)
 {
 	if (left_limit == right_limit) return left_limit;
 

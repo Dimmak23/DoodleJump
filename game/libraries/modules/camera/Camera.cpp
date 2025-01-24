@@ -24,22 +24,22 @@ Camera::Camera(const ScreenItem* parent_screen,		   //
 			   const unsigned int& viewport_width,	   //
 			   const unsigned int& viewport_height,	   //
 			   const char* path)
-	: _Screen(parent_screen), _TracingCharacter(tracing_body), _ImagePath(path)
+	: _screen(parent_screen), _tracingCharacter(tracing_body), _imagePath(path)
 {
 	//? Get serialized viewport width, height and scale them according to the game window
-	_ViewPort = std::make_unique<Image>(_Screen, _ImagePath,	//
+	_viewPort = std::make_unique<Image>(_screen, _imagePath,	//
 										viewport_width, viewport_height);
-	_ViewPort->setIsHidden(true);
+	_viewPort->SetIsHidden(true);
 
 	//? Place camera at correct point
-	_ViewPortLocator = std::make_unique<Locator>(_ViewPort.get());
-	_ViewPortLocator->setCenterLocation(_TracingCharacter->center());
+	_viewPortLocator = std::make_unique<Locator>(_viewPort.get());
+	_viewPortLocator->SetCenterLocation(_tracingCharacter->Center());
 
 	//? Contructing mover
-	_ViewPortMover = std::make_unique<PhysicsEngine>(_ViewPort.get());
-	_ViewPortMover->setConstantVelocity(_CameraSpeedX, _CameraSpeedY);
+	_viewPortMover = std::make_unique<PhysicsEngine>(_viewPort.get());
+	_viewPortMover->SetConstantVelocity(_cameraSpeedX, _cameraSpeedY);
 
-	_ViewPortLocator->setPhysicsEngineConnection(_ViewPortMover.get());
+	_viewPortLocator->SetPhysicsEngineConnection(_viewPortMover.get());
 
 	_info = new IntersectionInfo{};
 	_info->direction = IntersectionDirection::NONE;
@@ -54,69 +54,69 @@ Camera::~Camera()
 	_info = nullptr;
 }
 
-// void Camera::setCharacterIsInFocus(bool new_character_is_in_focus) { _bCharacterIsInFocus =
+// void Camera::SetCharacterIsInFocus(bool new_character_is_in_focus) { _bCharacterIsInFocus =
 // new_character_is_in_focus; }
 
-void Camera::setSceneConnection(ILocatableScene* scene) { _LevelScene = scene; }
+void Camera::SetSceneConnection(ILocatableScene* scene) { _levelScene = scene; }
 
-void Camera::setCharacterEngine(IMechanics* engine) { _CharacterEngine = engine; }
+void Camera::SetCharacterEngine(IMechanics* engine) { _characterEngine = engine; }
 
-void Camera::setCameraSpeed(float camera_speed_x, float camera_speed_y)
+void Camera::SetCameraSpeed(float camera_speed_x, float camera_speed_y)
 {
-	_CameraSpeedX = camera_speed_x;
-	_CameraSpeedY = camera_speed_y;
-	if (_ViewPortMover.get())
+	_cameraSpeedX = camera_speed_x;
+	_cameraSpeedY = camera_speed_y;
+	if (_viewPortMover.get())
 	{
-		_ViewPortMover->setConstantVelocity(_CameraSpeedX, _CameraSpeedY);
+		_viewPortMover->SetConstantVelocity(_cameraSpeedX, _cameraSpeedY);
 	}
 }
 
-void Camera::setIgnoreSidesMoves(bool ignore_x_side)
+void Camera::SetIgnoreSidesMoves(bool ignore_x_side)
 {
 	_bIgnoreXOffset = ignore_x_side;
-	relocateCamereByIgnore();
+	RelocateCamereByIgnore();
 }
 
-void Camera::setIgnoreUpDownMoves(bool ignore_y_side)
+void Camera::SetIgnoreUpDownMoves(bool ignore_y_side)
 {
 	_bIgnoreYOffset = ignore_y_side;
-	relocateCamereByIgnore();
+	RelocateCamereByIgnore();
 }
 
-int Camera::getViewportWidth() const { return _ViewPort->width(); }
+int Camera::GetViewportWidth() const { return _viewPort->Width(); }
 
-int Camera::getViewportHeight() const { return _ViewPort->height(); }
+int Camera::GetViewportHeight() const { return _viewPort->Height(); }
 
-int Camera::getViewportBottom() const { return _ViewPort->bottom(); }
+int Camera::GetViewportBottom() const { return _viewPort->Bottom(); }
 
-void Camera::tick(float deltaT)
+void Camera::Tick(float deltaT)
 {
-	checkIfCharacterIsInFocus();
-	traceCharacter(deltaT);
-	checkIfPrecisionIsMet();
+	CheckIfCharacterIsInFocus();
+	TraceCharacter(deltaT);
+	CheckIfPrecisionIsMet();
 }
 
-void Camera::pointCamera(const int& x, const int& y) { _ViewPortLocator->setCenterLocation(x, y); }
+void Camera::PointCamera(const int& x, const int& y) { _viewPortLocator->SetCenterLocation(x, y); }
 
-void Camera::setDontGoDown(bool new_state) { _bDontGoDown = new_state; }
+void Camera::SetDontGoDown(bool new_state) { _bDontGoDown = new_state; }
 
-void Camera::clearTrace()
+void Camera::ClearTrace()
 {
 	_info->direction = IntersectionDirection::NONE;
 	_info->size.width = 0;
 	_info->size.height = 0;
 }
 
-void Camera::render() { _ViewPort->render(); }
+void Camera::Render() { _viewPort->Render(); }
 
-void Camera::checkIfPrecisionIsMet()
+void Camera::CheckIfPrecisionIsMet()
 {
 	if (!_bCharacterIsInFocus)
 	{
 		if (																										 //
-			((std::abs(_TracingCharacter->center().x - _ViewPort->center().x) <= _precisionX) || _bIgnoreXOffset)	 //
+			((std::abs(_tracingCharacter->Center().x - _viewPort->Center().x) <= _precisionX) || _bIgnoreXOffset)	 //
 			&&																										 //
-			((std::abs(_TracingCharacter->center().y - _ViewPort->center().y) <= _precisionY) || _bIgnoreYOffset)	 //
+			((std::abs(_tracingCharacter->Center().y - _viewPort->Center().y) <= _precisionY) || _bIgnoreYOffset)	 //
 		)
 		{
 			_bCharacterIsInFocus = true;
@@ -124,67 +124,67 @@ void Camera::checkIfPrecisionIsMet()
 	}
 }
 
-void Camera::relocateCamereByIgnore()
+void Camera::RelocateCamereByIgnore()
 {
-	_ViewPortLocator->setCenterLocation(													//
-		((_bIgnoreXOffset) ? (_Screen->ApplicationWidth / 2) : (_ViewPort->center().x)),	//
-		((_bIgnoreYOffset) ? (_Screen->ApplicationHeight / 2) : (_ViewPort->center().y))	//
+	_viewPortLocator->SetCenterLocation(													//
+		((_bIgnoreXOffset) ? (_screen->_applicationWidth / 2) : (_viewPort->Center().x)),	//
+		((_bIgnoreYOffset) ? (_screen->_applicationHeight / 2) : (_viewPort->Center().y))	//
 	);
 }
 
-void Camera::onRelocateScene(int delta_x, int delta_y)
+void Camera::OnRelocateScene(int delta_x, int delta_y)
 {
-	if (_LevelScene)
+	if (_levelScene)
 	{
-		_LevelScene->relocateAll(delta_x, delta_y);
+		_levelScene->RelocateAll(delta_x, delta_y);
 	}
 }
 
-void Camera::checkIfCharacterIsInFocus()
+void Camera::CheckIfCharacterIsInFocus()
 {
 	if (																						//
-		((_TracingCharacter->left() < _ViewPort->left())										//
+		((_tracingCharacter->Left() < _viewPort->Left())										//
 		 ||																						//
-		 (!_bCharacterIsInFocus && (_TracingCharacter->center().x < _ViewPort->center().x)))	//
+		 (!_bCharacterIsInFocus && (_tracingCharacter->Center().x < _viewPort->Center().x)))	//
 		&&																						//
 		!_bIgnoreXOffset																		//
 	)
 	{
 		_info->direction = IntersectionDirection::LEFT;
-		_info->size.width = _ViewPort->center().x - _TracingCharacter->center().x;
+		_info->size.width = _viewPort->Center().x - _tracingCharacter->Center().x;
 
 		_bCharacterIsInFocus = false;
 	}
 	else if (																					//
-		((_TracingCharacter->right() > _ViewPort->right())										//
+		((_tracingCharacter->Right() > _viewPort->Right())										//
 		 ||																						//
-		 (!_bCharacterIsInFocus && (_TracingCharacter->center().x > _ViewPort->center().x)))	//
+		 (!_bCharacterIsInFocus && (_tracingCharacter->Center().x > _viewPort->Center().x)))	//
 		&&																						//
 		!_bIgnoreXOffset																		//
 	)
 	{
 		_info->direction = IntersectionDirection::RIGHT;
-		_info->size.width = _TracingCharacter->center().x - _ViewPort->center().x;
+		_info->size.width = _tracingCharacter->Center().x - _viewPort->Center().x;
 
 		_bCharacterIsInFocus = false;
 	}
 	else if (																					//
-		((_TracingCharacter->top() < _ViewPort->top())											//
+		((_tracingCharacter->Top() < _viewPort->Top())											//
 		 ||																						//
-		 (!_bCharacterIsInFocus && (_TracingCharacter->center().y < _ViewPort->center().y)))	//
+		 (!_bCharacterIsInFocus && (_tracingCharacter->Center().y < _viewPort->Center().y)))	//
 		&&																						//
 		!_bIgnoreYOffset																		//
 	)
 	{
 		_info->direction = IntersectionDirection::TOP;
-		_info->size.height = -(_ViewPort->center().y - _TracingCharacter->center().y);
+		_info->size.height = -(_viewPort->Center().y - _tracingCharacter->Center().y);
 
 		_bCharacterIsInFocus = false;
 	}
 	else if (																					//
-		((_TracingCharacter->bottom() > _ViewPort->bottom())									//
+		((_tracingCharacter->Bottom() > _viewPort->Bottom())									//
 		 ||																						//
-		 (!_bCharacterIsInFocus && (_TracingCharacter->center().y > _ViewPort->center().y)))	//
+		 (!_bCharacterIsInFocus && (_tracingCharacter->Center().y > _viewPort->Center().y)))	//
 		&&																						//
 		!_bIgnoreYOffset																		//
 		&&																						//
@@ -192,7 +192,7 @@ void Camera::checkIfCharacterIsInFocus()
 	)
 	{
 		_info->direction = IntersectionDirection::BOTTOM;
-		_info->size.height = _TracingCharacter->center().y - _ViewPort->center().y;
+		_info->size.height = _tracingCharacter->Center().y - _viewPort->Center().y;
 
 		_bCharacterIsInFocus = false;
 	}
@@ -203,7 +203,7 @@ void Camera::checkIfCharacterIsInFocus()
 	}
 }
 
-void Camera::traceCharacter(float deltaT)
+void Camera::TraceCharacter(float deltaT)
 {
 	if (!_bCharacterIsInFocus && _info)
 	{
@@ -212,23 +212,23 @@ void Camera::traceCharacter(float deltaT)
 			return;
 		}
 		auto CameraDeltas =
-			_ViewPortMover->constantSpeedUp(deltaT, float(_info->size.width), float(_info->size.height));
+			_viewPortMover->ConstantSpeedUp(deltaT, float(_info->size.width), float(_info->size.height));
 		// _ViewPortMover->move(); //! turned off, to move scene instead
-		onRelocateScene(-int(CameraDeltas.x), -int(CameraDeltas.y));
+		OnRelocateScene(-int(CameraDeltas.x), -int(CameraDeltas.y));
 
-		if (!_CharacterEngine->getOnPlatform())
+		if (!_characterEngine->GetOnPlatform())
 		{
-			_CharacterEngine->setAirFrictionY(0.105);
+			_characterEngine->SetAirFrictionY(0.105);
 			// TODO: setted const speed in two independent places, somewhow work correctly
-			_CharacterEngine->setConstantVelocity(0.f, 0.275f);
+			_characterEngine->SetConstantVelocity(0.f, 0.275f);
 		}
 		else
 		{
-			_CharacterEngine->setAirFrictionY(0.015);
+			_characterEngine->SetAirFrictionY(0.015);
 		}
 	}
 	else if (_bCharacterIsInFocus)
 	{
-		auto CameraDeltas = _ViewPortMover->constantSpeedUp(deltaT, 0, 0);
+		auto CameraDeltas = _viewPortMover->ConstantSpeedUp(deltaT, 0, 0);
 	}
 }

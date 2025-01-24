@@ -34,40 +34,40 @@ public:
 
 	//* Getters
 
-	RectangleCore* getPlayerBoundary();
-	RectangleShape* getPlayerShape();
-	IRelocatableActor* getPlayerLocator();
-	// PhysicsEngine* getPlayerFullEngine();
-	IMechanics* getPlayerEngine();
-	virtual const Point* getSpawnPoint() override;
-	int getBoundaryTop();
-	int getCenterY();
+	RectangleCore* GetPlayerBoundary();
+	RectangleShape* GetPlayerShape();
+	IRelocatableActor* GetPlayerLocator();
+	// PhysicsEngine* GetPlayerFullEngine();
+	IMechanics* GetPlayerEngine();
+	virtual const Point* GetSpawnPoint() override;
+	int GetBoundaryTop();
+	int GetCenterY();
 
 	//* Setters
 
-	virtual void setShootingSide(const Point& aim) override;
-	void resetShooting();
-	void setIsOnTopPlatfrom(bool new_state);
+	virtual void SetShootingSide(const Point& aim) override;
+	void ResetShooting();
+	void SetIsOnTopPlatfrom(bool new_state);
 
 	//* Manipulators
 
-	void initialize();
-	void setInitialPlace(Point coordinate);
-	void enableGravity(bool enable);
-	void tick(float delta_t);
-	void clear();
+	void Initialize();
+	void SetInitialPlace(Point coordinate);
+	void EnableGravity(bool enable);
+	void Tick(float delta_t);
+	void Clear();
 
 	//* Keyboard implementations
 
-	void onWalking(WalkingSide side);
-	void onUpArrowClicked();	  //! TESTING FEATURE
-	void onDownArrowClicked();	  //! TESTING FEATURE
-	void onStopWalking();
-	void onVerticalArrowsReleased();	//! TESTING FEATURE
+	void OnWalking(WalkingSide side);
+	void OnUpArrowClicked();	  //! TESTING FEATURE
+	void OnDownArrowClicked();	  //! TESTING FEATURE
+	void OnStopWalking();
+	void OnVerticalArrowsReleased();	//! TESTING FEATURE
 
 	//* Graphics
 
-	void render();
+	void Render();
 
 private:
 	//@ Methods
@@ -76,36 +76,36 @@ private:
 	Player(const Player&) = delete;
 	Player& operator=(const Player&) = delete;
 
-	void changeShootingSide(WalkingSide side);
+	void ChangeShootingSide(WalkingSide side);
 
-	const Point* updateSpawnPoint();
+	const Point* UpdateSpawnPoint();
 
 	//@ Members
 
 	//* Core
-	std::unique_ptr<AnimatedImage> _DoodieAnimation{ nullptr };
-	std::unique_ptr<Point> _DoodieSpawnPoint{ nullptr };
-	std::unique_ptr<Locator> _DoodieLocator{ nullptr };
-	std::unique_ptr<PhysicsEngine> _DoodieMover{ nullptr };
+	std::unique_ptr<AnimatedImage> _doodieAnimation{ nullptr };
+	std::unique_ptr<Point> _doodieSpawnPoint{ nullptr };
+	std::unique_ptr<Locator> _doodieLocator{ nullptr };
+	std::unique_ptr<PhysicsEngine> _doodieMover{ nullptr };
 
 	//* Graphics window
-	const ScreenItem* _Screen{ nullptr };	 //! Maybe unused
-
-	//* States
-	bool _bIsShooting{ false };
-	WalkingSide _CurrentLookSide{ WalkingSide::NONE };
-	bool _bForceAdded{ false };
-
-	//* Geometry
-	const unsigned int _SpawnPointHeight{};
-
-	//* Mechanics
-	const float _Mass{ 200.f };
-	unsigned int _CurrentFlightDistance{};
-	const unsigned int _FlightDestination{};
-	float _JumpImpulse{ -80.f };
-	float _SideTilt{ 75.f };
+	const ScreenItem* _screen{ nullptr };
 
 	//* Default image path
-	const char* _ImagePath{ nullptr };
+	const char* _imagePath{ nullptr };
+
+	//* Geometry
+	const unsigned int _spawnPointHeight{};
+
+	//* Mechanics
+	unsigned int _currentFlightDistance{};
+	const unsigned int _flightDestination{};
+	const float _mass{ 200.f };
+	float _jumpImpulse{ -80.f };
+	float _sideTilt{ 75.f };
+
+	//* States
+	WalkingSide _currentLookSide{ WalkingSide::NONE };
+	bool _bIsShooting{ false };
+	bool _bForceAdded{ false };
 };
