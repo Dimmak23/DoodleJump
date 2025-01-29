@@ -2,8 +2,8 @@
 #include "graphics/image/Image.hpp"
 
 //* SDL2: Connector
-#include "SDL2_Connector/Loger.hpp"
-#include "SDL2_Connector/Render.hpp"
+#include "SDL2_connector/Loger.hpp"
+#include "SDL2_connector/Render.hpp"
 
 //* Game
 //? Interfaces

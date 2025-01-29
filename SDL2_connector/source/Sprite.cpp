@@ -2,11 +2,7 @@
 #include "Sprite.hpp"
 
 //* Vendor: SDL2
-#ifdef _WIN32
 #include "SDL.h"
-#else
-#include <SDL2/SDL.h>
-#endif
 
 //* SDL2: connector
 #include "IApplication.hpp"

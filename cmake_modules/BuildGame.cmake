@@ -5,6 +5,11 @@ if(WIN32)
 		${CMAKE_SOURCE_DIR}/game/source/${MAIN}.cpp
 		"${APP_ICON_WIN}"
 	)
+else()
+	add_executable(
+		${MAIN}
+		${CMAKE_SOURCE_DIR}/game/source/${MAIN}.cpp
+	)
 endif()
 
 target_include_directories(

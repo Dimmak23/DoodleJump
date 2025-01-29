@@ -1,1 +1,0 @@
-executables/Debug/sparcle/sparcle

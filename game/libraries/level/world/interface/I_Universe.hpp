@@ -15,5 +15,5 @@ public:
 	@ get index from [0, N-1] of Static World new generated platform
 	@ return UniverseDot with coordinates to place new Enemy
 	 */
-	virtual UniverseDot TraverseNewPlatforms(unsigned long long) = 0;
+	virtual UniverseDot TraverseNewPlatforms(long unsigned int) = 0;
 };

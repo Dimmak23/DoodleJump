@@ -8,7 +8,7 @@
 
 //* Forward declarations
 class IRelocatableActor;
-using size_t = unsigned long long int;
+using size_t = long unsigned int;
 
 class ILocatableScene
 {

@@ -2,7 +2,7 @@
 #include "graphics/animated_image/AnimatedImage.hpp"
 
 //* SDL2: Connector
-#include "SDL2_Connector/Render.hpp"
+#include "SDL2_connector/Render.hpp"
 
 //* C++ std
 #include <format>

@@ -1,6 +1,3 @@
-# ? Where to install
-set(VC_BINARY "${CMAKE_SOURCE_DIR}/bin")
-
 # ? Different platforms and modes: different folders
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 	if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")

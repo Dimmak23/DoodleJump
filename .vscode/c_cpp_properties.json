@@ -6,8 +6,6 @@
         "${workspaceFolder}/**",
         "${workspaceFolder}/tests/launch_connector",
         "${workspaceFolder}/tests/tested_application",
-        "${workspaceFolder}/vendor/SDL2/include/SDL2",
-        "${workspaceFolder}/vendor/SDL2_Image/include/SDL2",
         "${workspaceFolder}/SDL2_connector/include",
         "${workspaceFolder}/SDL2_connector/include/SDL2_Connector",
         "${workspaceFolder}/game/libraries/"
@@ -27,11 +25,11 @@
         "${workspaceFolder}/**",
         "${workspaceFolder}/tests/launch_connector",
         "${workspaceFolder}/tests/tested_application",
-        "${workspaceFolder}/vendor/SDL2/include/SDL2",
-        "${workspaceFolder}/vendor/SDL2_image/include/SDL2",
         "${workspaceFolder}/SDL2_connector/include",
         "${workspaceFolder}/SDL2_connector/include/SDL2_Connector",
-        "${workspaceFolder}/game/libraries/"
+        "${workspaceFolder}/game/libraries/",
+        "${workspaceFolder}/SDL2_connector/build/_deps/sdl2-src/include",
+        "${workspaceFolder}/SDL2_connector/build/_deps/sdl2_image-src/include"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/gcc-12",

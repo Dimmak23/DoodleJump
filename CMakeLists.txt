@@ -40,7 +40,11 @@ set(VC_BIN "${CMAKE_SOURCE_DIR}/SDL2_connector/bin/${CMAKE_BUILD_TYPE}") # ! Thi
 
 # ? Specify where get SDL2_connector library
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-	set(SDL2_Connector_LIBRARY "${VC_BIN}/libSDL2_connector.dll")
+	if(NOT UNIX)
+		set(SDL2_Connector_LIBRARY "${VC_BIN}/libSDL2_connector.dll")
+	else()
+		set(SDL2_Connector_LIBRARY "${VC_BIN}/libSDL2_connector.so")
+	endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 	set(SDL2_Connector_LIBRARY "${VC_BIN}/SDL2_connector.lib") # ! You know what? dll also will be linked
 endif()
@@ -52,7 +56,11 @@ message("...[library_path]: ${SDL2_Connector_LIBRARY}")
 set(MAIN DoodleJump)
 
 # * Icon
-set(APP_ICON_WIN "${CMAKE_SOURCE_DIR}/resources/icon.rc")
+if(NOT UNIX)
+	set(APP_ICON_WIN "${CMAKE_SOURCE_DIR}/resources/icon.rc")
+else()
+	# TODO: implement for Linux
+endif()
 
 # ? Set up paths for the custom libraries headers
 set(GAME_INCLUDES "${CMAKE_SOURCE_DIR}/game/libraries")

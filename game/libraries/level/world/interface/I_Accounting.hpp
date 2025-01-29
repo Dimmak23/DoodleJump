@@ -1,7 +1,7 @@
 #pragma once
 
 //* Forward declarations
-using size_t = unsigned long long int;
+using size_t = long unsigned int;
 
 class IAccounting
 {
