@@ -38,7 +38,6 @@ include("${CONNECTOR_MODS}/AddLinkerFlags.cmake")
 # ? Find and connect vendor libraries
 include("${CONNECTOR_MODS}/FetchSDL2Packages.cmake")
 
-
 # ? Where vendor connector leaves
 set(VC_SRC "${CMAKE_SOURCE_DIR}/source")
 set(VC_IMPORT_INCLUDE "${CMAKE_SOURCE_DIR}/include/SDL2_connector")
@@ -61,6 +60,7 @@ target_link_libraries(
 	${PROJECT_NAME}
 	PUBLIC SDL2::SDL2
 	PUBLIC SDL2_image::SDL2_image
+
 	# PUBLIC SDL2_mixer::SDL2_mixer # TODO: for the future
 	# PUBLIC SDL2_ttf::SDL2_ttf # TODO: for the future
 )
@@ -85,5 +85,5 @@ target_compile_definitions(
 )
 
 # ? Finally install connector for Windows
-# ? For Linux output properties would be enough 
+# ? For Linux output properties would be enough
 include("${CONNECTOR_MODS}/ExtractSDL2Packages.cmake")

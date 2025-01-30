@@ -275,6 +275,6 @@ void Level::OnMouseLeftButtonReleased() { _bLeftMouseButtonClicked = false; }
 
 void Level::OnLevelStop() { _bIsRunning = false; }
 
-void Level::OnEnemyKilled(size_t index) { _enemiesWorld->OnEnemyKilled(index); }
+void Level::OnEnemyKilled(long unsigned int index) { _enemiesWorld->OnEnemyKilled(index); }
 
-void Level::OnAmmoDestroyed(size_t index) { _enemiesWorld->OnAmmoDestroyed(index); }
+void Level::OnAmmoDestroyed(long unsigned int index) { _enemiesWorld->OnAmmoDestroyed(index); }

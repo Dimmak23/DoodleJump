@@ -40,7 +40,7 @@ public:
 	virtual ~WorldDynamic();
 
 	//* Empty
-	virtual UniverseDot TraverseNewPlatforms(size_t index) override;
+	virtual UniverseDot TraverseNewPlatforms(long unsigned int index) override;
 	virtual void OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance) override;
 
 	//@ API for other worlds
@@ -67,10 +67,10 @@ public:
 	//* Manipulators
 
 	void Initialize();
-	void CheckForSpawnNewEnemies(size_t* new_platforms_quantity);
+	void CheckForSpawnNewEnemies(long unsigned int* new_platforms_quantity);
 	void CheckForSpawnNewWormholes();
-	void OnEnemyKilled(size_t index);	   //? Calling only Scene there
-	void OnAmmoDestroyed(size_t index);	   //? Calling only Scene there
+	void OnEnemyKilled(long unsigned int index);	  //? Calling only Scene there
+	void OnAmmoDestroyed(long unsigned int index);	  //? Calling only Scene there
 	//? Call it every frame to check if we can delete some platforms
 	void Cleaner();
 
@@ -100,7 +100,7 @@ private:
 	void OnRemoveFrontActorFromPlayerCollider();
 	void OnRemoveFrontWormholeFromScene();
 	void OnRemoveFrontWormholeFromPlayerCollider();
-	void OnRemoveAmmoMissed(size_t index);
+	void OnRemoveAmmoMissed(long unsigned int index);
 	void OnRemoveFrontAmmoFromScene();
 	void OnRemoveFrontAmmoFromPlayerCollider();
 
@@ -146,9 +146,9 @@ private:
 
 	/*
 	//* Debugging
-	size_t _overallDeleted{};			  // TODO: serialize this and set after level reload
-	size_t _overallDeletedAmmos{};		  // TODO: serialize this and set after level reload
-	size_t _overallDeletedWormholes{};	  // TODO: serialize this and set after level reload
+	long unsigned int _overallDeleted{};			  // TODO: serialize this and set after level reload
+	long unsigned int _overallDeletedAmmos{};		  // TODO: serialize this and set after level reload
+	long unsigned int _overallDeletedWormholes{};	  // TODO: serialize this and set after level reload
 	 */
 	const unsigned int _enemiesQuantity{};
 

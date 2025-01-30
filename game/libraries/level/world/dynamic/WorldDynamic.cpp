@@ -47,11 +47,11 @@ WorldDynamic::~WorldDynamic()
 	// std::cout << std::format("Game left with enemies container of size: {}.\n", _Enemies.size());
 }
 
-UniverseDot WorldDynamic::TraverseNewPlatforms(size_t index) { return UniverseDot(); }
+UniverseDot WorldDynamic::TraverseNewPlatforms(long unsigned int index) { return UniverseDot(); }
 
 void WorldDynamic::OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance) {}
 
-void WorldDynamic::CheckForSpawnNewEnemies(size_t* new_platforms_quantity)
+void WorldDynamic::CheckForSpawnNewEnemies(long unsigned int* new_platforms_quantity)
 {
 	//? Here we clear container with empty places for wormholes
 	//? If there would be new places after enemy spawn
@@ -136,7 +136,7 @@ void WorldDynamic::OnSpawnNewMoveableActor(const Point& begin, const Point& end)
 
 void WorldDynamic::Cleaner()
 {
-	size_t count{};
+	long unsigned int count{};
 
 	while (!_enemies.empty())
 	{
@@ -208,7 +208,7 @@ void WorldDynamic::Tick(float delta_t)
 	}
 
 	//! TESTS: deletes ammo that gets to target point
-	// for (size_t index{}; index < _AmmoTiles.size();)
+	// for (long unsigned int index{}; index < _AmmoTiles.size();)
 	// {
 	// 	if (_AmmoTiles[index]->IsOnPlace())
 	// 	{
@@ -265,7 +265,7 @@ void WorldDynamic::Initialize()
 	_wormholeSpawner->SetOffsetsX(0, 0);	// TODO: get rid of magic number
 }
 
-void WorldDynamic::OnEnemyKilled(size_t index)
+void WorldDynamic::OnEnemyKilled(long unsigned int index)
 {
 	//? Tell scene index of killed enemy
 	if (_scene)
@@ -280,7 +280,7 @@ void WorldDynamic::OnEnemyKilled(size_t index)
 	}
 }
 
-void WorldDynamic::OnAmmoDestroyed(size_t index)
+void WorldDynamic::OnAmmoDestroyed(long unsigned int index)
 {
 	//? Tell scene index of destroyed ammo
 	if (_scene)
@@ -391,7 +391,7 @@ void WorldDynamic::OnRemoveFrontWormholeFromPlayerCollider()
 	}
 }
 
-void WorldDynamic::OnRemoveAmmoMissed(size_t index)
+void WorldDynamic::OnRemoveAmmoMissed(long unsigned int index)
 {
 	//? First delete from scene
 	if (_scene)

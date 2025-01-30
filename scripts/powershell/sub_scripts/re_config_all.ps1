@@ -28,13 +28,13 @@ foreach ($params in $parameterSets) {
 # Generator option code for re-using
 $generatorOption = "-G $generator"
 
-#! VENDOR
+# #! VENDOR
 
-# Config
-& "scripts/powershell/sub_scripts/cmake_config.ps1" -directoryPath "vendor/build" -config $config -generatorOption $generatorOption
-Set-Location .. ; Set-Location .. ;
-# Build
-& "scripts/powershell/sub_scripts/cmake_build.ps1" -directoryPath "vendor/build" -config $config
+# # Config
+# & "scripts/powershell/sub_scripts/cmake_config.ps1" -directoryPath "vendor/build" -config $config -generatorOption $generatorOption
+# Set-Location .. ; Set-Location .. ;
+# # Build
+# & "scripts/powershell/sub_scripts/cmake_build.ps1" -directoryPath "vendor/build" -config $config
 
 #! CONNECTOR
 

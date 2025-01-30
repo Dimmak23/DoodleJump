@@ -44,7 +44,7 @@ jsonFilePath="build_data.json"
 if [[ ! -f "$jsonFilePath" ]]; then
     echo "Data about previous build not found. Going with 'Ninja' on 'Debug'..."
 	bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "Debug" "Ninja"
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "Debug"
+	bash ./scripts/bash/sub_scripts/re_build_game.sh "Debug" "Ninja"
     exit 0
 fi
 
@@ -104,10 +104,10 @@ if [[ -n "$config" && -z "$generator" ]]; then
     if [[ "$config" != "$currentConfig" ]]; then
         echo "Configuration changed to: $config."
 		bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$currentGenerator"
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$config"
+		bash ./scripts/bash/sub_scripts/re_build_game.sh "$config" "$currentGenerator"
         exit 0
     else
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig"
+		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
         exit 0
     fi
 fi
@@ -116,10 +116,10 @@ if [[ -n "$generator" && -z "$config" ]]; then
     if [[ "$generator" != "$currentGenerator" ]]; then
         echo "Generator changed to: $generator. Using 'Debug' as default on new generator..."
 		bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "Debug" "$generator"
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig"
+		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$generator"
         exit 0
     else
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig"
+		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
         exit 0
     fi
 fi
@@ -127,7 +127,7 @@ fi
 if [[ -n "$config" && -n "$generator" ]]; then
     echo "Redo with config: $config, generator: $generator"
 	bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$generator"
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig"
+	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
     exit 0
 fi
 
@@ -138,12 +138,12 @@ fi
 
 # Handle rebuild cases
 if [[ -z "$rebuild" || "$rebuild" == "game" ]]; then
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig"
+	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
     exit 0
 fi
 
 if [[ "$rebuild" == "connector" ]]; then
 	bash ./scripts/bash/sub_scripts/re_build_connector.sh "$currentConfig" "$currentGenerator"
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig"
+	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
     exit 0
 fi

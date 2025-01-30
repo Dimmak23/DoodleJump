@@ -41,9 +41,9 @@ WorldStatic::~WorldStatic()
 	// std::cout << "deleted _PlatformSpawner...\n";
 }
 
-size_t WorldStatic::GetDeletedPlatformsCount() { return _overallDeleted; }
+long unsigned int WorldStatic::GetDeletedPlatformsCount() { return _overallDeleted; }
 
-size_t WorldStatic::GetAllBellowPlatformsCount(const int& actor_bottom)
+long unsigned int WorldStatic::GetAllBellowPlatformsCount(const int& actor_bottom)
 {
 	size_t result{};
 	for (auto& Platform : _platforms)
@@ -57,7 +57,7 @@ size_t WorldStatic::GetAllBellowPlatformsCount(const int& actor_bottom)
 	return result;
 }
 
-UniverseDot WorldStatic::TraverseNewPlatforms(size_t index)
+UniverseDot WorldStatic::TraverseNewPlatforms(long unsigned int index)
 {
 	if (!_dynamicWorld) return UniverseDot();
 
@@ -85,7 +85,7 @@ Point WorldStatic::GetFirstPlatformTopCLocation() const
 	return Point(_platforms.begin()->get()->Center().x, _platforms.begin()->get()->Top());
 }
 
-size_t* WorldStatic::GetNewPlatformsQuantity() { return &_newPlatformsQuantity; }
+long unsigned int* WorldStatic::GetNewPlatformsQuantity() { return &_newPlatformsQuantity; }
 
 void WorldStatic::Initialize()
 {
@@ -183,7 +183,7 @@ void WorldStatic::Render()
 	}
 }
 
-void WorldStatic::OnTopOfPlatformMessaging(size_t index)
+void WorldStatic::OnTopOfPlatformMessaging(long unsigned int index)
 {
 	//? Checking if module not taking by platform already
 	if (_stealth->GetPlatformImage() != dynamic_cast<IGraphicle*>(_platforms[index].get()))

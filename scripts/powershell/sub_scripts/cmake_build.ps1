@@ -4,4 +4,5 @@ param (
     [string]$config
 )
 
-cmake --build $directoryPath --config $config -j 8 -v
+# cmake --build $directoryPath --config $config -j 8 -v
+cmake --build $directoryPath --config $config -j 8

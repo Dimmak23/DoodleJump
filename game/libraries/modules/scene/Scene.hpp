@@ -30,9 +30,9 @@ public:
 	virtual void RemoveRelocatableEnemyAtFront() override;
 	virtual void RemoveRelocatableWormholeAtFront() override;
 	virtual void RemoveRelocatableAmmoAtFront() override;
-	virtual void OnAmmoMissed(size_t index) override;
-	virtual void OnEnemyKilled(size_t index) override;
-	virtual void OnAmmoDestroyed(size_t index) override;
+	virtual void OnAmmoMissed(long unsigned int index) override;
+	virtual void OnEnemyKilled(long unsigned int index) override;
+	virtual void OnAmmoDestroyed(long unsigned int index) override;
 
 	void AddBackground(IRelocatableActor* back);
 

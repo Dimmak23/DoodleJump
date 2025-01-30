@@ -8,7 +8,7 @@
 
 //* Forward declarations
 class IRelocatableActor;
-using size_t = long unsigned int;
+// using size_t = long unsigned int;
 
 class ILocatableScene
 {
@@ -21,9 +21,9 @@ public:
 	virtual void RemoveRelocatableEnemyAtFront() = 0;
 	virtual void RemoveRelocatableWormholeAtFront() = 0;
 	virtual void RemoveRelocatableAmmoAtFront() = 0;
-	virtual void OnAmmoMissed(size_t) = 0;
-	virtual void OnEnemyKilled(size_t) = 0;
-	virtual void OnAmmoDestroyed(size_t) = 0;
+	virtual void OnAmmoMissed(long unsigned int) = 0;
+	virtual void OnEnemyKilled(long unsigned int) = 0;
+	virtual void OnAmmoDestroyed(long unsigned int) = 0;
 
 	virtual void RelocateAll(int, int) = 0;
 };

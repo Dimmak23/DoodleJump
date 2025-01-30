@@ -2,7 +2,7 @@
 
 //* Forward declarations
 class IGraphicle;
-using size_t = long unsigned int;
+// using size_t = long unsigned int;
 
 /*
 @ Construct shallow pointer to Stealth object

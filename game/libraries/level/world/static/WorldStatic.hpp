@@ -44,13 +44,13 @@ public:
 	//* Getters
 
 	//? get API for deleted Platforms
-	virtual size_t GetDeletedPlatformsCount() override;
+	virtual long unsigned int GetDeletedPlatformsCount() override;
 	//? get number of platforms which top() is bigger (or equal) then given coordinate player bottom()
-	virtual size_t GetAllBellowPlatformsCount(const int& actor_bottom) override;
+	virtual long unsigned int GetAllBellowPlatformsCount(const int& actor_bottom) override;
 
 	//* Manipulators
 
-	virtual UniverseDot TraverseNewPlatforms(size_t index) override;
+	virtual UniverseDot TraverseNewPlatforms(long unsigned int index) override;
 
 	//@ API for level
 
@@ -65,7 +65,7 @@ public:
 	int GetPlatformsBottom() const;
 	Point GetFirstPlatformTopCLocation() const;
 
-	size_t* GetNewPlatformsQuantity();
+	long unsigned int* GetNewPlatformsQuantity();
 
 	//* Manipulators
 
@@ -82,7 +82,7 @@ public:
 
 	//@ API for collider
 
-	virtual void OnTopOfPlatformMessaging(size_t index) override;
+	virtual void OnTopOfPlatformMessaging(long unsigned int index) override;
 	virtual void OnFlyingMessaging() override;
 
 private:
@@ -128,10 +128,10 @@ private:
 	const unsigned int _platformHeight{};
 
 	//* Traversing
-	size_t _newPlatformsQuantity{};
+	long unsigned int _newPlatformsQuantity{};
 
 	//* Debugging
-	size_t _overallDeleted{};	 // TODO: serialize this and set after level reload
+	long unsigned int _overallDeleted{};	// TODO: serialize this and set after level reload
 
 	const unsigned int _platformsQuantity{};
 

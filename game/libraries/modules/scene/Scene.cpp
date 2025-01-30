@@ -52,7 +52,7 @@ void Scene::RemoveRelocatableAmmoAtFront()
 	}
 }
 
-void Scene::OnAmmoMissed(size_t index)
+void Scene::OnAmmoMissed(long unsigned int index)
 {
 	if (!_ammos.empty())
 	{
@@ -60,7 +60,7 @@ void Scene::OnAmmoMissed(size_t index)
 	}
 }
 
-void Scene::OnEnemyKilled(size_t index)
+void Scene::OnEnemyKilled(long unsigned int index)
 {
 	if (!_enemies.empty())
 	{
@@ -68,7 +68,7 @@ void Scene::OnEnemyKilled(size_t index)
 	}
 }
 
-void Scene::OnAmmoDestroyed(size_t index)
+void Scene::OnAmmoDestroyed(long unsigned int index)
 {
 	if (!_ammos.empty())
 	{

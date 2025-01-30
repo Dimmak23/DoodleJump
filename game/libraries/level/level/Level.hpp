@@ -67,8 +67,8 @@ public:
 	//@ API: connection to colider
 
 	virtual void OnLevelStop() override;
-	virtual void OnEnemyKilled(size_t index) override;
-	virtual void OnAmmoDestroyed(size_t index) override;
+	virtual void OnEnemyKilled(long unsigned int index) override;
+	virtual void OnAmmoDestroyed(long unsigned int index) override;
 
 private:
 	//@ Methods

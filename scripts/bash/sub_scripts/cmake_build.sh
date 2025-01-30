@@ -11,4 +11,5 @@ if [[ -z "$directoryPath" || -z "$config" ]]; then
 fi
 
 # Run the cmake build command
-cmake --build "$directoryPath" --config "$config" -j 8 -v
+# cmake --build "$directoryPath" --config "$config" -j 8 -v
+cmake --build "$directoryPath" --config "$config" -j 8

@@ -33,13 +33,15 @@ if (-not (Test-Path $jsonFilePath)) {
 # Read and parse the JSON file
 $jsonData = Get-Content -Path $jsonFilePath | ConvertFrom-Json
 
+# TODO: Validate config parameter
+
 if($config -or $generator){
 
     # Check the value of $generator and convert it accordingly
     if ($generator -eq "Ninja") {
         Write-Output "Specified $generator as generator."
     }
-    elseif ($generator -eq "MinGW") {
+    elseif ($generator -eq "Makefiles") {
         $generator = "MinGW Makefiles"
         Write-Output "Specified $generator as generator."
     }
@@ -72,14 +74,14 @@ if($config -or $generator){
             & "scripts/powershell/sub_scripts/re_config_all.ps1" -jsonFilePath $jsonFilePath -config $config -generator $jsonData.Generator
             
             # Now we can re-build game itself
-            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $config
+            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $config -generator $jsonData.Generator
 
             exit 0
         }
         # ? If configuration didn't changed - treat this command as re-build game:
         else{
             # Now we can re-build game itself
-            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config
+            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $jsonData.Generator
 
             exit 0
         }
@@ -96,7 +98,7 @@ if($config -or $generator){
             & "scripts/powershell/sub_scripts/re_config_all.ps1" -jsonFilePath $jsonFilePath -config "Debug" -generator $generator
             
             # Now we can re-build game itself
-            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config
+            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $generator
 
             exit 0
         }
@@ -104,7 +106,7 @@ if($config -or $generator){
         else{
             # Now we can re-build game itself
             # ! See that we will get same configuration as before from json file
-            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config
+            & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $jsonData.Generator
 
             exit 0
         }
@@ -132,7 +134,7 @@ if($config -or $generator){
         
         # ? If generator and configuration didn't changed - treat this command as re-build game:
         # Now we can re-build game itself
-        & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config
+        & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $jsonData.Generator
 
         exit 0
     }
@@ -152,7 +154,7 @@ else{
     # * build.ps1 -rebuild 'game'
     if((-not $rebuild) -or ($rebuild -eq "game")){
         # Simply re-building game
-        & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config
+        & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $jsonData.Generator
         
         exit 0
     }
@@ -167,7 +169,7 @@ else{
         # Rebuilding connector first
         & "scripts/powershell/sub_scripts/re_build_connector.ps1" -config $jsonData.Config -generator $jsonData.Generator
         # Simply re-building game
-        & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config
+        & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $jsonData.Generator
 
         exit 0
     }

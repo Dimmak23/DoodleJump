@@ -22,6 +22,7 @@ if(WIN32) # ! Why Linux don't need it?
 
   copy_dll(SDL2)
   copy_dll(SDL2_image)
-  copy_dll(SDL2_ttf)
-  copy_dll(SDL2_mixer)
+
+  # copy_dll(SDL2_ttf) # TODO: for future releases
+  # copy_dll(SDL2_mixer) # TODO: for future releases
 endif()
