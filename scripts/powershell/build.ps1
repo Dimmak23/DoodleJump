@@ -115,24 +115,10 @@ if($config -or $generator){
     # * build.ps1 -generator 'Ninja'/'MinGW'/'VS' -config 'Debug'/'Release'
     # * build.ps1 -config 'Debug'/'Release' -generator 'Ninja'/'MinGW'/'VS'
     if($config -and $generator){
-        # Check if the current parameters match the JSON file values
-        # $isMatch = ($config -eq $jsonData.Config) -and ($generator -eq $jsonData.Generator)
 
-        # TODO: don't check for match
-        # TODO:     if config and generator didn't chaned but specified - it's intentional re-config and re-build for all
-        # if (-not $isMatch) {
-            # Parameters differ from JSON file values
-            # Write-Output "Parameters differ. Performing action for differing parameters."
+        Write-Output "redo with config: $config, generator: $generator"
+        & "scripts/powershell/sub_scripts/re_config_all.ps1" -jsonFilePath $jsonFilePath -config $config -generator $generator
         
-            # Re-config vendor, connector and game; also build vendor and connector
-            Write-Output "redo with config: $config, generator: $generator"
-            & "scripts/powershell/sub_scripts/re_config_all.ps1" -jsonFilePath $jsonFilePath -config $config -generator $generator
-        
-            # Build
-            # ? No build step here... just wait for it
-        # }
-        
-        # ? If generator and configuration didn't changed - treat this command as re-build game:
         # Now we can re-build game itself
         & "scripts/powershell/sub_scripts/re_build_game.ps1" -config $jsonData.Config -generator $jsonData.Generator
 
