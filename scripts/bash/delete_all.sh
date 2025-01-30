@@ -6,12 +6,6 @@ folderList=(
     "build"
     "SDL2_connector/build"
     "SDL2_connector/bin"
-    "vendor/build"
-    "vendor/SDL2"
-    "vendor/ZLIB"
-    "vendor/JPEG"
-    "vendor/PNG"
-    "vendor/SDL2_image"
 )
 
 # Path to the sub-script file

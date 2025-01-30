@@ -1,5 +1,6 @@
 include(FetchContent)
-set(FETCHCONTENT_QUIET FALSE) # ? To allow cmake print intermidiate comments
+set(FETCHCONTENT_QUIET TRUE)
+# set(FETCHCONTENT_QUIET FALSE) # ? To allow cmake print intermidiate comments
 
 # ? Define SDL version and URLs
 set(SDL_VERSION "2.30.2") # 2.3.11

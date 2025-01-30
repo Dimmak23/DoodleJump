@@ -23,11 +23,13 @@ fi
 # Navigate to the directory
 cd "$directoryPath" || { echo "Failed to navigate to directory: $directoryPath"; exit 1; }
 
-echo "! Using as generator: [$generatorOption]..."
+# echo "! Using as generator: [$generatorOption]..."
 
 # Build type configuration and run cmake
 if [[ "$config" == "Debug" ]]; then
     if [[ "$generatorOption" == "-G Unix Makefiles" ]]; then
+        # TODO: Maybe some better solution exists 
+        # ! Need this if-else case because of difficulty to parse 'Unix Makefiles' with space between words
         cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles"
     else
         cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Debug $generatorOption
