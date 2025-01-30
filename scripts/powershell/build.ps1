@@ -87,7 +87,7 @@ if($config -or $generator){
         }
     }
 
-    # * build.ps1 -generator 'Ninja'/'MinGW'/'VS'
+    # * build.ps1 -generator 'Ninja'/'Makefiles'/'VS'
     # Check if another generator: re-configure all for 'Debug'
     if($generator -and -not $config) {
         if(-not ($generator -eq $jsonData.Generator)){
