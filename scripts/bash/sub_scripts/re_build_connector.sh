@@ -19,9 +19,6 @@ for directoryPath in "${parameterSets[@]}"; do
     bash ./scripts/bash/sub_scripts/delete.sh "$directoryPath"
 done
 
-# Generator option code for re-using
-generatorOption="-G $generator"
-
 # ! CONNECTOR
 
 # Build SDL2_connector
@@ -32,7 +29,7 @@ bash ./scripts/bash/sub_scripts/cmake_build.sh "SDL2_connector/build" "$config"
 
 # Configuring build for the game
 echo "Configuring build for the game..."
-bash ./scripts/bash/sub_scripts/cmake_config.sh "build" "$config" "$generatorOption"
+bash ./scripts/bash/sub_scripts/cmake_config.sh "build" "$config" "$generator"
 
 # Return to the previous directory
 cd ..

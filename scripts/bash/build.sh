@@ -5,6 +5,8 @@ rebuild=""
 config=""
 generator=""
 
+# ^ Validations
+
 while [[ $# -gt 0 ]]; do
     key="$1"
 
@@ -34,6 +36,12 @@ done
 # ? Validate conflicting options
 if { [[ -n "$generator" || -n "$config" ]] && [[ -n "$rebuild" ]]; }; then
     echo "Wrong command. '--rebuild' can't be used with '--config' and/or '--generator'."
+    exit 1
+fi
+
+# ? Does 'rebuild' option is valid?
+if [[ -n "$rebuild" && "$rebuild" != "game" && "$rebuild" != "connector" ]]; then
+    echo "Can't rebuild with option --rebuild '$rebuild'. No default option will be used..."
     exit 1
 fi
 
@@ -82,10 +90,13 @@ fi
 # ? Define the path to the JSON file
 jsonFilePath="build_data.json"
 
+echo "Checking built data..."
 # ? If NO JSON file exists: create default
 if [[ ! -f "$jsonFilePath" ]]; then
-    echo "Checking built data... Data about previous build not found. 'Debug' and 'Ninja' will be written as built data."
+    echo "Data about previous build not found. 'Debug' and 'Ninja' will be written as built data."
     bash ./scripts/bash/sub_scripts/create_build_data.sh "$jsonFilePath" "Debug" "Ninja"
+else
+    echo "Got built data file..."
 fi
 
 # ? In any case we have built data now
@@ -135,16 +146,12 @@ fi
 
 # * build.sh --generator 'Ninja'/'MinGW'/'VS' --config 'Debug'/'Release'
 # * build.sh --config 'Debug'/'Release' --generator 'Ninja'/'MinGW'/'VS'
+# ? Could be same as 'build.sh'
 if [[ -n "$config" && -n "$generator" ]]; then
     echo "Redo with config: $config, generator: $generator"
 	bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$generator"
 	bash ./scripts/bash/sub_scripts/re_build_game.sh "$config" "$generator"
     exit 0
-fi
-
-if [[ -n "$rebuild" && "$rebuild" != "game" && "$rebuild" != "connector" ]]; then
-    echo "Can't rebuild with option --rebuild '$rebuild'. No default option will be used..."
-    exit 1
 fi
 
 # * build.sh --rebuild game

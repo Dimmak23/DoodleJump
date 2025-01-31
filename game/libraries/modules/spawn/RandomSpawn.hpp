@@ -47,8 +47,8 @@ public:
 	//? Choose one number from [_MinOffsetX, _MaxOffsetX]
 	int OrderVariantByWidth() const;
 
-	size_t OrderNewActors(const Rectangle& new_place_boundary, const unsigned int& variant_qty,
-						  UniverseCoorCallBackType callback) const;
+	long unsigned int OrderNewActors(const Rectangle& new_place_boundary, const unsigned int& variant_qty,
+									 UniverseCoorCallBackType callback) const;
 
 	void OrderSingleActor(const int bottom_coordinate_to_spawn, const int screen_width, const unsigned int& variant_qty,
 						  UniverseCoorCallBackType callback) const;

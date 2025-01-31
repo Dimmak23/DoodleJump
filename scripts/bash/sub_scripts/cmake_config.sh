@@ -1,18 +1,17 @@
 #!/bin/bash
 
-# Set up parameters
+# ? Set up parameters
 directoryPath="$1"
 config="$2"
-generatorOption="$3"
+generator="$3"
 
-
-# Check if required parameters are provided
+# ? Check if required parameters are provided
 if [[ -z "$directoryPath" || -z "$config" ]]; then
-    echo "Usage: $0 <directoryPath> <config> [generatorOption]"
+    echo "Usage: $0 <directoryPath> <config> [generator]"
     exit 1
 fi
 
-# Create the directory if it doesn't exist
+# ? Create the directory if it doesn't exist
 if [[ ! -d "$directoryPath" ]]; then
     mkdir -p "$directoryPath"
     echo "Directory created: $directoryPath"
@@ -20,12 +19,18 @@ else
     echo "Directory already exists: $directoryPath"
 fi
 
-# Navigate to the directory
+# ? Navigate to the directory
 cd "$directoryPath" || { echo "Failed to navigate to directory: $directoryPath"; exit 1; }
+
+
+# Generator option code for re-using
+generatorOption="-G $generator"
 
 # echo "! Using as generator: [$generatorOption]..."
 
-# Build type configuration and run cmake
+# ? Build type configuration and run cmake
+# TODO: Problems with '-DCMAKE_BUILD_TYPE=Debug/Release' parsed as parameter
+# TODO:		if solve this - if-else statements can be deleted
 if [[ "$config" == "Debug" ]]; then
     if [[ "$generatorOption" == "-G Unix Makefiles" ]]; then
         # TODO: Maybe some better solution exists 

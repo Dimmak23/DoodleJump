@@ -45,7 +45,7 @@ long unsigned int WorldStatic::GetDeletedPlatformsCount() { return _overallDelet
 
 long unsigned int WorldStatic::GetAllBellowPlatformsCount(const int& actor_bottom)
 {
-	size_t result{};
+	long unsigned int result{};
 	for (auto& Platform : _platforms)
 	{
 		if (Platform->Top() >= actor_bottom)
@@ -145,7 +145,7 @@ void WorldStatic::Cleaner()
 {
 	if (_platforms.empty()) return;
 
-	size_t count{};
+	long unsigned int count{};
 
 	while (true)
 	{

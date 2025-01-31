@@ -35,9 +35,9 @@ bool RandomSpawn::DoWeSpawnByHeight() const { return (Randomizer::GetRandomNumbe
 
 int RandomSpawn::OrderVariantByWidth() const { return Randomizer::GetRandomNumber(_minOffsetX, _maxOffsetX); }
 
-size_t RandomSpawn::OrderNewActors(const Rectangle& new_place_boundary,	   //
-								   const unsigned int& variant_qty,		   //
-								   UniverseCoorCallBackType callback	   //
+long unsigned int RandomSpawn::OrderNewActors(const Rectangle& new_place_boundary,	  //
+											  const unsigned int& variant_qty,		  //
+											  UniverseCoorCallBackType callback		  //
 ) const
 {
 	if (!_parent)
