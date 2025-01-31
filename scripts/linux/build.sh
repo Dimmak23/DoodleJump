@@ -94,7 +94,7 @@ echo "Checking built data..."
 # ? If NO JSON file exists: create default
 if [[ ! -f "$jsonFilePath" ]]; then
     echo "Data about previous build not found. 'Debug' and 'Ninja' will be written as built data."
-    bash ./scripts/bash/sub_scripts/create_build_data.sh "$jsonFilePath" "Debug" "Ninja"
+    bash ./scripts/linux/sub_scripts/create_build_data.sh "$jsonFilePath" "Debug" "Ninja"
 else
     echo "Got built data file..."
 fi
@@ -110,8 +110,8 @@ currentGenerator=$(echo "$jsonData" | jq -r '.Generator')
 # ? Doing this only when 'config' and 'generator' parameters didn't provided
 if [[ -z "$rebuild" && -z "$config" && -z "$generator" ]]; then
     echo "command were: 'bash.sh'. Going with data about previous built: --config $currentConfig --generator $currentGenerator"
-    bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$currentConfig" "$currentGenerator"
-    bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
+    bash ./scripts/linux/sub_scripts/re_config_all.sh "$jsonFilePath" "$currentConfig" "$currentGenerator"
+    bash ./scripts/linux/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
     exit 0
 fi
 
@@ -121,11 +121,11 @@ if [[ -n "$config" && -z "$generator" ]]; then
     if [[ "$config" != "$currentConfig" ]]; then
         echo "command were: 'bash.sh --config $config'"
         echo "Configuration changed to: $config."
-		bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$currentGenerator"
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$config" "$currentGenerator"
+		bash ./scripts/linux/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$currentGenerator"
+		bash ./scripts/linux/sub_scripts/re_build_game.sh "$config" "$currentGenerator"
         exit 0
     else
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$config" "$currentGenerator"
+		bash ./scripts/linux/sub_scripts/re_build_game.sh "$config" "$currentGenerator"
         exit 0
     fi
 fi
@@ -135,11 +135,11 @@ fi
 if [[ -n "$generator" && -z "$config" ]]; then
     if [[ "$generator" != "$currentGenerator" ]]; then
         echo "command were: 'bash.sh --generator $generator'"
-		bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$currentConfig" "$generator"
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$generator"
+		bash ./scripts/linux/sub_scripts/re_config_all.sh "$jsonFilePath" "$currentConfig" "$generator"
+		bash ./scripts/linux/sub_scripts/re_build_game.sh "$currentConfig" "$generator"
         exit 0
     else
-		bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$generator"
+		bash ./scripts/linux/sub_scripts/re_build_game.sh "$currentConfig" "$generator"
         exit 0
     fi
 fi
@@ -149,8 +149,8 @@ fi
 # ? Could be same as 'build.sh'
 if [[ -n "$config" && -n "$generator" ]]; then
     echo "Redo with config: $config, generator: $generator"
-	bash ./scripts/bash/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$generator"
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "$config" "$generator"
+	bash ./scripts/linux/sub_scripts/re_config_all.sh "$jsonFilePath" "$config" "$generator"
+	bash ./scripts/linux/sub_scripts/re_build_game.sh "$config" "$generator"
     exit 0
 fi
 
@@ -158,7 +158,7 @@ fi
 # ? Rebuilding only game: only game source code have been changed
 if [[ "$rebuild" == "game" ]]; then
     echo "Just rebuilding game code space..."
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
+	bash ./scripts/linux/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
     exit 0
 fi
 
@@ -166,7 +166,7 @@ fi
 # ? Rebuilding connector and game: connector and game source codes have been changed
 if [[ "$rebuild" == "connector" ]]; then
     echo "Just rebuilding connector and game code space..."
-	bash ./scripts/bash/sub_scripts/re_build_connector.sh "$currentConfig" "$currentGenerator"
-	bash ./scripts/bash/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
+	bash ./scripts/linux/sub_scripts/re_build_connector.sh "$currentConfig" "$currentGenerator"
+	bash ./scripts/linux/sub_scripts/re_build_game.sh "$currentConfig" "$currentGenerator"
     exit 0
 fi

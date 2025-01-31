@@ -9,7 +9,7 @@ folderList=(
 )
 
 # Path to the sub-script file
-subScriptPath="scripts/bash/sub_scripts/delete.sh"
+subScriptPath="scripts/linux/sub_scripts/delete.sh"
 
 # Check if the sub-script exists
 if [[ ! -f "$subScriptPath" ]]; then

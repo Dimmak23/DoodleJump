@@ -14,7 +14,7 @@ fi
 directoryPath="executables"
 
 # Delete the 'executables' directory
-bash ./scripts/bash/sub_scripts/delete.sh "$directoryPath"
+bash ./scripts/linux/sub_scripts/delete.sh "$directoryPath"
 
 echo "Using generator: '$generator', and config: '$config'"
 
@@ -29,4 +29,4 @@ fi
 
 # Build using cmake
 echo "Running cmake build for config: $config"
-bash ./scripts/bash/sub_scripts/cmake_build.sh "build" "$config"
+bash ./scripts/linux/sub_scripts/cmake_build.sh "build" "$config"

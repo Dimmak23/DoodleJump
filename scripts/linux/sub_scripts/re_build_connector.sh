@@ -16,20 +16,20 @@ parameterSets=("build")
 # Delete all directories
 for directoryPath in "${parameterSets[@]}"; do
     echo "Deleting directory: $directoryPath"
-    bash ./scripts/bash/sub_scripts/delete.sh "$directoryPath"
+    bash ./scripts/linux/sub_scripts/delete.sh "$directoryPath"
 done
 
 # ! CONNECTOR
 
 # Build SDL2_connector
 echo "Building SDL2_connector..."
-bash ./scripts/bash/sub_scripts/cmake_build.sh "SDL2_connector/build" "$config"
+bash ./scripts/linux/sub_scripts/cmake_build.sh "SDL2_connector/build" "$config"
 
 # ! GAME
 
 # Configuring build for the game
 echo "Configuring build for the game..."
-bash ./scripts/bash/sub_scripts/cmake_config.sh "build" "$config" "$generator"
+bash ./scripts/linux/sub_scripts/cmake_config.sh "build" "$config" "$generator"
 
 # Return to the previous directory
 cd ..

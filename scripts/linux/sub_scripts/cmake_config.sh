@@ -22,27 +22,12 @@ fi
 # ? Navigate to the directory
 cd "$directoryPath" || { echo "Failed to navigate to directory: $directoryPath"; exit 1; }
 
-
-# Generator option code for re-using
+# ? Generator option code for re-using
 generatorOption="-G $generator"
 
-# echo "! Using as generator: [$generatorOption]..."
+# ? Config option code for re-using
+configOption="-DCMAKE_BUILD_TYPE=$config"
 
-# ? Build type configuration and run cmake
-# TODO: Problems with '-DCMAKE_BUILD_TYPE=Debug/Release' parsed as parameter
-# TODO:		if solve this - if-else statements can be deleted
-if [[ "$config" == "Debug" ]]; then
-    if [[ "$generatorOption" == "-G Unix Makefiles" ]]; then
-        # TODO: Maybe some better solution exists 
-        # ! Need this if-else case because of difficulty to parse 'Unix Makefiles' with space between words
-        cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles"
-    else
-        cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Debug $generatorOption
-    fi
-else
-    if [[ "$generatorOption" == "-G Unix Makefiles" ]]; then
-        cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles"
-    else
-        cmake .. -Wno-dev -DCMAKE_BUILD_TYPE=Release $generatorOption
-    fi
-fi
+# ? Finally config
+# TODO: add support for clang compilator
+cmake .. -Wno-dev "$configOption" "$generatorOption"
