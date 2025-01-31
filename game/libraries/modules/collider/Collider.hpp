@@ -88,8 +88,8 @@ private:
 	void OnMessagingOnFrame(bool new_state);
 	void OnMessagingOnPlatform(bool new_state);
 	void OnLevelStop();
-	void OnEnemyKilled(size_t index);
-	void OnAmmoDestroyed(size_t index);
+	void OnEnemyKilled(unsigned long int index);
+	void OnAmmoDestroyed(unsigned long int index);
 
 	//@ Members
 

@@ -4,10 +4,10 @@
 
 Main command:
 
-```ps1
-# powershell script
-.\scripts\powershell\build.ps1 -config CONFIG -generator GENERATOR
-# or, same command:
+```bat
+@REM powershell script
+scripts\win\build.bat --config CONFIG --generator GENERATOR
+@REM or, same command:
 # .\scripts\powershell\build.ps1 -generator GENERATOR -config CONFIG
 ```
 

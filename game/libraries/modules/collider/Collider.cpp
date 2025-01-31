@@ -436,7 +436,7 @@ bool Collider::DoWeJump(RectangleCore* frame, IMechanics* player_engine)
 
 void Collider::CheckOnTopOfAnyPlatform()
 {
-	size_t Counter{};
+	long unsigned int Counter{};
 
 	for (auto& Actor : _blockingActors)
 	{
@@ -588,7 +588,7 @@ void Collider::OnLevelStop()
 	}
 }
 
-void Collider::OnEnemyKilled(size_t index)
+void Collider::OnEnemyKilled(unsigned long int index)
 {
 	if (_levelInstance)
 	{
@@ -596,7 +596,7 @@ void Collider::OnEnemyKilled(size_t index)
 	}
 }
 
-void Collider::OnAmmoDestroyed(size_t index)
+void Collider::OnAmmoDestroyed(unsigned long int index)
 {
 	if (_levelInstance)
 	{
