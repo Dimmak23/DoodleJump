@@ -37,6 +37,7 @@ set "configOption=-DCMAKE_BUILD_TYPE=!config!"
 @REM ? Generator option code
 set "generatorOption=-G !generator!"
 
+@REM ? Finally config
 @REM TODO: add support for clang compilator
 cmake .. -Wno-dev "!configOption!" "!generatorOption!"
 
