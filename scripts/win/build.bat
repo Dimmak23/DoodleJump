@@ -74,7 +74,7 @@ echo Checking built data...
 @REM ? Check if JSON file exists
 if not exist "!jsonFilePath!" (
     echo Data about previous build not found. 'Debug' and 'Ninja' will be written as built data.
-    call scripts\batch\sub_scripts\create_build_data.bat "!jsonFilePath!" "Debug" "Ninja"
+    call scripts\win\sub_scripts\create_build_data.bat "!jsonFilePath!" "Debug" "Ninja"
 ) else (
 	echo Got built data file...
 )
@@ -99,8 +99,8 @@ echo Current Generator: !currentGenerator!
 @REM ? Doing this only when 'config' and 'generator' parameters didn't provided
 if "!rebuild!!config!!generator!"=="" (
     echo command was: 'build.bat'. Using previous build data: --config !currentConfig! --generator !currentGenerator!
-    call scripts\batch\sub_scripts\re_config_all.bat "!jsonFilePath!" "!currentConfig!" "!currentGenerator!"
-    call scripts\batch\sub_scripts\re_build_game.bat "!currentConfig!" "!currentGenerator!"
+    call scripts\win\sub_scripts\re_config_all.bat "!jsonFilePath!" "!currentConfig!" "!currentGenerator!"
+    call scripts\win\sub_scripts\re_build_game.bat "!currentConfig!" "!currentGenerator!"
     exit /b 0
 )
 
@@ -109,9 +109,9 @@ if "!rebuild!!config!!generator!"=="" (
 if not "!config!"=="" if "!generator!"=="" (
     if not "!config!"=="!currentConfig!" (
         echo command was: 'build.bat --config !config!'
-        call scripts\batch\sub_scripts\re_config_all.bat "!jsonFilePath!" "!config!" "!currentGenerator!"
+        call scripts\win\sub_scripts\re_config_all.bat "!jsonFilePath!" "!config!" "!currentGenerator!"
     )
-    call scripts\batch\sub_scripts\re_build_game.bat "!config!" "!currentGenerator!"
+    call scripts\win\sub_scripts\re_build_game.bat "!config!" "!currentGenerator!"
     exit /b 0
 )
 
@@ -120,9 +120,9 @@ if not "!config!"=="" if "!generator!"=="" (
 if not "!generator!"=="" if "!config!"=="" (
     if not "!generator!"=="!currentGenerator!" (
         echo command was: 'build.bat --generator !generator!'
-        call scripts\batch\sub_scripts\re_config_all.bat "!jsonFilePath!" "!currentConfig!" "!generator!"
+        call scripts\win\sub_scripts\re_config_all.bat "!jsonFilePath!" "!currentConfig!" "!generator!"
     )
-    call scripts\batch\sub_scripts\re_build_game.bat "!currentConfig!" "!generator!"
+    call scripts\win\sub_scripts\re_build_game.bat "!currentConfig!" "!generator!"
     exit /b 0
 )
 
@@ -131,8 +131,8 @@ if not "!generator!"=="" if "!config!"=="" (
 @REM ? Could be same as 'build.bat'
 if not "!config!"=="" if not "!generator!"=="" (
     echo Redo with config: !config!, generator: !generator!
-    call scripts\batch\sub_scripts\re_config_all.bat "!jsonFilePath!" "!config!" "!generator!"
-    call scripts\batch\sub_scripts\re_build_game.bat "!config!" "!generator!"
+    call scripts\win\sub_scripts\re_config_all.bat "!jsonFilePath!" "!config!" "!generator!"
+    call scripts\win\sub_scripts\re_build_game.bat "!config!" "!generator!"
     exit /b 0
 )
 
@@ -140,7 +140,7 @@ if not "!config!"=="" if not "!generator!"=="" (
 @REM ? Rebuilding only game: only game source code have been changed
 if "!rebuild!"=="game" (
     echo Just rebuilding game code space...
-    call scripts\batch\sub_scripts\re_build_game.bat "!currentConfig!" "!currentGenerator!"
+    call scripts\win\sub_scripts\re_build_game.bat "!currentConfig!" "!currentGenerator!"
     exit /b 0
 )
 
@@ -148,8 +148,8 @@ if "!rebuild!"=="game" (
 @REM ? Rebuilding connector and game: connector and game source codes have been changed
 if "!rebuild!"=="connector" (
     echo Just rebuilding connector and game code space...
-    call scripts\batch\sub_scripts\re_build_connector.bat "!currentConfig!" "!currentGenerator!"
-    call scripts\batch\sub_scripts\re_build_game.bat "!currentConfig!" "!currentGenerator!"
+    call scripts\win\sub_scripts\re_build_connector.bat "!currentConfig!" "!currentGenerator!"
+    call scripts\win\sub_scripts\re_build_game.bat "!currentConfig!" "!currentGenerator!"
     exit /b 0
 )
 

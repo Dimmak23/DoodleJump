@@ -5,7 +5,7 @@ setlocal enabledelayedexpansion
 set folders=executables build SDL2_connector\build SDL2_connector\bin
 
 @REM ? Path to the sub-script file
-set subScriptPath=scripts\batch\sub_scripts\delete.bat
+set subScriptPath=scripts\win\sub_scripts\delete.bat
 
 @REM ? Check if the sub-script exists
 if not exist "%subScriptPath%" (

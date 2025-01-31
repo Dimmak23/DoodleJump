@@ -15,7 +15,7 @@ if "%config%"=="" (
 set "directoryPath=executables"
 
 @REM ? Delete the 'executables' directory
-call scripts\batch\sub_scripts\delete.bat "%directoryPath%"
+call scripts\win\sub_scripts\delete.bat "%directoryPath%"
 
 echo Using generator: '%generator%', and config: '%config%'
 
@@ -30,6 +30,6 @@ if "%generator%"=="MinGW Makefiles" (
 
 @REM ? Build using CMake
 echo Running CMake build for config: %config%
-call scripts\batch\sub_scripts\cmake_build.bat "build" "%config%"
+call scripts\win\sub_scripts\cmake_build.bat "build" "%config%"
 
 endlocal

@@ -31,13 +31,13 @@ cd /d "%directoryPath%" || (
     exit /b 1
 )
 
-@REM ? Build type configuration and run CMake
+@REM ? Build type configuration
 set "configOption=-DCMAKE_BUILD_TYPE=!config!"
 
-@REM ? Generator option code for re-using
+@REM ? Generator option code
 set "generatorOption=-G !generator!"
 
-@REM TODO: rewrite this script to pass only generator and create '-G generator' command inside.
+@REM TODO: add support for clang compilator
 cmake .. -Wno-dev "!configOption!" "!generatorOption!"
 
 endlocal

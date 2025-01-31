@@ -23,26 +23,26 @@ if "%generator%"=="" (
 )
 
 @REM ? Delete all directories
-call scripts\batch\delete_all.bat
+call scripts\win\delete_all.bat
 
 @REM ? Save new build data
 echo Saving new build data to %jsonFilePath%
-call scripts\batch\sub_scripts\create_build_data.bat "%jsonFilePath%" "%config%" "%generator%"
+call scripts\win\sub_scripts\create_build_data.bat "%jsonFilePath%" "%config%" "%generator%"
 
 @REM ! CONNECTOR
 
 @REM ? Configuring SDL2_connector build
 echo Configuring SDL2_connector build
-call scripts\batch\sub_scripts\cmake_config.bat "SDL2_connector\build" "%config%" "%generator%"
+call scripts\win\sub_scripts\cmake_config.bat "SDL2_connector\build" "%config%" "%generator%"
 
 @REM ? Building SDL2_connector
 echo Building SDL2_connector
-call scripts\batch\sub_scripts\cmake_build.bat "SDL2_connector\build" "%config%"
+call scripts\win\sub_scripts\cmake_build.bat "SDL2_connector\build" "%config%"
 
 @REM ! GAME
 
 @REM ? Configuring game build
 echo Configuring game build
-call scripts\batch\sub_scripts\cmake_config.bat "build" "%config%" "%generator%"
+call scripts\win\sub_scripts\cmake_config.bat "build" "%config%" "%generator%"
 
 endlocal
