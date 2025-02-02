@@ -45,7 +45,7 @@ Here is the typical style for header and source files of any library.
 // Game libraries headers
 
 //* C++ std
-// Any C++ sta header that need to be included directly in the header
+// Any C++ std header that need to be included directly in the header
 
 //* Forward declarations
 
@@ -117,12 +117,14 @@ bash scripts/linux/build.sh --config CONFIG
 bash scripts/linux/build.sh --generator GENERATOR
 ```
 
+Important to know that change of configuration or/and generator will lead to necessity in re-building connector from scratch. Meaning vendor supply libraries differently for Debug and Release, also custom shell for connector differs for configuration (for example Logger disables in Relase mode).
+Also good to keep in mind that connector library builded with Visual Studio compiler don't link to executable builded with MinGW compiler.
+
 <img src="documentation/pics/config_option.png" alt="" data-canonical-src="" width="450" height="" />
 
 <img src="documentation/pics/generator_option.png" alt="" data-canonical-src="" width="700" height="" />
 
-Also when you about to change code base of game or connector,
-and you don't need to re-configure and re-build vendor you can simply re-configure and re-build top level code:
+When you about to change **ONLY** code base of game or connector, and you don't need to re-configure and re-build vendor you can simply re-configure and re-build top level code:
 
 ```batch
 scripts\win\build.bat --rebuild AIM
@@ -131,6 +133,8 @@ scripts\win\build.bat --rebuild AIM
 ```bash
 bash scripts/linux/build.sh --rebuild AIM
 ```
+
+Previous scripts are most important that 95% of time for developing a game is changing the game codebase itself, and adding something to connector, so you don't need to build vendor libraries all over again. This is why you can simply re-build only what you need.
 
 <img src="documentation/pics/rebuild_option.png" alt="" data-canonical-src="" width="350" height="" />
 
@@ -151,6 +155,10 @@ For example:
 executables\Debug\DoodleJump.exe -fullscreen 1600x900
 ```
 
+```bash
+bash executables/Debug/DoodleJump --fullscreen 1600x900
+```
+
 This would run previously built by you Debug version of DoodleJump.exe on Windows in a fullscreen mode with 1600 to 900 resolution (of course if you have built Release version, Debug version will be simply deleted and such command will not work).
 
 For convinience you can simply run a script:
@@ -159,11 +167,25 @@ For convinience you can simply run a script:
 scripts\win\run.bat
 ```
 
+```bash
+bash scripts/win/run.sh
+```
+
 It will look into executables folder and run such configured 'executables/{configuration}/DoodleJump.exe' that live there.
 Of course, such behavior applies in a case when you didn't change built script,
 so build system still delete 'Debug' executables when you build 'Release' and vice verse.
 
 So if you are going to change build script, and you don't wanna to delete Debug/Release configuration when doing Release/Debug - don't forget to change run script to run exact configuration that you want to run.
+
+Finally, run this script to delete all builds folders, executables and binaries:
+
+```bat
+scripts\win\delete_all.bat
+```
+
+```bash
+bash scripts/win/delete_all.sh
+```
 
 ### About game:
 
