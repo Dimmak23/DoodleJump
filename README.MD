@@ -176,6 +176,7 @@ Of course, such behavior applies in a case when you didn't change built script,
 so build system still delete 'Debug' executables when you build 'Release' and vice verse.
 
 So if you are going to change build script, and you don't wanna to delete Debug/Release configuration when doing Release/Debug - don't forget to change run script to run exact configuration that you want to run.
+<<<<<<< HEAD
 
 Finally, run this script to delete all builds folders, executables and binaries:
 
@@ -186,6 +187,8 @@ scripts\win\delete_all.bat
 ```bash
 bash scripts/win/delete_all.sh
 ```
+
+> > > > > > > > > Temporary merge branch 2
 
 ### About game:
 
