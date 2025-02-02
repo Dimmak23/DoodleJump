@@ -136,12 +136,34 @@ bash scripts/linux/build.sh --rebuild AIM
 
 ### How to run executable?
 
-<!-- TODO -->
+Build system create ./build and ./executables/{configuration} folders for you.
+./executables/{configuration} folder is the destination for installing .exe
+and .dlls (.so) libs, also data will be copied here.
 
-Build system create ./build and ./executables folders for you.
-./executables folder is the destination for installing .exe and .dlls, also data will be copied here.
+Game have been built in a way to run in a different modes.
 
-<!-- TODO -->
+So if you specify in a command line window mode (windowed or fullscreen) and resolution,
+you will get
+
+For example:
+
+```bat
+executables\Debug\DoodleJump.exe -fullscreen 1600x900
+```
+
+This would run previously built by you Debug version of DoodleJump.exe on Windows in a fullscreen mode with 1600 to 900 resolution (of course if you have built Release version, Debug version will be simply deleted and such command will not work).
+
+For convinience you can simply run a script:
+
+```bat
+scripts\win\run.bat
+```
+
+It will look into executables folder and run such configured 'executables/{configuration}/DoodleJump.exe' that live there.
+Of course, such behavior applies in a case when you didn't change built script,
+so build system still delete 'Debug' executables when you build 'Release' and vice verse.
+
+So if you are going to change build script, and you don't wanna to delete Debug/Release configuration when doing Release/Debug - don't forget to change run script to run exact configuration that you want to run.
 
 ### About game:
 
