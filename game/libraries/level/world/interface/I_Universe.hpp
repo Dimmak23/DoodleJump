@@ -9,6 +9,7 @@ struct UniverseDot
 class IUniverse
 {
 public:
+	// TODO: This is breaking an 'Interface segregation principle' - WorldDynamic doesn't need this
 	virtual void OnSpawnNewActor(const int&, const int&, const unsigned int&) = 0;
 
 	/*

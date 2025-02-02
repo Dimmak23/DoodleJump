@@ -1,57 +1,138 @@
 # A Classic Doodle Jump 2D Clone
 
+## Briefly about code base
+
+### What code base is?
+
+Doodle Jump game made in C++ with help of SDL2 libraries.
+SDL2 graphic features were putted in a shell - connector.
+Basicaly connector hides SDL2 features to allow to be independent from changes in SDL libraries.
+Meaning any change in SDL2 or going from SDL2 to SDL3 requires only editing in the connector,
+not in the game itself.
+
+There is three main parts:
+
+- Sprite: it holds image data, such as SDL_Texture and destination area rectangle.
+- Render: it operates with Sprites. Render's API should be called to create, draw, destroy any Sprite, also to operate
+  with Sprite size changes; Render holds SDL_Window* and SDL_Renderer* as static variable,
+  cause game needs only one instance of those.
+- Launcher: it runs game application. Just pass game application that implements IApplication interface, Launcher
+  could run it for you.
+
+### Project architecture
+
+Since it's two main parts, but only one (top level with game itself) needs to be constantly re-configured and rebuilded - it's convinient to split project in two parts.
+
+After code base is cloned to machine you need to build connector once, after that point you done here.
+
+Any changes in game itself requires only to rebuild option (look futher for '--rebuild' flag).
+
+<img src="documentation/pics/project_architecture.png" alt="" data-canonical-src="" width="800" height="" />
+
+### Naming convention
+
+Here is the typical style for header and source files of any library.
+
+```cpp
+// Lib.hpp
+
+#pragma once
+
+//* SDL2: Connector
+// What we have to include from connector libraries
+
+//* Game
+// Game libraries headers
+
+//* C++ std
+// Any C++ sta header that need to be included directly in the header
+
+//* Forward declarations
+
+class AnyClass
+{
+public:
+	//@ API's
+	AnyClass();
+
+	//@ Methods
+	ReturnType MemberFunction(ParamType param_variable, bool bSomeFlag);
+
+private:
+	//* Let's prevent copying AnyClass object
+	AnyClass(const AnyClass&) = delete;
+	AnyClass& operator=(const AnyClass&) = delete;
+
+	//@ Members
+	Type _memberVariable;
+
+	//? Treating booleas vaariables in some special way,
+	//? by using same style as in the UnrealEngine convention
+	bool _bInSomeState{false};
+};
+
+// Lib.cpp
+AnyClass::AnyClass()
+{
+...
+}
+
+ReturnType AnyClass::MemberFunction(ParamType param_variable, bool bSomeFlag);
+{
+	ReturnType scope_variable{param_variable + _memberVariable};
+
+	return bSomeFlag && _bInSomeState? scope_variable: ReturnType{};
+}
+```
+
 ### How to build executable?
 
-Main command:
+To build SDL2_connector library and game executable you need to run only one script:
 
 ```bat
-@REM powershell script
+@REM batch script
 scripts\win\build.bat --config CONFIG --generator GENERATOR
 @REM or, same command:
-# .\scripts\powershell\build.ps1 -generator GENERATOR -config CONFIG
+scripts\win\build.bat --generator GENERATOR --config CONFIG
 ```
 
-Specify configuration(Debug or Release) with generator (Ninja, MinGW or Mirosoft Visual Studio 17 2022)
+```bash
+bash scripts/linux/build.sh --config CONFIG --generator GENERATOR
+bash scripts/linux/build.sh --generator GENERATOR --config CONFIG
+```
+
+Specify configuration (Debug or Release) with generator (Ninja, MinGW Makefiles or Unix Makefiles or Mirosoft Visual Studio 17 2022 - however no such option for linux builts)
 and script will delete all builds (vendor, connector and game) - if any existed, and configure and build everything for you.
 
-This command is for doing same but with generator or config same from previous build:
+This command is for doing same but generator or config don't specified - meaning would be used same
+from previous built:
 
-```ps1
-# powershell script
-.\scripts\powershell\build.ps1 -config CONFIG
-# or, not same:
-.\scripts\powershell\build.ps1 -generator GENERATOR
+```bat
+scripts\win\build.bat --config CONFIG
+scripts\win\build.bat --generator GENERATOR
 ```
 
-<style>
-    .viewbox {
-        width: auto;
-        height: auto;
-        margin-right: -400px;
-        overflow: hidden;
-    }
-    .viewbox img {
-        width: auto;
-        height: auto;
-        margin-top: -190px;
-        margin-left: -660px;
-        margin-bottom: -170px;
-    }
-</style>
+```bash
+bash scripts/linux/build.sh --config CONFIG
+bash scripts/linux/build.sh --generator GENERATOR
+```
 
-<div class="viewbox">
-    <img src="./documentation/diagrams/build_methods.svg" />
-</div>
+<img src="documentation/pics/config_option.png" alt="" data-canonical-src="" width="450" height="" />
+
+<img src="documentation/pics/generator_option.png" alt="" data-canonical-src="" width="700" height="" />
 
 Also when you about to change code base of game or connector,
 and you don't need to re-configure and re-build vendor you can simply re-configure and re-build top level code:
 
-```ps1
-# powershell script
-.\scripts\powershell\build.ps1 -rebuild AIM
+```batch
+scripts\win\build.bat --rebuild AIM
 ```
 
-Where AIM is `game` or `connector`.
+```bash
+bash scripts/linux/build.sh --rebuild AIM
+```
+
+<img src="documentation/pics/rebuild_option.png" alt="" data-canonical-src="" width="350" height="" />
 
 ### How to run executable?
 
@@ -93,76 +174,3 @@ To close game press **Esc** key.
 You will achive points from: distance you pass and platforms you fly.
 
 ![image](about/gifs/doodlejump_gameplay.gif)
-
-## Briefly about code base
-
-### SDL2 connector reasons
-
-Basicaly connector hides SDL2 features to allow to be independent from changes in SDL libraries.
-Meaning any change in SDL2 or going from SDL2 to SDL3 requires only editing in the connector,
-not in the game itself.
-
-There is three main parts:
-
-- Sprite: it holds image data, such as SDL_Texture and destination area rectangle.
-- Render: it operates with Sprites. Render's API should be called to create, draw, destroy any Sprite, also to operate
-  with Sprite size changes; Render holds SDL_Window* and SDL_Renderer* as static variable,
-  cause game needs only one instance of those.
-- Launcher: it runs game application. Just pass game application that implements IApplication interface, Launcher
-  could run it for you.
-
-### Naming convention
-
-Here is the typical style for header and source files of any library
-
-```cpp
-// Lib.hpp
-
-#pragma once
-
-//* SDL2: Connector
-// What we have to include from connector libraries
-
-//* Game
-// Game libraries headers
-
-//* C++ std
-// Any C++ sta header that need to be included directly in the header
-
-//* Forward declarations
-
-class AnyClass
-{
-public:
-	//@ API's
-	AnyClass();
-
-	//@ Methods
-	ReturnType MemberFunction(ParamType param_variable, bool SomeFlag);
-
-private:
-	//* Let's prevent copying AnyClass object
-	AnyClass(const AnyClass&) = delete;
-	AnyClass& operator=(const AnyClass&) = delete;
-
-	//@ Members
-	Type _memberVariable;
-
-	//? Treating booleas vaariables in some special way,
-	//? by using same style as in the UnrealEngine convention
-	bool _bInSomeState{false};
-};
-
-// Lib.cpp
-AnyClass::AnyClass()
-{
-...
-}
-
-ReturnType AnyClass::MemberFunction(ParamType param_variable, bool SomeFlag);
-{
-	ReturnType scope_variable{param_variable + _memberVariable};
-
-	return SomeFlag? scope_variable: ReturnType{};
-}
-```

@@ -39,6 +39,7 @@ public:
 				 const char* ammo_path);
 	virtual ~WorldDynamic();
 
+	// TODO: This is breaking an 'Interface segregation principle' - WorldDynamic doesn't need this
 	//* Empty
 	virtual UniverseDot TraverseNewPlatforms(long unsigned int index) override;
 	virtual void OnSpawnNewActor(const int& x, const int& y, const unsigned int& variance) override;
