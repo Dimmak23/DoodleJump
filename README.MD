@@ -25,7 +25,7 @@ Since it's two main parts, but only one (top level with game itself) needs to be
 
 After code base is cloned to machine you need to build connector once, after that point you done here.
 
-Any changes in game itself requires only to rebuild option (look futher for '--rebuild' flag).
+Any changes in game itself requires only rebuild option (look futher for '--rebuild' flag).
 
 <img src="documentation/pics/project_architecture.png" alt="" data-canonical-src="" width="800" height="" />
 
@@ -72,6 +72,15 @@ private:
 };
 
 // Lib.cpp
+
+// What we can include only here to resolve circular dependencies by using forward declarations
+
+//* SDL2: Connector
+
+//* Game
+
+//* C++ std
+
 AnyClass::AnyClass()
 {
 ...
@@ -90,9 +99,7 @@ ReturnType AnyClass::MemberFunction(ParamType param_variable, bool bSomeFlag);
 To build SDL2_connector library and game executable you need to run only one script:
 
 ```bat
-@REM batch script
 scripts\win\build.bat --config CONFIG --generator GENERATOR
-@REM or, same command:
 scripts\win\build.bat --generator GENERATOR --config CONFIG
 ```
 
@@ -101,8 +108,8 @@ bash scripts/linux/build.sh --config CONFIG --generator GENERATOR
 bash scripts/linux/build.sh --generator GENERATOR --config CONFIG
 ```
 
-Specify configuration (Debug or Release) with generator (Ninja, MinGW Makefiles or Unix Makefiles or Mirosoft Visual Studio 17 2022 - however no such option for linux builts)
-and script will delete all builds (vendor, connector and game) - if any existed, and configure and build everything for you.
+Specify configuration (Debug or Release) with generator (Ninja, MinGW Makefiles or Unix Makefiles, Mirosoft Visual Studio 17 2022 - however no such option for linux builts)
+and script will delete all builds (vendor, connector and game) - if any existed, and configure and build new ones from scratch for you.
 
 This command is for doing same but generator or config don't specified - meaning would be used same
 from previous built:
@@ -117,7 +124,9 @@ bash scripts/linux/build.sh --config CONFIG
 bash scripts/linux/build.sh --generator GENERATOR
 ```
 
-Important to know that change of configuration or/and generator will lead to necessity in re-building connector from scratch. Meaning vendor supply libraries differently for Debug and Release, also custom shell for connector differs for configuration (for example Logger disables in Relase mode).
+(NOTE: If built data is absent Debug and Ninja - is default options)
+
+Important to know that the change of configuration or/and generator will lead to necessity in re-building connector from scratch. Meaning vendor supply libraries differently for Debug and Release, also custom shell for connector differs for configuration (for example Logger disabled in Relase mode).
 Also good to keep in mind that connector library builded with Visual Studio compiler don't link to executable builded with MinGW compiler.
 
 <img src="documentation/pics/config_option.png" alt="" data-canonical-src="" width="450" height="" />
@@ -146,8 +155,7 @@ and .dlls (.so) libs, also data will be copied here.
 
 Game have been built in a way to run in a different modes.
 
-So if you specify in a command line window mode (windowed or fullscreen) and resolution,
-you will get
+So you have to specify in a command line window mode (windowed or fullscreen) and resolution.
 
 For example:
 
@@ -159,7 +167,7 @@ executables\Debug\DoodleJump.exe -fullscreen 1600x900
 bash executables/Debug/DoodleJump --fullscreen 1600x900
 ```
 
-This would run previously built by you Debug version of DoodleJump.exe on Windows in a fullscreen mode with 1600 to 900 resolution (of course if you have built Release version, Debug version will be simply deleted and such command will not work).
+This would run previously builded by you Debug version of DoodleJump.exe on Windows (DoodleJump Debug verion on Linux) in a fullscreen mode with 1600 to 900 resolution (of course if you have built Release version, Debug version will be simply deleted and such command will not work).
 
 For convinience you can simply run a script:
 
@@ -172,10 +180,10 @@ bash scripts/win/run.sh
 ```
 
 It will look into executables folder and run such configured 'executables/{configuration}/DoodleJump.exe' that live there.
-Of course, such behavior applies in a case when you didn't change built script,
+Of course, such behavior applies for a case when you didn't change build script,
 so build system still delete 'Debug' executables when you build 'Release' and vice verse.
 
-So if you are going to change build script, and you don't wanna to delete Debug/Release configuration when doing Release/Debug - don't forget to change run script to run exact configuration that you want to run.
+But if you want to change build script, and you don't wanna delete Debug/Release configuration when producing Release/Debug - don't forget to change run script to run exact configuration that you want to run.
 
 Finally, run this script to delete all builds folders, executables and binaries:
 
@@ -187,18 +195,18 @@ scripts\win\delete_all.bat
 bash scripts/win/delete_all.sh
 ```
 
-### About game:
+## About game
 
 Welcome! Start your gateway to endless jumping fun! This is a delightful and addictive arcade game that puts you in control of a bouncy character on a mission to reach new heights. Inspired by the timeless classic Doodle Jump, this game brings back the nostalgia of simple yet captivating gameplay.
 
-#### Features:
+### Features:
 
 1. Endless Jumping Excitement: Experience the thrill of endless jumping as you bounce from platform to platform in a vibrant and colorful world.
 2. Simple Controls, Addictive Gameplay: With easy-to-learn controls, DoodleJump is accessible to players of all ages. Just tilt your device to guide your character left and right, and watch them leap higher and higher!
 3. Challenging Obstacles: Test your reflexes and agility as you encounter various obstacles, enemies and wormholes while climbing. Dodge monsters, avoid traps, and collect power-ups to boost your journey.
 4. Compete for High Scores: Challenge yourself to beat your own high score, or compete with friends and players from around the world on the global leaderboard. Can you climb to the top and become the ultimate DoodleJump champion?
 
-#### Controls:
+### Controls:
 
 Doodle jump off platform automatically when player move it to the edge of the platform. To move use **LEFT\RIGHT keyboard arrow keys**. Doodle is able to take a long fly: press **UP keyboard arrow key**, Doodle will jump in 10 seconds, after that it would take 2 seconds to recharge fly ability.
 
