@@ -108,7 +108,7 @@ bash scripts/linux/build.sh --config CONFIG --generator GENERATOR
 bash scripts/linux/build.sh --generator GENERATOR --config CONFIG
 ```
 
-Specify configuration (Debug or Release) with generator (Ninja, MinGW Makefiles or Unix Makefiles, Mirosoft Visual Studio 17 2022 - however no such option for linux builts)
+Specify configuration (Debug or Release) with generator (Ninja, MinGW Makefiles or Unix Makefiles, Microsoft Visual Studio 17 2022 - however no such option for linux builts)
 and script will delete all builds (vendor, connector and game) - if any existed, and configure and build new ones from scratch for you.
 
 This command is for doing same but generator or config don't specified - meaning would be used same
