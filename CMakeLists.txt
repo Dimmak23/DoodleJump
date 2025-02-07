@@ -1,6 +1,6 @@
 # ? Selecting C++20 through CMAKE_CXX_STANDARD requires 3.12
 cmake_minimum_required(VERSION 3.12.0)
-project(DOODLE_JUMP VERSION 2.0.0)
+project(DOODLE_JUMP VERSION 1.0.0)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 20)
